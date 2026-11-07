@@ -10,47 +10,78 @@
 <style>
   :root{
     --bg:#121a22; --panel:#18222c; --line:#2a3642; --text:#e9eef2; --muted:#a8b3bd;
-    --accent:#e8774a; --accent-dark:#7a3a20; --yellow:#f2c230; --red:#d33c3c;
+    --accent:#f5c400; --red:#d33c3c;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
   button,input{font:inherit;color:inherit}
   button{cursor:pointer}
   .wrap{max-width:1180px;margin:0 auto;padding:24px 16px 40px;position:relative}
 
-  /* ---------- header ---------- */
-  .head{display:grid;grid-template-columns:200px 1fr auto;gap:32px;align-items:start}
-  .bag{position:relative;width:170px;height:240px;margin:0 auto}
-  .bag .body{position:absolute;inset:0 0 22px 0;border-radius:10px 10px 6px 6px;
-    background:linear-gradient(180deg,#b08a55 0%,#9c7344 40%,#8d6538 100%);
-    clip-path:polygon(4% 0,96% 0,100% 100%,0 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
-  .bag .brand{position:absolute;top:30px;left:16px;background:var(--yellow);color:#111;font:800 11px Unbounded;padding:3px 6px}
-  .bag .band{position:absolute;top:78px;left:-2px;right:-2px;height:72px;background:var(--accent);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:4px}
-  .bag .band b{font:800 22px Unbounded;color:#fff}
-  .bag .band span{font:600 11px 'JetBrains Mono';color:#fff;opacity:.9;margin-top:4px}
-  .bag .kg{position:absolute;bottom:52px;width:100%;text-align:center;font:600 15px 'JetBrains Mono';color:#f6ead8}
-  .bag .shadow{position:absolute;bottom:0;left:10px;right:10px;height:18px;border-radius:50%;background:#2a3540}
-  .tag{display:inline-block;background:var(--accent-dark);color:#ffb08c;font:600 12px 'JetBrains Mono';letter-spacing:.12em;padding:5px 10px;border-radius:4px}
-  h1{font:800 clamp(30px,5vw,54px)/1.05 Unbounded;margin:12px 0 6px}
-  .was{font:400 14px 'JetBrains Mono';color:var(--muted)}
-  .desc{font-size:clamp(16px,1.8vw,19px);line-height:1.55;color:#c9d2da;max-width:780px;margin:16px 0}
-  .price{font:600 clamp(24px,3.2vw,36px) 'JetBrains Mono'}
-  .price-sub{font:400 13px 'JetBrains Mono';color:var(--muted);margin-top:6px}
-  .close{border:2px solid #fff;background:transparent;border-radius:999px;padding:10px 20px;font-weight:700;font-size:17px;outline:3px solid var(--yellow);outline-offset:3px}
+  /* ---------- hero banner ---------- */
+  .hero{position:relative;overflow:hidden;border-radius:24px;padding:40px 44px 36px;
+    background:radial-gradient(circle at 24% 46%,rgba(245,196,0,.26),transparent 42%),
+               radial-gradient(circle at 100% 0%,rgba(255,255,255,.06),transparent 40%),
+               linear-gradient(135deg,#0d1216 0%,#161d24 55%,#1d262f 100%);
+    border:1px solid #26303a;display:grid;grid-template-columns:minmax(260px,.85fr) 1.15fr;gap:36px;align-items:center}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:44px 44px;mask-image:linear-gradient(90deg,transparent,#000 40%,#000 70%,transparent)}
+  .hero::after{content:"";position:absolute;left:-18%;width:70%;bottom:-38%;height:62%;border-radius:50%;
+    border-top:6px solid var(--accent);pointer-events:none;opacity:.85}
+  .hero-media{position:relative;display:flex;justify-content:center;align-items:center;min-height:460px;z-index:1}
+  .hero-media .glow{position:absolute;left:50%;top:50%;width:78%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(circle,rgba(245,196,0,.55),rgba(245,196,0,0) 68%);filter:blur(10px)}
+  .hero-bag{position:relative;width:auto;max-width:100%;max-height:520px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55));
+    animation:float 6s ease-in-out infinite;transform-origin:50% 100%}
+  .hero-media .floor{position:absolute;bottom:-6px;left:18%;right:18%;height:26px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(10px);animation:floor 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-12px) rotate(.6deg)}}
+  @keyframes floor{0%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.88);opacity:.75}}
+  @media (prefers-reduced-motion:reduce){.hero-bag,.hero-media .floor{animation:none}}
+  .hero-body{position:relative;z-index:1}
+  .brandline{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{display:inline-flex;align-items:center;gap:8px;font:800 18px Unbounded;letter-spacing:.02em;color:#fff}
+  .logo svg{width:22px;height:22px}
+  .tag{display:inline-block;background:rgba(245,196,0,.14);color:var(--accent);border:1px solid rgba(245,196,0,.4);font:600 12px 'JetBrains Mono';letter-spacing:.12em;padding:5px 10px;border-radius:4px}
+  h1{font:800 clamp(40px,6.4vw,78px)/.98 Unbounded;margin:18px 0 8px;letter-spacing:-.01em}
+  h1 .y{color:var(--accent);display:block}
+  .sub{font:700 clamp(15px,1.7vw,19px) Inter;text-transform:uppercase;letter-spacing:.04em;color:#fff}
+  .sub-kz{font:700 clamp(13px,1.4vw,15px) Inter;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin-top:4px}
+  .desc{font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:#c2ccd5;max-width:620px;margin:16px 0 22px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #2c3742;border-bottom:1px solid #2c3742;margin-bottom:22px}
+  .kpi{padding:14px 12px;display:flex;flex-direction:column;gap:6px;border-left:1px solid #2c3742}
+  .kpi:first-child{border-left:0;padding-left:0}
+  .kpi .ic{width:38px;height:38px;border-radius:50%;border:2px solid var(--accent);display:grid;place-items:center;color:var(--accent)}
+  .kpi .ic svg{width:20px;height:20px}
+  .kpi b{font:700 clamp(17px,1.9vw,22px) 'JetBrains Mono';color:#fff;white-space:nowrap}
+  .kpi span{font-size:13px;color:var(--muted);line-height:1.3}
+  .hero-foot{display:flex;align-items:center;gap:14px 24px;flex-wrap:wrap}
+  .price{font:700 clamp(22px,2.6vw,30px) 'JetBrains Mono';color:#fff}
+  .price-sub{font:400 13px 'JetBrains Mono';color:var(--muted);margin-top:4px}
+  .cta{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:15px;padding:13px 22px;border-radius:999px;background:var(--accent);color:#111;transition:transform .15s,box-shadow .15s}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,196,0,.3)}
+  .cta.ghost{background:transparent;color:#fff;border:2px solid #4a5662}
+  .cta.ghost:hover{box-shadow:none;border-color:#fff}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+  .uses{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+  .uses span{font:500 12px Inter;color:#c9d2da;background:rgba(255,255,255,.05);border:1px solid #2c3742;padding:6px 11px;border-radius:999px}
+  .uses span.kz{color:var(--accent);border-color:rgba(245,196,0,.35)}
+  .close{position:absolute;top:18px;right:18px;z-index:2;border:1.5px solid #4a5662;background:rgba(13,18,22,.6);border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px;color:#fff}
+  .close:hover{border-color:#fff}
 
   /* ---------- scenario tabs ---------- */
   .sec-title{font:600 14px 'JetBrains Mono';letter-spacing:.2em;color:#c8d0d6;margin:34px 0 12px}
   .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .tab{background:transparent;border:1.5px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px;color:#c9d2da;transition:all .2s}
   .tab:hover{border-color:#5a6875}
-  .tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .tab.on{background:var(--accent);border-color:var(--accent);color:#111}
 
   /* ---------- viewer ---------- */
   .viewer{position:relative;width:100%;aspect-ratio:16/9;min-height:320px;background:#efefea;overflow:hidden;border-radius:2px}
   .viewer canvas{display:block;width:100%;height:100%}
   .viewer.interactive canvas{cursor:grab}
-  .progress{position:absolute;top:0;left:0;height:4px;background:var(--red);width:0;z-index:3}
+  .progress{position:absolute;top:0;left:0;height:4px;background:var(--accent);width:0;z-index:3}
   .labels{position:absolute;inset:0;pointer-events:none;z-index:2}
   .lbl{position:absolute;left:0;top:0;transition:opacity .35s}
   .lbl i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
@@ -72,7 +103,7 @@
   .steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
   .step{text-align:left;background:transparent;border:1.5px solid var(--line);border-radius:22px;padding:12px 18px;color:#c9d2da;font-size:15px;line-height:1.4;display:flex;gap:10px;transition:border-color .2s,background .2s}
   .step em{font-style:normal;font-family:'JetBrains Mono';color:var(--muted)}
-  .step.active{border-color:var(--accent);background:rgba(232,119,74,.08);color:#fff}
+  .step.active{border-color:var(--accent);background:rgba(245,196,0,.07);color:#fff}
 
   /* ---------- specs + calculator ---------- */
   .specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
@@ -95,10 +126,23 @@
   body.closed .wrap{display:none}
   body.closed .reopen{display:block}
 
+  @media (max-width:900px){
+    .hero{grid-template-columns:.8fr 1.2fr;gap:20px;padding:36px 26px}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .kpi:nth-child(3){border-left:0;padding-left:0}
+    .kpi:nth-child(n+3){border-top:1px solid #2c3742}
+  }
   @media (max-width:760px){
-    .head{grid-template-columns:1fr;gap:12px}
-    .bag{transform:scale(.75);margin:-30px auto -40px}
-    .close{position:absolute;top:16px;right:16px;padding:8px 14px;font-size:14px}
+    .hero{grid-template-columns:1fr;padding:56px 18px 26px;gap:8px;border-radius:18px}
+    .hero-media{min-height:0}
+    .hero-bag{max-height:330px}
+    .hero::after{left:-30%;width:160%;bottom:auto;top:300px;height:200px}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .kpi:nth-child(3){border-left:0;padding-left:0}
+    .kpi:nth-child(n+3){border-top:1px solid #2c3742}
+    .hero-actions{margin-left:0;width:100%}
+    .cta{flex:1;justify-content:center}
+    .close{top:12px;right:12px;padding:6px 12px;font-size:13px}
     .viewer{aspect-ratio:4/3}
     .lbl span{top:-38px;padding:3px 7px}
     .calc{grid-template-columns:1fr 1fr}
@@ -110,26 +154,35 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="head">
-    <div class="bag" aria-hidden="true">
-      <div class="body"></div>
-      <div class="brand" id="bagBrand"></div>
-      <div class="band"><b id="bagName"></b><span id="bagCat"></span></div>
-      <div class="kg" id="bagKg"></div>
-      <div class="shadow"></div>
-    </div>
-    <div>
-      <span class="tag" id="tag"></span>
-      <h1 id="title"></h1>
-      <div class="was" id="was"></div>
-      <p class="desc" id="desc"></p>
-      <div class="price" id="price"></div>
-      <div class="price-sub" id="priceSub"></div>
-    </div>
+  <section class="hero">
     <button class="close" id="closeBtn">Закрыть ✕</button>
-  </div>
+    <div class="hero-media">
+      <div class="glow"></div>
+      <img class="hero-bag" id="bagImg" src="assets/rapid-t600-bag.webp" alt="Мешок EasyMix Rapid T600, 25 кг" width="840" height="900">
+      <div class="floor"></div>
+    </div>
+    <div class="hero-body">
+      <div class="brandline">
+        <span class="logo" id="logo"></span>
+        <span class="tag" id="tag"></span>
+      </div>
+      <h1 id="title"></h1>
+      <div class="sub" id="sub"></div>
+      <div class="sub-kz" id="subKz"></div>
+      <p class="desc" id="desc"></p>
+      <div class="kpis" id="kpis"></div>
+      <div class="hero-foot">
+        <div><div class="price" id="price"></div><div class="price-sub" id="priceSub"></div></div>
+        <div class="hero-actions">
+          <a class="cta" href="#anatomy">Смотреть 3D-анатомию ↓</a>
+          <a class="cta ghost" href="#calc">Рассчитать расход</a>
+        </div>
+      </div>
+      <div class="uses" id="uses"></div>
+    </div>
+  </section>
 
-  <div class="sec-title">3D-АНАТОМИЯ: КАК И КУДА НАНОСИТЬ</div>
+  <div class="sec-title" id="anatomy">3D-АНАТОМИЯ: КАК И КУДА НАНОСИТЬ</div>
   <div class="tabs" id="tabs"></div>
   <div class="viewer" id="viewer">
     <div class="progress" id="progress"></div>
@@ -147,7 +200,7 @@
   <div class="sec-title">КЛЮЧЕВЫЕ ХАРАКТЕРИСТИКИ · +20 °C</div>
   <div class="specs" id="specs"></div>
 
-  <div class="sec-title">КАЛЬКУЛЯТОР РАСХОДА</div>
+  <div class="sec-title" id="calc">КАЛЬКУЛЯТОР РАСХОДА</div>
   <div class="calc">
     <label>Площадь, м²<input id="cArea" type="number" min="0" step="0.1" value="1"></label>
     <label>Толщина слоя, мм<input id="cThick" type="number" min="0" step="5" value="30"></label>
@@ -175,11 +228,18 @@
 window.PRODUCT = {
   brand: 'EASYMIX',
   name: 'EasyMix Rapid T600',
-  bagName: 'T600',
+  titleA: 'RAPID',
+  titleB: 'T600',
   category: 'РЕМОНТ БЕТОНА',
-  bagCategory: 'Ремонт бетона',
-  weight: '25 кг',
-  formerly: 'ТОО «ЭкоМикс» · производство в Актобе',
+  subtitle: 'Быстротвердеющий ремонтный состав',
+  subtitleKz: 'Жедел қататын жөндеу қоспасы',
+  kpis: [                                            // иконки: clock, chart, layers, snow
+    ['clock', '1 час', 'открытие движения'],
+    ['chart', '≥ 60 МПа', 'прочность в 28 суток'],
+    ['layers', '20–50 мм', 'толщина слоя (без щебня)'],
+    ['snow', 'F300', 'морозостойкость'],
+  ],
+  uses: ['Ремонт дорог', 'Установка люков', 'Ремонт бетона', 'Анкеровка закладных', '🇰🇿 Сделано в Казахстане · Актобе'],
   description: 'Однокомпонентный быстротвердеющий наливной ремонтный раствор с полимерной модификацией: установка люков и бордюров, ремонт дорожного бетона и колодцев, анкеровка закладных. Открытие движения — через 1 час.',
   price: 'Цена по запросу',                        // напр. '7 500 ₸'
   priceSub: 'мешок 25 кг ≈ 12,5 л раствора',
@@ -194,6 +254,7 @@ window.PRODUCT = {
     ['3,4–3,6 л', 'воды на мешок 25 кг'],
     ['20 кг/м²', 'на 10 мм слоя'],
     ['+5…+30 °C', 'основание и воздух'],
+    ['F300', 'морозостойкость'],
   ],
   footer: 'Производитель: ТОО «ЭкоМикс» (торговая марка EasyMix), Казахстан, г. Актобе, Промзона 679/17 · Тел.: 8 707 539 00 00 · <a href="mailto:info@easymix.kz">info@easymix.kz</a> · <a href="https://easymix.kz" target="_blank" rel="noopener">easymix.kz</a><br>Данные основаны на лабораторных испытаниях при +20 °C и 50 % влажности; на объекте показатели могут отличаться.',
   scenarios: [
@@ -251,14 +312,26 @@ const $ = id => document.getElementById(id);
 const PI = Math.PI;
 
 /* ======================= static texts ======================= */
-$('bagBrand').textContent = P.brand;
-$('bagName').textContent = P.bagName;
-$('bagCat').textContent = P.bagCategory;
-$('bagKg').textContent = P.weight;
+const ICONS = {
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6M12 2v3"/></svg>',
+  chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20h16M7 16v-4M12 16V8M17 16V5"/></svg>',
+  layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg>',
+  snow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4 7l16 10M20 7 4 17M9 4l3 2 3-2M9 20l3-2 3 2"/></svg>',
+};
+$('logo').innerHTML = P.brand + ' <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#3aa835"><rect x="9" y="1" width="6" height="6" rx="1" transform="rotate(45 12 4)"/><rect x="9" y="17" width="6" height="6" rx="1" transform="rotate(45 12 20)"/><rect x="1" y="9" width="6" height="6" rx="1" transform="rotate(45 4 12)"/><rect x="17" y="9" width="6" height="6" rx="1" transform="rotate(45 20 12)"/></g></svg>';
 $('tag').textContent = P.category;
-$('title').textContent = P.name;
+$('title').innerHTML = '<span class="y"></span><span></span>';
+$('title').children[0].textContent = P.titleA; $('title').children[1].textContent = P.titleB;
+$('sub').textContent = P.subtitle;
+$('subKz').textContent = P.subtitleKz;
 $('reTitle').textContent = P.name;
-$('was').textContent = P.formerly;
+P.kpis.forEach(([ic, v, l]) => {
+  const d = document.createElement('div'); d.className = 'kpi';
+  d.innerHTML = `<div class="ic">${ICONS[ic] || ''}</div><b></b><span></span>`;
+  d.querySelector('b').textContent = v; d.querySelector('span').textContent = l;
+  $('kpis').appendChild(d);
+});
+P.uses.forEach((u, i) => { const e = document.createElement('span'); e.textContent = u; if (i === P.uses.length - 1) e.className = 'kz'; $('uses').appendChild(e); });
 $('desc').textContent = P.description;
 $('price').textContent = P.price;
 $('priceSub').textContent = P.priceSub;
