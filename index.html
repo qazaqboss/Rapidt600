@@ -10,7 +10,7 @@
 <style>
   :root{
     --bg:#121a22; --panel:#18222c; --line:#2a3642; --text:#e9eef2; --muted:#a8b3bd;
-    --accent:#f5c400; --red:#d33c3c;
+    --accent:#f5c400; --accent-rgb:245,196,0; --red:#d33c3c;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -19,9 +19,20 @@
   button{cursor:pointer}
   .wrap{max-width:1180px;margin:0 auto;padding:24px 16px 40px;position:relative}
 
+  /* ---------- product switcher ---------- */
+  .products{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+  .products .lab{font:600 12px 'JetBrains Mono';letter-spacing:.16em;color:var(--muted);margin-right:6px}
+  .prod{display:flex;align-items:center;gap:10px;background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:6px 16px 6px 8px;text-align:left;transition:all .2s}
+  .prod img{width:34px;height:40px;object-fit:contain}
+  .prod b{display:block;font-weight:700;font-size:14px;color:#fff}
+  .prod span{font-size:12px;color:var(--muted)}
+  .prod:hover{border-color:#4a5662}
+  .prod.on{border-color:var(--accent);background:rgba(var(--accent-rgb),.08)}
+  .tab.on, .cta{transition:background .3s}
+
   /* ---------- hero banner ---------- */
   .hero{position:relative;overflow:hidden;border-radius:24px;padding:40px 44px 36px;
-    background:radial-gradient(circle at 24% 46%,rgba(245,196,0,.26),transparent 42%),
+    background:radial-gradient(circle at 24% 46%,rgba(var(--accent-rgb),.26),transparent 42%),
                radial-gradient(circle at 100% 0%,rgba(255,255,255,.06),transparent 40%),
                linear-gradient(135deg,#0d1216 0%,#161d24 55%,#1d262f 100%);
     border:1px solid #26303a;display:grid;grid-template-columns:minmax(260px,.85fr) 1.15fr;gap:36px;align-items:center}
@@ -32,7 +43,7 @@
     border-top:6px solid var(--accent);pointer-events:none;opacity:.85}
   .hero-media{position:relative;display:flex;justify-content:center;align-items:center;min-height:460px;z-index:1}
   .hero-media .glow{position:absolute;left:50%;top:50%;width:78%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
-    background:radial-gradient(circle,rgba(245,196,0,.55),rgba(245,196,0,0) 68%);filter:blur(10px)}
+    background:radial-gradient(circle,rgba(var(--accent-rgb),.55),rgba(var(--accent-rgb),0) 68%);filter:blur(10px)}
   .hero-bag{position:relative;width:auto;max-width:100%;max-height:520px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55));
     animation:float 6s ease-in-out infinite;transform-origin:50% 100%}
   .hero-media .floor{position:absolute;bottom:-6px;left:18%;right:18%;height:26px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(10px);animation:floor 6s ease-in-out infinite}
@@ -43,9 +54,11 @@
   .brandline{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
   .logo{display:inline-flex;align-items:center;gap:8px;font:800 18px Unbounded;letter-spacing:.02em;color:#fff}
   .logo svg{width:22px;height:22px}
-  .tag{display:inline-block;background:rgba(245,196,0,.14);color:var(--accent);border:1px solid rgba(245,196,0,.4);font:600 12px 'JetBrains Mono';letter-spacing:.12em;padding:5px 10px;border-radius:4px}
+  .tag{display:inline-block;background:rgba(var(--accent-rgb),.14);color:var(--accent);border:1px solid rgba(var(--accent-rgb),.4);font:600 12px 'JetBrains Mono';letter-spacing:.12em;padding:5px 10px;border-radius:4px}
   h1{font:800 clamp(40px,6.4vw,78px)/.98 Unbounded;margin:18px 0 8px;letter-spacing:-.01em}
-  h1 .y{color:var(--accent);display:block}
+  h1 span{display:block}
+  h1 .y{color:var(--accent)}
+  h1.long{font-size:clamp(32px,4.8vw,60px)}
   .sub{font:700 clamp(15px,1.7vw,19px) Inter;text-transform:uppercase;letter-spacing:.04em;color:#fff}
   .sub-kz{font:700 clamp(13px,1.4vw,15px) Inter;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);margin-top:4px}
   .desc{font-size:clamp(15px,1.5vw,17px);line-height:1.6;color:#c2ccd5;max-width:620px;margin:16px 0 22px}
@@ -60,13 +73,13 @@
   .price{font:700 clamp(22px,2.6vw,30px) 'JetBrains Mono';color:#fff}
   .price-sub{font:400 13px 'JetBrains Mono';color:var(--muted);margin-top:4px}
   .cta{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:15px;padding:13px 22px;border-radius:999px;background:var(--accent);color:#111;transition:transform .15s,box-shadow .15s}
-  .cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,196,0,.3)}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(var(--accent-rgb),.3)}
   .cta.ghost{background:transparent;color:#fff;border:2px solid #4a5662}
   .cta.ghost:hover{box-shadow:none;border-color:#fff}
   .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
   .uses{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
   .uses span{font:500 12px Inter;color:#c9d2da;background:rgba(255,255,255,.05);border:1px solid #2c3742;padding:6px 11px;border-radius:999px}
-  .uses span.kz{color:var(--accent);border-color:rgba(245,196,0,.35)}
+  .uses span.kz{color:var(--accent);border-color:rgba(var(--accent-rgb),.35)}
   .close{position:absolute;top:18px;right:18px;z-index:2;border:1.5px solid #4a5662;background:rgba(13,18,22,.6);border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px;color:#fff}
   .close:hover{border-color:#fff}
 
@@ -103,7 +116,7 @@
   .steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
   .step{text-align:left;background:transparent;border:1.5px solid var(--line);border-radius:22px;padding:12px 18px;color:#c9d2da;font-size:15px;line-height:1.4;display:flex;gap:10px;transition:border-color .2s,background .2s}
   .step em{font-style:normal;font-family:'JetBrains Mono';color:var(--muted)}
-  .step.active{border-color:var(--accent);background:rgba(245,196,0,.07);color:#fff}
+  .step.active{border-color:var(--accent);background:rgba(var(--accent-rgb),.07);color:#fff}
 
   /* ---------- specs + calculator ---------- */
   .specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}
@@ -143,6 +156,11 @@
     .hero-actions{margin-left:0;width:100%}
     .cta{flex:1;justify-content:center}
     .close{top:12px;right:12px;padding:6px 12px;font-size:13px}
+    .products{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .products .lab{grid-column:1/-1}
+    .prod{padding:6px 10px 6px 6px;gap:6px}
+    .prod b{font-size:13px}
+    .prod span{font-size:11px}
     .viewer{aspect-ratio:4/3}
     .lbl span{top:-38px;padding:3px 7px}
     .calc{grid-template-columns:1fr 1fr}
@@ -154,6 +172,7 @@
 </head>
 <body>
 <div class="wrap">
+  <nav class="products" id="products"><span class="lab">ПРОДУКЦИЯ</span></nav>
   <section class="hero">
     <button class="close" id="closeBtn">Закрыть ✕</button>
     <div class="hero-media">
@@ -197,7 +216,7 @@
   </div>
   <div class="steps" id="steps"></div>
 
-  <div class="sec-title">КЛЮЧЕВЫЕ ХАРАКТЕРИСТИКИ · +20 °C</div>
+  <div class="sec-title" id="specTitle"></div>
   <div class="specs" id="specs"></div>
 
   <div class="sec-title" id="calc">КАЛЬКУЛЯТОР РАСХОДА</div>
@@ -207,7 +226,7 @@
     <div class="calc-out">
       <div><b id="oKg">—</b><span>сухой смеси</span></div>
       <div><b id="oBags">—</b><span>мешков по 25 кг</span></div>
-      <div><b id="oWater">—</b><span>воды для затворения</span></div>
+      <div id="oWaterBox"><b id="oWater">—</b><span>воды для затворения</span></div>
       <div id="oGravelBox" hidden><b id="oGravel">—</b><span>щебня 5–6 мм</span></div>
     </div>
     <p class="calc-note" id="cNote"></p>
@@ -225,11 +244,18 @@
 /* ======================================================================
    НАСТРОЙКИ ПРОДУКТА — все тексты правятся здесь
    ====================================================================== */
-window.PRODUCT = {
+window.SITE = {
+  footer: 'Производитель: ТОО «ЭкоМикс» (торговая марка EasyMix), Казахстан, г. Актобе, Промзона 679/17 · Тел.: 8 707 539 00 00 · <a href="mailto:info@easymix.kz">info@easymix.kz</a> · <a href="https://easymix.kz" target="_blank" rel="noopener">easymix.kz</a><br>Данные основаны на лабораторных испытаниях при +20 °C и 50 % влажности; на объекте показатели могут отличаться.',
+};
+window.PRODUCTS = [{
   brand: 'EASYMIX',
   name: 'EasyMix Rapid T600',
-  titleA: 'RAPID',
-  titleB: 'T600',
+  id: 't600',
+  short: 'Rapid T600',
+  kind: 'наливной · люки, дороги',
+  image: 'assets/rapid-t600-bag.webp', imageSize: [840, 900],
+  accent: '#f5c400', accentRgb: '245,196,0',
+  title: [['RAPID', true], ['T600', false]],
   category: 'РЕМОНТ БЕТОНА',
   subtitle: 'Быстротвердеющий ремонтный состав',
   subtitleKz: 'Жедел қататын жөндеу қоспасы',
@@ -244,6 +270,9 @@ window.PRODUCT = {
   price: 'Цена по запросу',                        // напр. '7 500 ₸'
   priceSub: 'мешок 25 кг ≈ 12,5 л раствора',
   layer: 'Rapid T600',
+  specTitle: 'КЛЮЧЕВЫЕ ХАРАКТЕРИСТИКИ · +20 °C',
+  calc: { kgPerMm: 2, def: 30, min: 20, max: 50, gravel: true, water: [3.4, 3.6],
+          note: 'Расчёт ориентировочный: 20 кг сухой смеси на 1 м² при слое 10 мм.' },
   specs: [
     ['1 час', 'открытие движения'],
     ['≥ 20 МПа', 'прочность через 1 час'],
@@ -256,7 +285,6 @@ window.PRODUCT = {
     ['+5…+30 °C', 'основание и воздух'],
     ['F300', 'морозостойкость'],
   ],
-  footer: 'Производитель: ТОО «ЭкоМикс» (торговая марка EasyMix), Казахстан, г. Актобе, Промзона 679/17 · Тел.: 8 707 539 00 00 · <a href="mailto:info@easymix.kz">info@easymix.kz</a> · <a href="https://easymix.kz" target="_blank" rel="noopener">easymix.kz</a><br>Данные основаны на лабораторных испытаниях при +20 °C и 50 % влажности; на объекте показатели могут отличаться.',
   scenarios: [
     { id: 'manhole', tab: 'Люк на дороге', steps: [
       { text: 'Оконтуривание и вырубка разрушенного бетона и асфальта вокруг люка на глубину не менее 20 мм' },
@@ -293,7 +321,65 @@ window.PRODUCT = {
       { text: 'Через 1 час — монтажная нагрузка: установка колонны', badge: '⏱ 1 час · ≥ 20 МПа' },
     ]},
   ]
-};
+}, {
+  id: 'rp650',
+  brand: 'EASYMIX',
+  name: 'EasyMix Repair Master RP650',
+  short: 'Repair Master RP650',
+  kind: 'ремонт железобетона',
+  image: 'assets/rp650-bag.webp', imageSize: [860, 900],
+  accent: '#5cb848', accentRgb: '92,184,72',
+  title: [['REPAIR MASTER', false], ['RP650', true]],
+  category: 'РЕМОНТ ЖЕЛЕЗОБЕТОНА',
+  subtitle: 'Ремонтный состав',
+  subtitleKz: 'Жөндеу қоспасы',
+  kpis: [
+    ['chart', '60 МПа', 'прочность на сжатие'],
+    ['layers', '15–50 мм', 'толщина за один слой'],
+    ['snow', 'F₂300', 'морозостойкость в солях'],
+    ['link', '2,5 МПа', 'адгезия к бетону'],
+  ],
+  uses: ['Колонны и балки', 'Плиты перекрытий', 'Стены и опоры', 'Защитный слой арматуры', '🇰🇿 Сделано в Казахстане · Актобе'],
+  description: 'Высокопрочный ремонтный состав для восстановления и защиты железобетонных конструкций: колонн, балок, плит перекрытий, стен и опор. Наносится вручную слоем 15–50 мм за один проход на вертикальные и потолочные поверхности.',
+  analog: '',                                       // напр. 'аналог: MasterEmaco S 488' — показывается под названием
+  price: 'Цена по запросу',
+  priceSub: 'мешок 25 кг',
+  layer: 'RP650',
+  specTitle: 'ХАРАКТЕРИСТИКИ (по данным упаковки)',
+  calc: { kgPerMm: 2, def: 30, min: 15, max: 50, gravel: false, water: null,   // ⚠ расход и вода — уточнить по техописанию RP650
+          note: 'Расчёт ориентировочный (≈ 20 кг/м² при слое 10 мм) — уточните расход по техописанию RP650.' },
+  specs: [
+    ['60 МПа', 'прочность на сжатие'],
+    ['2,5 МПа', 'адгезия к бетону'],
+    ['15–50 мм', 'толщина за один слой'],
+    ['F₂300', 'морозостойкость в солях'],
+    ['вручную', 'кельма / шпатель, без опалубки'],
+    ['25 кг', 'многослойный мешок'],
+  ],
+  scenarios: [
+    { id: 'column', tab: 'Колонна', element: 'Ж/б колонна', steps: [
+      { text: 'Удаление разрушенного и непрочного бетона до прочного основания, вскрытие арматуры' },
+      { text: 'Очистка арматуры от ржавчины до металлического блеска' },
+      { text: 'Обеспыливание и насыщение основания водой до матово-влажного состояния' },
+      { text: 'Нанесение RP650 кельмой на вертикальную поверхность снизу вверх, слоем 15–50 мм — без опалубки', badge: '15–50 мм за один слой' },
+      { text: 'Заглаживание поверхности; уход — защита от пересыхания плёнкой или влажной мешковиной' },
+    ]},
+    { id: 'ceiling', tab: 'Плита перекрытия (потолок)', element: 'Плита перекрытия', steps: [
+      { text: 'Удаление отслоившегося защитного слоя бетона снизу плиты, вскрытие арматуры' },
+      { text: 'Очистка арматуры от ржавчины до металлического блеска' },
+      { text: 'Обеспыливание и насыщение основания водой до матово-влажного состояния' },
+      { text: 'Нанесение RP650 на потолочную поверхность вручную, без опалубки, слоем 15–50 мм', badge: '15–50 мм за один слой' },
+      { text: 'Заглаживание; восстановленный защитный слой арматуры, уход от пересыхания' },
+    ]},
+    { id: 'beam', tab: 'Балка / ригель', element: 'Ж/б балка', steps: [
+      { text: 'Удаление разрушенного защитного слоя балки, вскрытие продольной арматуры' },
+      { text: 'Очистка арматуры и хомутов от ржавчины до металлического блеска' },
+      { text: 'Обеспыливание и насыщение основания водой до матово-влажного состояния' },
+      { text: 'Нанесение RP650 на боковую грань балки слоем 15–50 мм за один проход', badge: '15–50 мм за один слой' },
+      { text: 'Заглаживание и уход — геометрия балки восстановлена' },
+    ]},
+  ]
+}];
 </script>
 
 <script type="importmap">
@@ -307,7 +393,8 @@ window.PRODUCT = {
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const P = window.PRODUCT;
+const PRODUCTS = window.PRODUCTS;
+let P = PRODUCTS[0];
 const $ = id => document.getElementById(id);
 const PI = Math.PI;
 
@@ -317,54 +404,82 @@ const ICONS = {
   chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20h16M7 16v-4M12 16V8M17 16V5"/></svg>',
   layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg>',
   snow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M4 7l16 10M20 7 4 17M9 4l3 2 3-2M9 20l3-2 3 2"/></svg>',
+  link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
 };
-$('logo').innerHTML = P.brand + ' <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#3aa835"><rect x="9" y="1" width="6" height="6" rx="1" transform="rotate(45 12 4)"/><rect x="9" y="17" width="6" height="6" rx="1" transform="rotate(45 12 20)"/><rect x="1" y="9" width="6" height="6" rx="1" transform="rotate(45 4 12)"/><rect x="17" y="9" width="6" height="6" rx="1" transform="rotate(45 20 12)"/></g></svg>';
-$('tag').textContent = P.category;
-$('title').innerHTML = '<span class="y"></span><span></span>';
-$('title').children[0].textContent = P.titleA; $('title').children[1].textContent = P.titleB;
-$('sub').textContent = P.subtitle;
-$('subKz').textContent = P.subtitleKz;
-$('reTitle').textContent = P.name;
-P.kpis.forEach(([ic, v, l]) => {
-  const d = document.createElement('div'); d.className = 'kpi';
-  d.innerHTML = `<div class="ic">${ICONS[ic] || ''}</div><b></b><span></span>`;
-  d.querySelector('b').textContent = v; d.querySelector('span').textContent = l;
-  $('kpis').appendChild(d);
+const LOGO = ' <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#3aa835"><rect x="9" y="1" width="6" height="6" rx="1" transform="rotate(45 12 4)"/><rect x="9" y="17" width="6" height="6" rx="1" transform="rotate(45 12 20)"/><rect x="1" y="9" width="6" height="6" rx="1" transform="rotate(45 4 12)"/><rect x="17" y="9" width="6" height="6" rx="1" transform="rotate(45 20 12)"/></g></svg>';
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+$('foot').innerHTML = window.SITE.footer;
+PRODUCTS.forEach(pr => {
+  const b = el('button', 'prod'); b.dataset.id = pr.id;
+  b.innerHTML = '<img alt=""><div><b></b><span></span></div>';
+  b.querySelector('img').src = pr.image; b.querySelector('b').textContent = pr.short; b.querySelector('span').textContent = pr.kind;
+  b.onclick = () => setProduct(pr.id);
+  $('products').appendChild(b);
 });
-P.uses.forEach((u, i) => { const e = document.createElement('span'); e.textContent = u; if (i === P.uses.length - 1) e.className = 'kz'; $('uses').appendChild(e); });
-$('desc').textContent = P.description;
-$('price').textContent = P.price;
-$('priceSub').textContent = P.priceSub;
-$('foot').innerHTML = P.footer;
-document.title = P.name + ' — 3D-анатомия';
-P.specs.forEach(([v, l]) => {
-  const d = document.createElement('div'); d.className = 'spec';
-  d.innerHTML = '<b></b><span></span>';
-  d.querySelector('b').textContent = v; d.querySelector('span').textContent = l;
-  $('specs').appendChild(d);
-});
+
+function renderProduct() {
+  const root = document.documentElement.style;
+  root.setProperty('--accent', P.accent); root.setProperty('--accent-rgb', P.accentRgb);
+  const img = $('bagImg'); img.src = P.image; img.alt = `Мешок ${P.name}, 25 кг`; img.width = P.imageSize[0]; img.height = P.imageSize[1];
+  $('logo').innerHTML = P.brand + LOGO;
+  $('tag').textContent = P.category;
+  const h1 = $('title'); h1.innerHTML = '';
+  P.title.forEach(([t, acc]) => h1.appendChild(el('span', acc ? 'y' : '', t)));
+  h1.classList.toggle('long', P.title.some(([t]) => t.length > 8));
+  $('sub').textContent = P.subtitle + (P.analog ? ' · ' + P.analog : '');
+  $('subKz').textContent = P.subtitleKz;
+  $('desc').textContent = P.description;
+  $('price').textContent = P.price;
+  $('priceSub').textContent = P.priceSub;
+  $('reTitle').textContent = P.name;
+  document.title = P.name + ' — 3D-анатомия';
+  $('kpis').innerHTML = '';
+  P.kpis.forEach(([ic, v, l]) => {
+    const d = el('div', 'kpi'); d.innerHTML = `<div class="ic">${ICONS[ic] || ''}</div>`;
+    d.append(el('b', '', v), el('span', '', l)); $('kpis').appendChild(d);
+  });
+  $('uses').innerHTML = '';
+  P.uses.forEach((u, i) => $('uses').appendChild(el('span', i === P.uses.length - 1 ? 'kz' : '', u)));
+  $('specTitle').textContent = P.specTitle;
+  $('specs').innerHTML = '';
+  P.specs.forEach(([v, l]) => { const d = el('div', 'spec'); d.append(el('b', '', v), el('span', '', l)); $('specs').appendChild(d); });
+  $('cThick').value = P.calc.def; calc();
+  tabsEl.innerHTML = '';
+  P.scenarios.forEach(sc => {
+    const b = el('button', 'tab', sc.tab); b.dataset.id = sc.id;
+    b.onclick = () => load(sc.id); tabsEl.appendChild(b);
+  });
+  [...$('products').querySelectorAll('.prod')].forEach(b => b.classList.toggle('on', b.dataset.id === P.id));
+}
+function setProduct(id, scen) {
+  P = PRODUCTS.find(p => p.id === id) || PRODUCTS[0];
+  renderProduct(); load(scen);
+}
 $('closeBtn').onclick = () => document.body.classList.add('closed');
 $('openBtn').onclick = () => { document.body.classList.remove('closed'); resize(); };
 
 /* ======================= calculator ======================= */
 const fmt = (x, d = 0) => x.toLocaleString('ru-RU', { maximumFractionDigits: d, minimumFractionDigits: d });
 function calc() {
+  const C = P.calc;
   const a = Math.max(0, parseFloat($('cArea').value) || 0);
   const h = Math.max(0, parseFloat($('cThick').value) || 0);
-  const total = a * h * 2;                        // 20 кг/м² на 10 мм
-  const thick = h > 50;
+  const total = a * h * C.kgPerMm;
+  const thick = h > C.max && C.gravel;
   const mix = thick ? total * 5 / 6 : total;      // 1 кг щебня на 5 кг смеси
   const bags = Math.ceil(mix / 25 - 1e-9);
   $('oKg').textContent = fmt(mix, 1) + ' кг';
   $('oBags').textContent = fmt(bags);
-  $('oWater').textContent = `${fmt(bags * 3.4, 1)}–${fmt(bags * 3.6, 1)} л`;
+  $('oWaterBox').hidden = !C.water;
+  if (C.water) $('oWater').textContent = `${fmt(bags * C.water[0], 1)}–${fmt(bags * C.water[1], 1)} л`;
   $('oGravelBox').hidden = !thick;
   $('oGravel').textContent = fmt(total / 6, 1) + ' кг';
-  $('cNote').textContent = h > 0 && h < 20 ? 'Минимальная толщина слоя — 20 мм. Для более тонких слоёв Rapid T600 не применяется.'
+  $('cNote').textContent = h > 0 && h < C.min ? `Минимальная толщина слоя — ${C.min} мм.`
     : thick ? 'Слой более 50 мм: введите промытый щебень 5–6 мм (1 кг на 5 кг смеси), перемешайте всухую. Расчёт ориентировочный.'
-    : 'Расчёт ориентировочный: 20 кг сухой смеси на 1 м² при слое 10 мм.';
+    : h > C.max ? `Толщина одного слоя — до ${C.max} мм: наносите в несколько слоёв. ${C.note}`
+    : C.note;
 }
-$('cArea').oninput = $('cThick').oninput = calc; calc();
+$('cArea').oninput = $('cThick').oninput = calc;
 
 /* ======================= helpers ======================= */
 const clamp01 = x => Math.min(1, Math.max(0, x));
@@ -1000,15 +1115,192 @@ BUILDERS.anchor = () => {
   };
 };
 
+
+/* ---------- RP650: hand-applied repair of reinforced concrete ---------- */
+// Element is built in a local frame: repaired face = plane z = 0 facing +z, body towards -z.
+function rectXY(x0, x1, y0, y1, Pc = THREE.Shape) {
+  const s = new Pc(); s.moveTo(x0, y0); s.lineTo(x1, y0); s.lineTo(x1, y1); s.lineTo(x0, y1); s.closePath(); return s;
+}
+function extrudeZ(shape, depth) { return new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: false }); }
+
+function repairBuilder(o) {
+  const grp = new THREE.Group(); world.add(grp); o.place(grp);
+  const [px0, px1, py0, py1] = o.pocket, d = o.d, W = o.W;
+  const r = rand(o.seed || 31);
+  // body: back block + front layer with the damaged pocket
+  mesh(extrudeZ(rectXY(-W / 2, W / 2, o.Y0, o.Y1), o.T - d), M.base, grp).position.z = -o.T;
+  { const sh = rectXY(-W / 2, W / 2, o.Y0, o.Y1); sh.holes.push(rectXY(px0, px1, py0, py1, THREE.Path));
+    mesh(extrudeZ(sh, d), M.base, grp).position.z = -d; }
+  const bottomMat = own(M.base), wetBottom = wetter(bottomMat);
+  { const g = new THREE.PlaneGeometry(px1 - px0, py1 - py0, 24, 24), pos = g.attributes.position;
+    for (let i = 0; i < pos.count; i++) pos.setZ(i, (r() - 0.5) * 0.04);
+    g.computeVertexNormals(); const m = mesh(g, bottomMat, grp); m.position.set((px0 + px1) / 2, (py0 + py1) / 2, -d + 0.025); }
+
+  // reinforcement
+  const rebarMat = own(M.steel), RUST = new THREE.Color(0x8a4a24), STEEL = M.steel.color.clone();
+  rebarMat.metalness = 0.35;
+  const alongY = o.mainAxis === 'y';
+  const bar = (len, rad, x, y, z, vertical) => {
+    const m = mesh(new THREE.CylinderGeometry(rad, rad, len, 12), rebarMat, grp);
+    m.position.set(x, y, z); if (!vertical) m.rotation.z = PI / 2; return m;
+  };
+  const mainZ = -d * 0.55, trZ = -d * 0.3;
+  const across = alongY ? [px0, px1] : [py0, py1], along = alongY ? [o.Y0, o.Y1] : [-W / 2, W / 2];
+  const nMain = 3, mains = [];
+  for (let i = 0; i < nMain; i++) {
+    const c = across[0] + (across[1] - across[0]) * (0.2 + 0.6 * i / (nMain - 1));
+    const len = along[1] - along[0] - 0.1, mid = (along[0] + along[1]) / 2;
+    mains.push(alongY ? bar(len, 0.05, c, mid, mainZ, true) : bar(len, 0.05, mid, c, mainZ, false));
+  }
+  const tr0 = alongY ? py0 : px0, tr1 = alongY ? py1 : px1;
+  const ext = alongY ? [-W / 2, W / 2] : [o.Y0, o.Y1];
+  for (let v = tr0 + 0.2; v < tr1 - 0.1; v += 0.42) {
+    const len = Math.min(across[1] - across[0] + 0.6, ext[1] - ext[0] - 0.12), mid = (ext[0] + ext[1]) / 2;
+    alongY ? bar(len, 0.03, mid, v, trZ, false) : bar(len, 0.03, v, mid, trZ, true);
+  }
+
+  // damaged concrete chunks
+  const items = [];
+  const nx = Math.max(2, Math.round((px1 - px0) / 0.26)), ny = Math.max(2, Math.round((py1 - py0) / 0.26));
+  for (let i = 0; i < nx; i++) for (let j = 0; j < ny; j++) {
+    const cx = px0 + (i + 0.5) * (px1 - px0) / nx, cy = py0 + (j + 0.5) * (py1 - py0) / ny;
+    const sz = 0.15 + r() * 0.05, g = new THREE.DodecahedronGeometry(sz, 0); g.scale(1, 1, 0.6 + r() * 0.5);
+    const m = mesh(g, own(M.old), grp); m.material.color.offsetHSL(0, 0, (r() - 0.5) * 0.12);
+    m.position.set(cx + (r() - .5) * 0.05, cy + (r() - .5) * 0.05, -d * 0.45 + r() * 0.06);
+    m.rotation.set(r() * 3, r() * 3, r() * 3);
+    items.push({ mesh: m, p0: m.position.clone(), r0: m.rotation.clone(), v: V((r() - .5) * 1.2, (r() - .5) * 1.2, 1.2 + r() * 1.5), start: 0.05 + r() * 0.55 });
+  }
+  const g = o.g;
+  const debris = sv => items.forEach(it => {
+    const dt = Math.max(0, (sv - it.start) * 2.4), m = it.mesh;
+    m.position.copy(it.p0).addScaledVector(it.v, dt).addScaledVector(g, 4.9 * dt * dt);
+    m.rotation.set(it.r0.x + dt * 3, it.r0.y + dt * 2, it.r0.z + dt * 4);
+    const f = clamp01(1 - dt * 1.4); m.material.opacity = f; m.visible = f > 0.01;
+  });
+
+  // tools: wire brush + trowel
+  const toolMat = own(M.bucket); toolMat.color.set(P.accent); toolMat.side = THREE.FrontSide;
+  const brush = new THREE.Group(); grp.add(brush);
+  mesh(new THREE.BoxGeometry(0.34, 0.12, 0.06), toolMat, brush).position.z = 0.09;
+  mesh(new THREE.BoxGeometry(0.32, 0.1, 0.06), M.steel, brush).position.z = 0.03;
+  mesh(new THREE.BoxGeometry(0.06, 0.06, 0.7), M.wood, brush).position.set(0.12, 0, 0.45);
+  const trowel = new THREE.Group(); grp.add(trowel);
+  mesh(new THREE.BoxGeometry(0.5, 0.24, 0.015), M.steel, trowel);
+  mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.16, 8), M.metal, trowel).rotation.x = PI / 2;
+  trowel.children[1].position.z = 0.08;
+  const handle = mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.32, 12), toolMat, trowel);
+  handle.rotation.z = PI / 2; handle.position.set(0, 0, 0.17);
+
+  // water spray drops travelling towards the face
+  const drops = [];
+  for (let i = 0; i < 40; i++) {
+    const m = mesh(new THREE.SphereGeometry(0.03, 8, 6), M.drop, grp, false);
+    m.userData = { x: px0 + 0.1 + r() * (px1 - px0 - 0.2), y: py0 + 0.1 + r() * (py1 - py0 - 0.2), o: r() }; drops.push(m);
+  }
+
+  // mortar applied as trowel-loads (cells), bottom row first
+  const fillMat = own(M.fill), cells = [];
+  const cw = (px1 - px0) / nx, ch = (py1 - py0) / ny;
+  const order = [];
+  for (let j = 0; j < ny; j++) for (let ii = 0; ii < nx; ii++) order.push([j % 2 ? nx - 1 - ii : ii, j]);
+  order.forEach(([i, j], n) => {
+    const bulge = 0.015 + r() * 0.03, dep = d + bulge;
+    const gg = new THREE.BoxGeometry(cw * 1.005, ch * 1.005, dep); gg.translate(0, 0, dep / 2);
+    const m = mesh(gg, fillMat, grp); m.position.set(px0 + (i + 0.5) * cw, py0 + (j + 0.5) * ch, -d);
+    m.userData = { n, j, flush: d / dep };
+    cells.push(m);
+  });
+  const N = cells.length;
+  const plate = mesh(extrudeZ(rectXY(px0, px1, py0, py1), d), fillMat, grp); plate.position.z = -d;
+
+  const L = (x, y, z) => () => grp.localToWorld(V(x, y, z));
+  const barC = alongY ? across[0] + (across[1] - across[0]) * 0.8 : (px0 + px1) / 2 + 0.3;
+  return {
+    camera: o.camera,
+    labels: [
+      { text: o.element, pos: L(...o.elementAt, 0) },
+      { text: 'Арматура', pos: alongY ? L(barC, py0 + 0.35, mainZ + 0.05) : L(px0 + 0.4, across[0] + (across[1] - across[0]) * 0.8, mainZ + 0.05), show: (st, k) => st === 1 || st === 2 || (st === 0 && k > 0.85) },
+      { text: 'Прочное основание', pos: L(px1 - 0.3, py0 + 0.25, -d), show: st => st === 2 },
+      { text: P.layer + ' · 15–50 мм', pos: L(px1 - 0.15, (py0 + py1) / 2, 0.03), show: (st, k) => st === 4 || (st === 3 && k > 0.6) },
+    ],
+    apply({ s, step, t }) {
+      debris(s[0]);
+      // rust removal
+      const clean = ease(seg(s[1], 0.1, 0.85));
+      rebarMat.color.copy(RUST).lerp(STEEL, clean); rebarMat.roughness = 0.9 - 0.5 * clean;
+      brush.visible = step === 1 && s[1] > 0.05 && s[1] < 0.92;
+      { const u = seg(s[1], 0.05, 0.92), k = Math.floor(u * nMain * 0.999), f = (u * nMain) % 1;
+        const m = mains[Math.min(nMain - 1, k)], wig = Math.sin(t * 28) * 0.06;
+        if (alongY) brush.position.set(m.position.x + wig, py0 + 0.15 + (py1 - py0 - 0.3) * (k % 2 ? 1 - f : f), mainZ + 0.05);
+        else brush.position.set(px0 + 0.15 + (px1 - px0 - 0.3) * (k % 2 ? 1 - f : f), m.position.y + wig, mainZ + 0.05);
+        brush.rotation.z = alongY ? 0 : PI / 2; }
+      // wetting
+      const on = step === 2 && s[2] > 0.05 && s[2] < 0.85;
+      drops.forEach(m => {
+        m.visible = on; if (!on) return;
+        const ph = (t * 1.3 + m.userData.o) % 1;
+        m.position.set(m.userData.x, m.userData.y, 1.6 - ph * (1.6 + d - 0.04));
+      });
+      wetBottom(ease(seg(s[2], 0.1, 0.8)));
+      // application
+      const ap = seg(s[3], 0.08, 0.9) * N;
+      const smooth = seg(s[4], 0.05, 0.75);
+      cells.forEach(m => {
+        const a = clamp01(ap - m.userData.n);
+        m.visible = (step > 3 || (step === 3 && a > 0)) && !(step === 4 && smooth >= 1);
+        const rowDone = clamp01(smooth * ny - m.userData.j);
+        const flush = step < 4 ? 1 : 1 - (1 - m.userData.flush) * ease(rowDone);
+        m.scale.set(1, 1, Math.max(0.01, (step > 3 ? 1 : easeOut(a)) * flush));
+      });
+      plate.visible = step === 4 && smooth >= 1;
+      trowel.visible = (step === 3 && s[3] > 0.04 && s[3] < 0.94) || (step === 4 && s[4] < 0.8);
+      if (step === 3) {
+        const c = cells[Math.min(N - 1, Math.floor(ap))];
+        trowel.position.set(c.position.x + Math.sin(t * 9) * 0.05, c.position.y + 0.02, 0.07);
+        trowel.rotation.set(0.35, 0, 0);
+      } else if (step === 4) {
+        const row = Math.min(ny - 1, Math.floor(smooth * ny)), f = (smooth * ny) % 1;
+        trowel.position.set(px0 + 0.2 + (px1 - px0 - 0.4) * (row % 2 ? 1 - f : f), py0 + (row + 0.5) * ch, 0.05);
+        trowel.rotation.set(0.12, 0, 0);
+      }
+      fillMat.color.copy(FILL_WET).lerp(FILL_CURED, ease(seg(s[4], 0.4, 1)));
+      fillMat.roughness = 0.3 + 0.6 * seg(s[4], 0.4, 1);
+    }
+  };
+}
+
+BUILDERS.column = () => {
+  box(-4, 4, -0.4, 0, -4, 4, M.road);
+  return repairBuilder({
+    W: 1.4, Y0: 0, Y1: 6, T: 1.4, pocket: [-0.5, 0.5, 1.4, 3.7], d: 0.28, mainAxis: 'y',
+    place: g => g.position.set(0, 0, 0.7), g: V(0, -1, 0), element: 'Ж/б колонна', elementAt: [0.5, 4.1],
+    camera: { a: 0.22, r: 8.5, h: 3.6, ty: 2.6 }
+  });
+};
+BUILDERS.ceiling = () => {
+  box(-5, 5, -0.3, 0, -5, 5, M.road);
+  for (const x of [-3.4, 3.4]) box(x - 0.35, x + 0.35, 0, 3.6, -3.2, -2.5, M.base);
+  const up = new THREE.DirectionalLight(0xffffff, 1.5); up.position.set(3, -4, 6); world.add(up);
+  return repairBuilder({
+    W: 9, Y0: -4.5, Y1: 4.5, T: 0.5, pocket: [-1.5, 1.1, -1.0, 1.0], d: 0.24, mainAxis: 'x', seed: 7,
+    place: g => { g.rotation.x = PI / 2; g.position.y = 3.6; }, g: V(0, 0, 1), element: 'Плита перекрытия', elementAt: [2.4, 2.4],
+    camera: { a: 0.5, r: 8.5, h: 0.7, ty: 3.1 }
+  });
+};
+BUILDERS.beam = () => {
+  box(-5, 5, -0.4, 0, -4, 4, M.road);
+  for (const x of [-3.2, 3.2]) box(x - 0.3, x + 0.3, 0, 2.6, -0.3, 0.3, M.base);
+  return repairBuilder({
+    W: 7.2, Y0: 2.6, Y1: 3.6, T: 0.6, pocket: [-1.7, 1.3, 2.72, 3.46], d: 0.22, mainAxis: 'x', seed: 13,
+    place: g => g.position.set(0, 0, 0.3), g: V(0, -1, 0), element: 'Ж/б балка', elementAt: [-2.6, 3.4],
+    camera: { a: 0.32, r: 10, h: 3.9, ty: 2.4 }
+  });
+};
+
 /* ======================= scenario engine ======================= */
 const STEP = 4.5;                 // seconds per step
 let cur = null, time = 0, playing = true, interactive = false, lastStep = -1;
 const labelsEl = $('labels'), stepsEl = $('steps'), tabsEl = $('tabs');
-
-P.scenarios.forEach(sc => {
-  const b = document.createElement('button'); b.className = 'tab'; b.textContent = sc.tab;
-  b.onclick = () => load(sc.id); b.dataset.id = sc.id; tabsEl.appendChild(b);
-});
 
 function clearWorld() {
   world.traverse(o => {
@@ -1044,7 +1336,7 @@ function load(id) {
   const c = inst.camera;
   controls.target.set(0, c.ty, c.tz || 0);
   if (interactive) { autoCamera(0); controls.update(); }
-  try { history.replaceState(null, '', '#' + def.id); } catch (e) {}
+  try { history.replaceState(null, '', '#' + P.id + '/' + def.id); } catch (e) {}
 }
 
 const tmp = new THREE.Vector3();
@@ -1100,7 +1392,11 @@ function resize() {
 new ResizeObserver(resize).observe(viewer);
 resize();
 
-load(location.hash.slice(1));
+{
+  const [h1, h2] = location.hash.slice(1).split('/');
+  const byScen = PRODUCTS.find(p => p.scenarios.some(sc => sc.id === h1));
+  if (byScen && !h2) setProduct(byScen.id, h1); else setProduct(h1, h2);
+}
 
 const clock = new THREE.Clock();
 let camT = 0;
@@ -1120,6 +1416,7 @@ function loop() {
 }
 window.__seek = t => { time = t; };
 window.__load = load;
+window.__setProduct = setProduct;
 loop();
 </script>
 </body>
