@@ -49,6 +49,7 @@
   .hero-media .floor{position:absolute;bottom:-6px;left:18%;right:18%;height:26px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(10px);animation:floor 6s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-12px) rotate(.6deg)}}
   @keyframes floor{0%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.88);opacity:.75}}
+  .hero-media.card .hero-bag{border-radius:28px;max-height:450px;filter:none;box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08)}
   @media (prefers-reduced-motion:reduce){.hero-bag,.hero-media .floor{animation:none}}
   .hero-body{position:relative;z-index:1}
   .brandline{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
@@ -221,11 +222,11 @@
 
   <div class="sec-title" id="calc">КАЛЬКУЛЯТОР РАСХОДА</div>
   <div class="calc">
-    <label>Площадь, м²<input id="cArea" type="number" min="0" step="0.1" value="1"></label>
-    <label>Толщина слоя, мм<input id="cThick" type="number" min="0" step="5" value="30"></label>
+    <label><span id="cLabA">Площадь, м²</span><input id="cArea" type="number" min="0" step="0.1" value="1"></label>
+    <label><span id="cLabB">Толщина слоя, мм</span><input id="cThick" type="number" min="0" step="5" value="30"></label>
     <div class="calc-out">
       <div><b id="oKg">—</b><span>сухой смеси</span></div>
-      <div><b id="oBags">—</b><span>мешков по 25 кг</span></div>
+      <div><b id="oBags">—</b><span id="oBagsLab">мешков по 25 кг</span></div>
       <div id="oWaterBox"><b id="oWater">—</b><span>воды для затворения</span></div>
       <div id="oGravelBox" hidden><b id="oGravel">—</b><span>щебня 5–6 мм</span></div>
     </div>
@@ -379,6 +380,82 @@ window.PRODUCTS = [{
       { text: 'Заглаживание и уход — геометрия балки восстановлена' },
     ]},
   ]
+}, {
+  id: 'wb1',
+  brand: 'EASYMIX',
+  name: 'EasyMix WaterBlock WB1',
+  short: 'WaterBlock WB1',
+  kind: 'гидропломба · стоп-течь',
+  image: 'assets/waterblock-wb1-bucket.webp', imageSize: [900, 900], imageCard: true,
+  imageAlt: 'Ведро EasyMix WaterBlock WB1, гидропломба, 5 кг',
+  accent: '#4f8fe8', accentRgb: '79,143,232',
+  title: [['WATER BLOCK', true], ['WB1', false]],
+  category: 'ГИДРОПЛОМБА · HYDRAULIC PLUG',
+  subtitle: 'Гидропломба быстротвердеющая',
+  subtitleKz: 'Жылдам қататын гидропломба',
+  kpis: [
+    ['clock', '1–3 мин', 'схватывание, даже под водой'],
+    ['drop', 'стоп-течь', 'останавливает напорные протечки'],
+    ['chart', '≥ 12 МПа', 'прочность через 30 минут'],
+    ['shield', '0 хлоридов', 'безопасен для арматуры'],
+  ],
+  uses: ['Подвалы и приямки', 'Резервуары и бассейны', 'Тоннели и шахты', 'Вводы коммуникаций', 'Анкерование', '🇰🇿 Сделано в Казахстане · Актобе'],
+  description: 'Сухая быстросхватывающаяся смесь для остановки активных и напорных протечек воды в бетоне, кирпиче и камне. Схватывается за 1–3 минуты прямо под водой, расширяется и намертво заклинивает отверстие. Два в одном: гидропломба и анкеровочный состав.',
+  price: 'Цена по запросу',
+  priceSub: 'ведро 1 / 5 / 15 кг',
+  layer: 'WaterBlock',
+  specTitle: 'ТЕХНИЧЕСКИЕ ДАННЫЕ · +20 °C',
+  calc: { mode: 'groove', kgPerDm3: 2.1, waterPerKg: 0.24, packs: [15, 5, 1], min: 20,
+          labelA: 'Длина расшивки (шва, трещины), м', labelB: 'Ширина = глубина расшивки, мм', defA: 2, defB: 25, stepB: 5,
+          packLabel: 'фасовка (вёдра)',
+          note: 'Расчёт ориентировочный: ~2,1 кг смеси на 1 дм³ заполняемого объёма, ~0,24 л воды на 1 кг. Замешивайте порции на 1 минуту работы.' },
+  specs: [
+    ['1–3 мин', 'время схватывания'],
+    ['≥ 12 МПа', 'прочность через 30 мин'],
+    ['до 50 МПа', 'прочность через 28 суток'],
+    ['~0,24 л', 'воды на 1 кг смеси'],
+    ['~2,1 кг', 'на 1 дм³ объёма'],
+    ['0,63 мм', 'макс. крупность заполнителя'],
+    ['0 %', 'хлоридов'],
+    ['НГ', 'негорючий'],
+    ['+5…+30 °C', 'температура применения'],
+    ['12 мес', 'срок хранения'],
+  ],
+  footer: 'Производитель: ТОО «ЭкоМикс» (бренд EasyMix), Казахстан, г. Актобе, Промзона 679/17 · Тел.: 8 747 111 19 64 · <a href="mailto:info@easymix.kz">info@easymix.kz</a> · <a href="https://easymix.kz" target="_blank" rel="noopener">easymix.kz</a><br>Не добавляйте воду в схватывающийся раствор; не применяйте как сплошное покрытие. Работайте в резиновых перчатках и защитных очках.',
+  scenarios: [
+    { id: 'leak', tab: 'Течь в стене подвала', steps: [
+      { text: 'Место течи расшивают «ласточкиным хвостом» — с расширением вглубь, не менее 20 мм в глубину и ширину' },
+      { text: 'Удаляют рыхлый бетон, пыль и грязь, промывают водой' },
+      { text: 'Замес порции на 1 минуту: ~0,24 л воды на 1 кг, 15–20 секунд в перчатке до консистенции пластилина', badge: '0,24 л/кг · 15–20 сек' },
+      { text: 'Как только пробка начнёт нагреваться — с силой вдавить в отверстие и удерживать до схватывания', badge: '⏱ удерживать 1–3 мин' },
+      { text: 'Поверхность держат влажной 15 минут; через 15–30 минут — обмазочная гидроизоляция', badge: '⏱ гидроизоляция через 15–30 мин' },
+    ]},
+    { id: 'joint', tab: 'Шов «стена–пол»', steps: [
+      { text: 'Шов примыкания «стена–пол» расшивают на глубину и ширину не менее 20 мм' },
+      { text: 'Удаляют рыхлый бетон и пыль, промывают водой' },
+      { text: 'Шов заделывают участками: каждая порция вдавливается и удерживается до схватывания', badge: '⏱ 1–3 мин на участок' },
+      { text: 'После схватывания — увлажнение 15 минут, затем гидроизоляция примыкания', badge: '⏱ через 15–30 мин' },
+    ]},
+    { id: 'pipe', tab: 'Ввод коммуникаций', steps: [
+      { text: 'Зазор вокруг трубы расшивают на глубину и ширину не менее 20 мм' },
+      { text: 'Удаляют рыхлый бетон и грязь, промывают водой' },
+      { text: 'Кольцевой зазор заполняют порциями сверху вниз, каждую вдавливают и удерживают', badge: '⏱ 1–3 мин на порцию' },
+      { text: 'Увлажнение 15 минут, затем обмазочная гидроизоляция вокруг ввода', badge: '⏱ через 15–30 мин' },
+    ]},
+    { id: 'flow', tab: 'Сильный поток', steps: [
+      { text: 'Отверстие с сильным потоком расшивают «ласточкиным хвостом» не менее 20 мм' },
+      { text: 'Поток отводят: в отверстие вставляют отводную трубку — вода уходит по ней' },
+      { text: 'Пространство вокруг трубки заделывают гидропломбой', badge: '⏱ 1–3 мин' },
+      { text: 'Трубку извлекают и сразу закрывают отвод пробкой — течь остановлена', badge: '⏱ удерживать 1–3 мин' },
+      { text: 'Поверхность держат влажной 15 минут, затем — гидроизоляция', badge: '⏱ через 15–30 мин' },
+    ]},
+    { id: 'post', tab: 'Анкерование стойки', steps: [
+      { text: 'Отверстие под стойку очищают от пыли и смачивают водой' },
+      { text: 'Отверстие заполняют замешанным составом WaterBlock' },
+      { text: 'Сразу устанавливают стойку и уплотняют смесь вокруг неё' },
+      { text: 'Нагружать — не ранее чем через 1 час', badge: '⏱ 1 час' },
+    ]},
+  ]
 }];
 </script>
 
@@ -400,6 +477,8 @@ const PI = Math.PI;
 
 /* ======================= static texts ======================= */
 const ICONS = {
+  drop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6M12 2v3"/></svg>',
   chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20h16M7 16v-4M12 16V8M17 16V5"/></svg>',
   layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 13 9 5 9-5"/></svg>',
@@ -408,7 +487,6 @@ const ICONS = {
 };
 const LOGO = ' <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="#3aa835"><rect x="9" y="1" width="6" height="6" rx="1" transform="rotate(45 12 4)"/><rect x="9" y="17" width="6" height="6" rx="1" transform="rotate(45 12 20)"/><rect x="1" y="9" width="6" height="6" rx="1" transform="rotate(45 4 12)"/><rect x="17" y="9" width="6" height="6" rx="1" transform="rotate(45 20 12)"/></g></svg>';
 const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-$('foot').innerHTML = window.SITE.footer;
 PRODUCTS.forEach(pr => {
   const b = el('button', 'prod'); b.dataset.id = pr.id;
   b.innerHTML = '<img alt=""><div><b></b><span></span></div>';
@@ -420,7 +498,9 @@ PRODUCTS.forEach(pr => {
 function renderProduct() {
   const root = document.documentElement.style;
   root.setProperty('--accent', P.accent); root.setProperty('--accent-rgb', P.accentRgb);
-  const img = $('bagImg'); img.src = P.image; img.alt = `Мешок ${P.name}, 25 кг`; img.width = P.imageSize[0]; img.height = P.imageSize[1];
+  const img = $('bagImg'); img.src = P.image; img.alt = P.imageAlt || `Мешок ${P.name}, 25 кг`; img.width = P.imageSize[0]; img.height = P.imageSize[1];
+  img.closest('.hero-media').classList.toggle('card', !!P.imageCard);
+  $('foot').innerHTML = P.footer || window.SITE.footer;
   $('logo').innerHTML = P.brand + LOGO;
   $('tag').textContent = P.category;
   const h1 = $('title'); h1.innerHTML = '';
@@ -443,7 +523,12 @@ function renderProduct() {
   $('specTitle').textContent = P.specTitle;
   $('specs').innerHTML = '';
   P.specs.forEach(([v, l]) => { const d = el('div', 'spec'); d.append(el('b', '', v), el('span', '', l)); $('specs').appendChild(d); });
-  $('cThick').value = P.calc.def; calc();
+  const C = P.calc;
+  $('cLabA').textContent = C.labelA || 'Площадь, м²';
+  $('cLabB').textContent = C.labelB || 'Толщина слоя, мм';
+  $('oBagsLab').textContent = C.packLabel || 'мешков по 25 кг';
+  $('cArea').value = C.defA ?? 1; $('cThick').value = C.defB ?? C.def; $('cThick').step = C.stepB || 5;
+  calc();
   tabsEl.innerHTML = '';
   P.scenarios.forEach(sc => {
     const b = el('button', 'tab', sc.tab); b.dataset.id = sc.id;
@@ -460,10 +545,28 @@ $('openBtn').onclick = () => { document.body.classList.remove('closed'); resize(
 
 /* ======================= calculator ======================= */
 const fmt = (x, d = 0) => x.toLocaleString('ru-RU', { maximumFractionDigits: d, minimumFractionDigits: d });
+function packText(kg, packs) {
+  if (kg <= 0) return '—';
+  const ps = [...packs].sort((a, b) => b - a), out = []; let rem = kg;
+  ps.forEach((p, i) => {
+    const n = i === ps.length - 1 ? Math.ceil(rem / p - 1e-9) : Math.floor(rem / p);
+    if (n > 0) { out.push(`${n} × ${p} кг`); rem -= n * p; }
+  });
+  return out.join(' + ');
+}
 function calc() {
   const C = P.calc;
   const a = Math.max(0, parseFloat($('cArea').value) || 0);
   const h = Math.max(0, parseFloat($('cThick').value) || 0);
+  if (C.mode === 'groove') {
+    const kg = a * 10 * (h / 100) ** 2 * C.kgPerDm3;        // объём, дм³ × 2,1 кг
+    $('oKg').textContent = fmt(kg, 2) + ' кг';
+    $('oBags').textContent = packText(kg, C.packs);
+    $('oWaterBox').hidden = false; $('oWater').textContent = '≈ ' + fmt(kg * C.waterPerKg, 2) + ' л';
+    $('oGravelBox').hidden = true;
+    $('cNote').textContent = h > 0 && h < C.min ? `Расшивка — не менее ${C.min} мм в глубину и ширину.` : C.note;
+    return;
+  }
   const total = a * h * C.kgPerMm;
   const thick = h > C.max && C.gravel;
   const mix = thick ? total * 5 / 6 : total;      // 1 кг щебня на 5 кг смеси
@@ -1297,6 +1400,364 @@ BUILDERS.beam = () => {
   });
 };
 
+
+/* ---------- WaterBlock WB1: stopping leaks ---------- */
+const WATER_MAT = new THREE.MeshStandardMaterial({ color: 0x6fb8ff, roughness: .05, metalness: .1, transparent: true, opacity: .85 });
+// instanced water drops: spawn(u, w, origin, velocity) defines each drop's emitter
+function makeWater(n, spawn, life = 1.1, g = 4.9) {
+  const inst = new THREE.InstancedMesh(new THREE.SphereGeometry(0.024, 8, 6), WATER_MAT, n);
+  inst.frustumCulled = false; world.add(inst);
+  const r = rand(77), D = [];
+  for (let i = 0; i < n; i++) D.push({ o: r(), u: r(), w: r() });
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3(), p = new THREE.Vector3(), v = new THREE.Vector3(), o = new THREE.Vector3();
+  return (t, intensity, active) => {
+    for (let i = 0; i < n; i++) {
+      const d = D[i], tau = ((t / life + d.o) % 1) * life;
+      const on = intensity > d.w * 0.98 + 0.01 && (!active || active(d.u));
+      if (on) {
+        spawn(d.u, d.w, o, v);
+        p.copy(o).addScaledVector(v, tau); p.y -= g * tau * tau;
+        if (p.y < 0.02) p.y = 0.02;
+        sc.set(1, 1.6, 1);
+      } else sc.set(0, 0, 0);
+      m4.compose(p, q, sc); inst.setMatrixAt(i, m4);
+    }
+    inst.instanceMatrix.needsUpdate = true;
+  };
+}
+function makePuddle(x, z, rx, rz) {
+  const mat = own(WATER_MAT); mat.opacity = 0.45;
+  const m = mesh(new THREE.CircleGeometry(1, 40), mat, null, false);
+  m.rotation.x = -PI / 2; m.position.set(x, 0.006, z); m.scale.set(rx, rz, 1);
+  return a => { m.visible = a > 0.01; mat.opacity = 0.45 * a; };
+}
+function makeGlove() {
+  const g = new THREE.Group(); world.add(g);
+  const mat = own(M.bucket); mat.color.set(0x8e9196); mat.roughness = 1; mat.side = THREE.FrontSide;
+  mesh(new THREE.BoxGeometry(0.3, 0.1, 0.3), mat, g).position.z = 0.05;
+  for (let i = 0; i < 4; i++) { const f = mesh(new THREE.CapsuleGeometry(0.036, 0.14, 4, 8), mat, g); f.rotation.x = PI / 2; f.position.set(-0.105 + i * 0.07, 0, -0.18); }
+  const th = mesh(new THREE.CapsuleGeometry(0.04, 0.1, 4, 8), mat, g); th.rotation.set(PI / 2, 0, 0.9); th.position.set(0.19, 0, -0.02);
+  const cuff = mesh(new THREE.CylinderGeometry(0.15, 0.17, 0.32, 16), mat, g); cuff.rotation.x = PI / 2; cuff.position.z = 0.34;
+  return (vis, pos, rx = 0, op = 1) => { g.visible = vis && op > 0.01; if (pos) g.position.copy(pos); g.rotation.set(rx, 0, 0); mat.opacity = op; };
+}
+function makeBall(r0 = 0.16) {
+  const geo = new THREE.IcosahedronGeometry(r0, 2), pos = geo.attributes.position, rr = rand(5), tmpv = new THREE.Vector3();
+  for (let i = 0; i < pos.count; i++) { tmpv.fromBufferAttribute(pos, i).multiplyScalar(1 + (rr() - .5) * 0.12); pos.setXYZ(i, tmpv.x, tmpv.y, tmpv.z); }
+  geo.computeVertexNormals();
+  const mat = own(M.fill); mat.emissive = new THREE.Color(0xff6a1a); mat.emissiveIntensity = 0;
+  return { m: mesh(geo, mat), mat };
+}
+// cylinder along +z with origin at its back end
+function zCyl(r, h, mat, segs = 32) { const g = new THREE.CylinderGeometry(r, r, h, segs); g.translate(0, h / 2, 0); g.rotateX(PI / 2); return mesh(g, mat); }
+function makeSpray(cx, cy, rad, n = 36, wide = 0) {
+  const r = rand(9), ds = [];
+  for (let i = 0; i < n; i++) {
+    const m = mesh(new THREE.SphereGeometry(0.03, 8, 6), M.drop, null, false);
+    const a = r() * PI * 2, d = Math.sqrt(r()) * rad;
+    m.userData = { x: cx + (wide ? (r() - .5) * wide : Math.cos(a) * d), y: cy + Math.sin(a) * d * (wide ? 0.4 : 1), o: r() }; ds.push(m);
+  }
+  return (on, t) => ds.forEach(m => {
+    m.visible = on; if (!on) return;
+    const ph = (t * 1.4 + m.userData.o) % 1;
+    m.position.set(m.userData.x, m.userData.y, 1.6 - ph * 1.58);
+  });
+}
+// basement wall: face at z = 0 facing +z, floor in front, wet soil behind
+function basementWall({ holes = [], grooves = [] } = {}) {
+  const X = 3.6, H = 4.2, T = 0.9, DP = 0.26;
+  box(-4.4, 4.4, -0.35, 0, 0, 4.2, M.road);
+  const soil = own(M.soil); soil.color.set(0xa9b6c9);
+  box(-X, X, -0.35, H, -T - 1.8, -T, soil);
+  mesh(extrudeZ(rectXY(-X, X, -0.35, H), T - DP), M.base).position.z = -T;
+  const sh = rectXY(-X, X, -0.35, H);
+  holes.forEach(h => { const pth = new THREE.Path(); pth.absarc(h.x, h.y, h.r, 0, PI * 2, true); sh.holes.push(pth); });
+  grooves.forEach(([x0, x1, y0, y1]) => sh.holes.push(rectXY(x0, x1, y0, y1, THREE.Path)));
+  mesh(extrudeZ(sh, DP), M.base).position.z = -DP;
+  const deep = own(M.base); deep.color.multiplyScalar(0.7);
+  holes.forEach(h => { const d = mesh(new THREE.CircleGeometry(h.r, 32), deep, null, false); d.position.set(h.x, h.y, -DP + 0.003); });
+  return { X, H, T, DP };
+}
+// crack cap over a leak (removed during "расшивка")
+function makeCap(x, y, r, seed = 4) {
+  const g = new THREE.Group(); world.add(g); g.position.set(x, y, 0.004);
+  const mat = own(M.base); mat.transparent = true;
+  const crackMat = own(M.slit); crackMat.transparent = true;
+  mesh(new THREE.CircleGeometry(r + 0.04, 32), mat, g, false);
+  const rr = rand(seed);
+  for (let i = 0; i < 5; i++) {
+    const a = rr() * PI * 2, L = r * (0.6 + rr() * 0.9), b = new THREE.BoxGeometry(L, 0.014, 0.004); b.translate(L / 2, 0, 0);
+    const m = mesh(b, crackMat, g, false); m.rotation.z = a; m.position.z = 0.002;
+  }
+  mesh(new THREE.CircleGeometry(0.045, 16), crackMat, g, false).position.z = 0.003;
+  return a => { g.visible = a > 0.01; mat.opacity = crackMat.opacity = a; };
+}
+function holeDebris(x, y, r, DP, n = 14, seed = 6) {
+  const rr = rand(seed), items = [];
+  for (let i = 0; i < n; i++) {
+    const a = rr() * PI * 2, d = Math.sqrt(rr()) * r * 0.8, sz = 0.05 + rr() * 0.05;
+    const m = mesh(new THREE.DodecahedronGeometry(sz, 0), own(M.old));
+    m.position.set(x + Math.cos(a) * d, y + Math.sin(a) * d, -DP * (0.2 + rr() * 0.6));
+    items.push({ mesh: m, v: V(Math.cos(a) * 0.6, 0.3 + rr() * 0.8, 1.2 + rr() * 1.4), start: 0.12 + rr() * 0.55 });
+  }
+  return makeDebris(items, 2.2);
+}
+function makeCoat(x0, x1, y0, y1) {
+  const mat = own(M.fill); mat.color.set(0x66707a); mat.roughness = 0.55;
+  const m = box(x0, x1, y0, y1, 0.0, 0.022, mat);
+  return a => { m.visible = a > 0.001; m.scale.x = Math.max(0.001, a); };
+}
+const cureFill = (mat, a) => { mat.color.copy(FILL_WET).lerp(FILL_CURED, a); mat.roughness = 0.3 + 0.6 * a; };
+const WALLCAM = { a: 0.62, r: 10.5, h: 3.0, ty: 1.5, tx: 0.9 };
+const WALL_LABELS = (X, T) => [
+  { text: 'Бетонная стена подвала', pos: V(-2.4, 3.4, 0) },
+  { text: 'Грунтовые воды', pos: V(X, 2.8, -T - 0.9) },
+];
+
+// knead → press sequence for a plug ball
+function plugMotion(ball, glove, from, to, sKnead, sPress, t, heatOn = true) {
+  if (sKnead !== null) {
+    ball.m.visible = true;
+    const sq = 1 + Math.sin(t * 11) * 0.18 * (1 - seg(sKnead, 0.75, 1));
+    ball.m.position.copy(from); ball.m.scale.set(1 / Math.sqrt(sq), sq, 1 / Math.sqrt(sq));
+    ball.mat.emissiveIntensity = heatOn ? 0.45 * seg(sKnead, 0.7, 1) * (0.7 + 0.3 * Math.sin(t * 9)) : 0;
+    glove(true, V(from.x, from.y - 0.14, from.z + 0.05));
+    return 0;
+  }
+  const mv = ease(seg(sPress, 0, 0.3)), ins = ease(seg(sPress, 0.3, 0.46));
+  const pos = from.clone().lerp(to, mv);
+  ball.m.visible = ins < 0.99; ball.m.position.copy(pos); ball.m.position.z -= ins * 0.15; ball.m.scale.setScalar(Math.max(0.01, 1 - ins));
+  ball.mat.emissiveIntensity = 0.45 * (1 - ins);
+  const out = ease(seg(sPress, 0.85, 1));
+  glove(sPress < 0.99, V(pos.x, pos.y, pos.z + 0.22 + out * 0.8), 0, 1 - out);
+  return ins;
+}
+
+BUILDERS.leak = () => {
+  const HX = 0, HY = 1.8, HR = 0.22;
+  const { X, T, DP } = basementWall({ holes: [{ x: HX, y: HY, r: HR }] });
+  const cap = makeCap(HX, HY, HR), debris = holeDebris(HX, HY, HR, DP);
+  const water = makeWater(160, (u, w, o, v) => { o.set(HX + Math.cos(u * 6.28) * 0.03, HY + Math.sin(u * 6.28) * 0.03, 0.02); v.set((u - .5) * 0.35, 0.45 + w * 0.3, 1.9 + w * 0.5); });
+  const puddle = makePuddle(0, 2.1, 1.0, 0.6);
+  const spray = makeSpray(HX, HY, HR);
+  const fillMat = own(M.fill), plug = zCyl(HR - 0.003, DP + 0.012, fillMat); plug.position.set(HX, HY, -DP);
+  const ball = makeBall(), glove = makeGlove(), coat = makeCoat(-2.2, 2.2, 0.5, 3.1);
+  const KNEAD = V(1.0, 1.3, 1.1), AT = V(HX, HY, 0.2);
+  return {
+    camera: WALLCAM,
+    labels: [...WALL_LABELS(X, T),
+      { text: 'Активная течь', pos: V(HX, HY, 0), show: st => st === 0 },
+      { text: '«Ласточкин хвост» ≥ 20 мм', pos: V(HX + HR, HY, 0), show: (st, k) => st === 1 || (st === 0 && k > 0.8) },
+      { text: 'Пробка ' + P.layer, pos: () => ball.m.position, show: st => st === 2 },
+      { text: P.layer, pos: V(HX + HR * 0.7, HY + HR * 0.4, 0.01), show: (st, k) => st === 4 ? k < 0.55 : st === 3 && k > 0.5 },
+      { text: 'Обмазочная гидроизоляция', pos: V(1.6, 2.7, 0.02), show: (st, k) => st === 4 && k > 0.6 },
+    ],
+    apply({ s, step, t }) {
+      debris(s[0]); cap(1 - seg(s[0], 0.08, 0.25));
+      spray(step === 1 && s[1] > 0.1 && s[1] < 0.85, t);
+      ball.m.visible = false; glove(false);
+      let ins = step > 3 ? 1 : 0;
+      if (step === 2) plugMotion(ball, glove, KNEAD, AT, s[2], 0, t);
+      if (step === 3) ins = plugMotion(ball, glove, KNEAD, AT, null, s[3], t);
+      plug.visible = ins > 0.01; plug.scale.z = Math.max(0.01, ins);
+      const flow = step < 3 ? 1 : step === 3 ? 1 - seg(s[3], 0.3, 0.46) : 0;
+      water(t, flow); puddle(1);
+      cureFill(fillMat, ease(seg(s[4], 0, 0.4)));
+      coat(ease(seg(s[4], 0.4, 0.95)));
+    }
+  };
+};
+
+BUILDERS.joint = () => {
+  const GX0 = -3, GX1 = 3, GH = 0.25;
+  const { X, T, DP } = basementWall({ grooves: [[GX0, GX1, 0, GH]] });
+  const coverMat = own(M.base), cover = box(GX0, GX1, 0, GH, -DP, 0, coverMat);
+  const crack = box(GX0, GX1, 0.02, 0.035, 0, 0.004, M.slit);
+  const rr = rand(12), items = [];
+  for (let i = 0; i < 36; i++) {
+    const x = GX0 + 0.1 + rr() * (GX1 - GX0 - 0.2), sz = 0.05 + rr() * 0.05;
+    const m = mesh(new THREE.DodecahedronGeometry(sz, 0), own(M.old)); m.position.set(x, 0.05 + rr() * 0.15, -0.05 - rr() * 0.15);
+    items.push({ mesh: m, v: V((rr() - .5) * 0.5, 0.8 + rr(), 0.8 + rr()), start: 0.1 + 0.8 * (x - GX0) / (GX1 - GX0) });
+  }
+  const debris = makeDebris(items, 2);
+  const water = makeWater(160, (u, w, o, v) => { o.set(GX0 + 0.1 + u * (GX1 - GX0 - 0.2), 0.08 + w * 0.12, 0.01); v.set(0, 0.2, 0.35 + w * 0.35); }, 1.5);
+  const puddle = makePuddle(0, 0.7, 3.2, 0.6);
+  const spray = makeSpray(0, 0.15, 0, 50, 5.6);
+  const fillMat = own(M.fill), fill = box(GX0, GX1, 0, GH + 0.012, -DP, 0.012, fillMat);
+  const glove = makeGlove(), coatW = makeCoat(-3.3, 3.3, 0, 0.9);
+  const floorMat = own(M.fill); floorMat.color.set(0x66707a); floorMat.roughness = 0.55;
+  const coatF = box(-3.3, 3.3, 0, 0.022, 0, 0.7, floorMat);
+  return {
+    camera: { a: 0.55, r: 8.4, h: 3.4, ty: 0.6, tx: 0.6 },
+    labels: [...WALL_LABELS(X, T),
+      { text: 'Протечка по шву', pos: V(-1.5, 0.03, 0), show: st => st === 0 },
+      { text: 'Расшивка ≥ 20 мм', pos: V(1.8, GH, 0), show: (st, k) => st === 1 || (st === 0 && k > 0.85) },
+      { text: P.layer, pos: V(0.6, GH, 0.01), show: (st, k) => st === 3 ? k < 0.4 : st === 2 && k > 0.4 },
+      { text: 'Гидроизоляция примыкания', pos: V(2.2, 0.8, 0.02), show: (st, k) => st === 3 && k > 0.65 },
+    ],
+    apply({ s, step, t }) {
+      const cut = seg(s[0], 0.1, 0.9);
+      cover.visible = crack.visible = cut < 1;
+      cover.position.x = crack.position.x = GX0 + (GX1 - GX0) * cut; cover.scale.x = crack.scale.x = Math.max(0.001, 1 - cut);
+      debris(s[0]);
+      spray(step === 1 && s[1] > 0.1 && s[1] < 0.85, t);
+      const u = step > 2 ? 1 : step === 2 ? seg(s[2], 0.06, 0.9) : 0, front = GX0 + (GX1 - GX0) * u;
+      fill.visible = u > 0; fill.scale.x = Math.max(0.001, u);
+      glove(step === 2 && s[2] > 0.03 && s[2] < 0.95, V(front, GH * 0.6, 0.24 + Math.abs(Math.sin(t * 6)) * 0.05));
+      water(t, 1, uu => GX0 + 0.1 + uu * (GX1 - GX0 - 0.2) > front);
+      puddle(1 - 0.5 * u);
+      cureFill(fillMat, ease(seg(s[3], 0, 0.35)));
+      const c = ease(seg(s[3], 0.35, 0.95)); coatW(c); coatF.visible = c > 0.001; coatF.scale.x = Math.max(0.001, c);
+    }
+  };
+};
+
+BUILDERS.pipe = () => {
+  const PX = 0, PY = 2.0, PR = 0.2, GR = 0.42;
+  const { X, T, DP } = basementWall({ holes: [{ x: PX, y: PY, r: GR }] });
+  const pipe = zCyl(PR, 2.6, M.steel); pipe.position.set(PX, PY, -1.7);
+  const capMat = own(M.base); capMat.transparent = true;
+  const cap = mesh(new THREE.RingGeometry(PR, GR + 0.04, 48), capMat, null, false); cap.position.set(PX, PY, 0.004);
+  const debris = holeDebris(PX, PY, GR, DP, 18, 8);
+  const rank = a => { let d = Math.abs(((a - PI / 2) % (2 * PI) + 3 * PI) % (2 * PI) - PI); return d / PI; };   // 0 at top → 1 at bottom
+  const fillMat = own(M.fill), NS = 24, sectors = [];
+  for (let i = 0; i < NS; i++) {
+    const a0 = i / NS * PI * 2, a1 = (i + 1) / NS * PI * 2;
+    const m = mesh(extrudeZ(sectorShape(PR + 0.003, GR - 0.003, a0, a1 + 0.01), DP + 0.012), fillMat);
+    m.position.set(PX, PY, -DP); m.userData.rank = rank((a0 + a1) / 2); sectors.push(m);
+  }
+  const water = makeWater(150, (u, w, o, v) => { const a = u * PI * 2, rr = (PR + GR) / 2; o.set(PX + Math.cos(a) * rr, PY + Math.sin(a) * rr, 0.02); v.set(Math.cos(a) * 0.25, Math.sin(a) * 0.25 + 0.2, 0.9 + w * 0.5); }, 1.2);
+  const puddle = makePuddle(0, 1.2, 1.1, 0.6);
+  const spray = makeSpray(PX, PY, GR);
+  const glove = makeGlove();
+  const coatMat = own(M.fill); coatMat.color.set(0x66707a); coatMat.roughness = 0.55; coatMat.transparent = true;
+  const coat = mesh(new THREE.RingGeometry(PR, 1.2, 48), coatMat, null, false); coat.position.set(PX, PY, 0.02);
+  return {
+    camera: { a: 0.6, r: 9.8, h: 3.0, ty: 1.7, tx: 0.9 },
+    labels: [...WALL_LABELS(X, T),
+      { text: 'Ввод трубы', pos: V(PX, PY + PR, 0.85) },
+      { text: 'Течь по зазору', pos: V(PX + GR, PY - 0.1, 0), show: st => st === 0 },
+      { text: 'Расшивка ≥ 20 мм', pos: V(PX - GR, PY, 0), show: (st, k) => st === 1 || (st === 0 && k > 0.85) },
+      { text: P.layer, pos: V(PX + 0.3, PY - 0.2, 0.01), show: (st, k) => st === 3 ? k < 0.4 : st === 2 && k > 0.5 },
+      { text: 'Гидроизоляция ввода', pos: V(PX + 0.9, PY + 0.5, 0.02), show: (st, k) => st === 3 && k > 0.65 },
+    ],
+    apply({ s, step, t }) {
+      const ca = 1 - seg(s[0], 0.08, 0.25); cap.visible = ca > 0.01; capMat.opacity = ca;
+      debris(s[0]);
+      spray(step === 1 && s[1] > 0.1 && s[1] < 0.85, t);
+      const u = step > 2 ? 1.01 : step === 2 ? seg(s[2], 0.06, 0.92) : 0;
+      sectors.forEach(m => { const a = clamp01((u - m.userData.rank) * 8); m.visible = a > 0; m.scale.z = Math.max(0.01, a); });
+      const side = Math.floor(u * 10) % 2 ? 1 : -1, ang = PI / 2 + side * u * PI;
+      glove(step === 2 && s[2] > 0.03 && s[2] < 0.95, V(PX + Math.cos(ang) * 0.31, PY + Math.sin(ang) * 0.31, 0.26));
+      water(t, 1, uu => rank(uu * PI * 2) >= u);
+      puddle(1);
+      cureFill(fillMat, ease(seg(s[3], 0, 0.35)));
+      const c = ease(seg(s[3], 0.35, 0.95)); coat.visible = c > 0.001; coatMat.opacity = c; coat.scale.setScalar(0.4 + 0.6 * c);
+    }
+  };
+};
+
+BUILDERS.flow = () => {
+  const HX = 0, HY = 1.7, HR = 0.3, TR = 0.065, TL = 1.1;
+  const { X, T, DP } = basementWall({ holes: [{ x: HX, y: HY, r: HR }] });
+  const cap = makeCap(HX, HY, HR, 9), debris = holeDebris(HX, HY, HR, DP, 18, 10);
+  const tubeMat = own(M.bucket); tubeMat.color.set(0xe8eef3); tubeMat.side = THREE.FrontSide; tubeMat.roughness = 0.3;
+  const tube = zCyl(TR, TL, tubeMat, 20);
+  let tubeEnd = 0;
+  const water = makeWater(200, (u, w, o, v) => {
+    if (tubeEnd > 0) { o.set(HX, HY, tubeEnd); v.set((u - .5) * 0.12, 0.1 + w * 0.15, 2.2 + w * 0.5); }
+    else { const rr = waterR; o.set(HX + Math.cos(u * 6.28) * rr, HY + Math.sin(u * 6.28) * rr, 0.02); v.set((u - .5) * 0.6, 0.5 + w * 0.4, 2.6 + w * 0.6); }
+  }, 1.1);
+  let waterR = 0.08;
+  const puddle = makePuddle(0, 2.6, 1.4, 0.8);
+  const fillMat = own(M.fill);
+  const ringSh = new THREE.Shape(); ringSh.absarc(0, 0, HR - 0.003, 0, PI * 2, false);
+  const hp = new THREE.Path(); hp.absarc(0, 0, TR + 0.004, 0, PI * 2, true); ringSh.holes.push(hp);
+  const ring = mesh(extrudeZ(ringSh, DP + 0.012), fillMat); ring.position.set(HX, HY, -DP);
+  const core = zCyl(TR + 0.004, DP + 0.012, fillMat, 20); core.position.set(HX, HY, -DP);
+  const ball = makeBall(0.11), glove = makeGlove(), coat = makeCoat(-2.2, 2.2, 0.5, 3.0);
+  const KNEAD = V(0.9, 1.2, 1.1), AT = V(HX, HY, 0.18);
+  return {
+    camera: WALLCAM,
+    labels: [...WALL_LABELS(X, T),
+      { text: 'Напорная течь', pos: V(HX, HY + 0.1, 0), show: st => st === 0 },
+      { text: 'Отводная трубка', pos: () => V(HX, HY + TR, tube.position.z + TL * 0.8), show: (st, k) => (st === 1 && k > 0.5) || st === 2 },
+      { text: P.layer, pos: V(HX + HR * 0.75, HY + HR * 0.4, 0.01), show: (st, k) => (st === 2 && k > 0.6) || (st === 4 && k < 0.5) },
+      { text: 'Пробка', pos: V(HX, HY, 0.02), show: (st, k) => st === 3 && k > 0.5 },
+      { text: 'Гидроизоляция', pos: V(1.6, 2.6, 0.02), show: (st, k) => st === 4 && k > 0.6 },
+    ],
+    apply({ s, step, t }) {
+      debris(s[0]); cap(1 - seg(s[0], 0.08, 0.25));
+      waterR = step === 0 ? 0.03 + 0.25 * seg(s[0], 0.2, 0.8) : step < 3 ? 0.25 : 0.03;
+      // tube in during step 2, out during step 4
+      const tin = step === 1 ? ease(seg(s[1], 0.1, 0.6)) : step === 2 ? 1 : step === 3 ? 1 - ease(seg(s[3], 0, 0.28)) : 0;
+      tube.visible = tin > 0.01; tubeMat.opacity = 1;
+      tube.position.set(HX, HY, -DP + 0.02 + (1 - tin) * 1.6);
+      tubeEnd = tin > 0.95 ? tube.position.z + TL : 0;
+      const rr = step === 2 ? ease(seg(s[2], 0.1, 0.8)) : step > 2 ? 1 : 0;
+      ring.visible = rr > 0.01; ring.scale.z = Math.max(0.01, rr);
+      glove(step === 2 && s[2] > 0.05 && s[2] < 0.9, V(HX + Math.cos(t * 3) * 0.2, HY + Math.sin(t * 3) * 0.2, 0.26));
+      ball.m.visible = false;
+      let ins = step > 3 ? 1 : 0;
+      if (step === 3) { const sp = seg(s[3], 0.22, 1); ins = sp > 0 ? plugMotion(ball, glove, KNEAD, AT, null, sp, t) : 0; if (sp <= 0) plugMotion(ball, glove, KNEAD, AT, 1, 0, t); }
+      core.visible = ins > 0.01; core.scale.z = Math.max(0.01, ins);
+      const flow = step < 3 ? 1 : step === 3 ? 1 - seg(s[3], 0.22 + 0.78 * 0.3, 0.22 + 0.78 * 0.46) : 0;
+      water(t, flow); puddle(1);
+      cureFill(fillMat, ease(seg(s[4], 0, 0.4)));
+      coat(ease(seg(s[4], 0.4, 0.95)));
+    }
+  };
+};
+
+BUILDERS.post = () => {
+  const HR = 0.2, HD = 0.7;
+  const topMat = own(M.base), wetTop = wetter(topMat);
+  box(-3.5, 3.5, -1.3, -HD, -3, 3, M.base);
+  { const sh = rectPath(-3.5, 3.5, -3, 3); sh.holes.push(circlePath(0, 0, HR)); prism(sh, -HD, 0, topMat); }
+  mesh(new THREE.CylinderGeometry(HR, HR, HD, 32, 1, true), M.dark, null, false).position.y = -HD / 2;
+  const fillMat = own(M.fill);
+  const fg = new THREE.CylinderGeometry(HR - 0.003, HR - 0.003, HD, 32); fg.translate(0, HD / 2, 0);
+  const fill = mesh(fg, fillMat); fill.position.y = -HD;
+  const collar = mesh(new THREE.CylinderGeometry(0.12, HR + 0.08, 0.07, 32), fillMat); collar.position.y = 0.035;
+  const postMat = M.steel;
+  const mkPost = x => { const g = new THREE.Group(); world.add(g); mesh(new THREE.CylinderGeometry(0.06, 0.06, 2.4, 20), postMat, g).position.y = 1.2 - 0.55; g.position.x = x; return g; };
+  const post = mkPost(0), old = mkPost(-2.4);
+  { const c = mesh(new THREE.CylinderGeometry(0.12, HR + 0.08, 0.07, 32), M.curb); c.position.set(-2.4, 0.035, 0); }
+  const railG = new THREE.CylinderGeometry(0.05, 0.05, 2.6, 16); railG.rotateZ(PI / 2);
+  const rail = mesh(railG, postMat); 
+  const drops = makeDrops(r => [(r() - .5) * 0.25, (r() - .5) * 0.25], 1.6, -0.6, 30);
+  const ball = makeBall(0.14), glove = makeGlove();
+  return {
+    camera: { a: 0.62, r: 7.2, h: 3.6, ty: 0.8 },
+    labels: [
+      { text: 'Бетонное основание', pos: V(-1.6, 0, 1.2) },
+      { text: 'Отверстие под стойку', pos: V(HR, 0, 0), show: st => st === 0 },
+      { text: P.layer, pos: V(HR + 0.05, 0.05, 0.1), show: (st, k) => st === 2 || (st === 1 && k > 0.6) || (st === 3 && k < 0.4) },
+      { text: 'Стойка ограждения', pos: () => V(0.06, post.position.y + 1.4, 0), show: (st, k) => st === 3 || (st === 2 && k > 0.5) },
+    ],
+    apply({ s, step, t }) {
+      drops(step === 0 && s[0] > 0.05 && s[0] < 0.85, t);
+      wetTop(ease(seg(s[0], 0.1, 0.8)));
+      // fill the hole: ball pressed down by glove
+      ball.m.visible = false; glove(false);
+      const f = step > 1 ? 1 : step === 1 ? ease(seg(s[1], 0.25, 0.85)) : 0;
+      if (step === 1) {
+        const mv = ease(seg(s[1], 0, 0.3)), from = V(0.8, 1.2, 0.8), to = V(0, 0.25, 0);
+        const pos = from.clone().lerp(to, mv);
+        ball.m.visible = f < 0.95; ball.m.position.copy(pos); ball.m.position.y -= f * 0.3; ball.m.scale.setScalar(Math.max(0.01, 1 - f));
+        glove(s[1] < 0.95, V(pos.x, pos.y + 0.25 - f * 0.25 + seg(s[1], 0.85, 1) * 0.8, pos.z), -PI / 2, 1 - seg(s[1], 0.85, 1));
+      }
+      fill.visible = f > 0.01; fill.scale.y = Math.max(0.01, f);
+      const pd = step > 2 ? 1 : step === 2 ? ease(seg(s[2], 0.05, 0.45)) : 0;
+      post.visible = step >= 2; post.position.y = (1 - pd) * 2.6;
+      collar.visible = step > 2 || (step === 2 && s[2] > 0.5); collar.scale.set(1, step > 2 ? 1 : seg(s[2], 0.5, 0.8) + 0.01, 1);
+      if (step === 2 && s[2] > 0.45) { const a = t * 4; glove(s[2] < 0.95, V(Math.cos(a) * 0.35, 0.22, Math.sin(a) * 0.35), -PI / 2); }
+      const rd = step === 3 ? ease(seg(s[3], 0.4, 0.85)) : 0;
+      rail.visible = step === 3 && s[3] > 0.35; rail.position.set(-1.2, 1.85 + (1 - rd) * 1.5, 0);
+      cureFill(fillMat, step === 3 ? ease(seg(s[3], 0, 0.4)) : 0);
+    }
+  };
+};
+
 /* ======================= scenario engine ======================= */
 const STEP = 4.5;                 // seconds per step
 let cur = null, time = 0, playing = true, interactive = false, lastStep = -1;
@@ -1334,7 +1795,7 @@ function load(id) {
   });
   [...tabsEl.children].forEach(b => b.classList.toggle('on', b.dataset.id === def.id));
   const c = inst.camera;
-  controls.target.set(0, c.ty, c.tz || 0);
+  controls.target.set(c.tx || 0, c.ty, c.tz || 0);
   if (interactive) { autoCamera(0); controls.update(); }
   try { history.replaceState(null, '', '#' + P.id + '/' + def.id); } catch (e) {}
 }
@@ -1353,9 +1814,9 @@ function updateLabels(step, k) {
 function autoCamera(t) {
   const c = cur.inst.camera;
   const a = c.a + Math.sin(t * 0.12) * 0.25, h = c.h + Math.sin(t * 0.09) * 0.4;
-  const tz = c.tz || 0;
-  camera.position.set(Math.sin(a) * c.r, h, tz + Math.cos(a) * c.r);
-  camera.lookAt(0, c.ty, tz);
+  const tz = c.tz || 0, tx = c.tx || 0;
+  camera.position.set(tx + Math.sin(a) * c.r, h, tz + Math.cos(a) * c.r);
+  camera.lookAt(tx, c.ty, tz);
 }
 
 const btn3d = $('btn3d'), btnPlay = $('btnPlay');
