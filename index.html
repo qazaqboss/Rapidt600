@@ -44,7 +44,7 @@
   .hero-media{position:relative;display:flex;justify-content:center;align-items:center;min-height:460px;z-index:1}
   .hero-media .glow{position:absolute;left:50%;top:50%;width:78%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;
     background:radial-gradient(circle,rgba(var(--accent-rgb),.55),rgba(var(--accent-rgb),0) 68%);filter:blur(10px)}
-  .hero-bag{position:relative;width:auto;max-width:100%;max-height:520px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55));
+  .hero-bag{position:relative;width:auto;height:auto;object-fit:contain;max-width:100%;max-height:520px;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55));
     animation:float 6s ease-in-out infinite;transform-origin:50% 100%}
   .hero-media .floor{position:absolute;bottom:-6px;left:18%;right:18%;height:26px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(10px);animation:floor 6s ease-in-out infinite}
   @keyframes float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-12px) rotate(.6deg)}}
@@ -386,7 +386,7 @@ window.PRODUCTS = [{
   name: 'EasyMix WaterBlock WB1',
   short: 'WaterBlock WB1',
   kind: 'гидропломба · стоп-течь',
-  image: 'assets/waterblock-wb1-bucket.webp', imageSize: [900, 900], imageCard: true,
+  image: 'assets/waterblock-wb1-bucket.webp', imageSize: [876, 900],
   imageAlt: 'Ведро EasyMix WaterBlock WB1, гидропломба, 5 кг',
   accent: '#4f8fe8', accentRgb: '79,143,232',
   title: [['WATER BLOCK', true], ['WB1', false]],
@@ -456,6 +456,63 @@ window.PRODUCTS = [{
       { text: 'Нагружать — не ранее чем через 1 час', badge: '⏱ 1 час' },
     ]},
   ]
+}, {
+  id: 'cc1',
+  brand: 'EASYMIX',
+  name: 'EasyMix Shotcrete Pro CC1',
+  short: 'Shotcrete Pro CC1',
+  kind: 'торкрет · машинное нанесение',
+  image: 'assets/shotcrete-cc1-bag.webp', imageSize: [458, 866],
+  accent: '#2fb3a6', accentRgb: '47,179,166',
+  title: [['SHOTCRETE PRO', true], ['CC1', false]],
+  category: 'ТОРКРЕТ-БЕТОН · CEMENT BASE',
+  subtitle: 'Сухая смесь для торкретирования',
+  subtitleKz: '',
+  kpis: [
+    ['spray', 'машинное', 'нанесение набрызгом'],
+    ['layers', '10–60 мм', 'толщина слоя'],
+    ['drop', 'водостойкая', 'после твердения'],
+    ['wind', 'NO DUST', 'пониженное пылеобразование'],
+  ],
+  uses: ['Тоннели и выработки', 'Укрепление откосов', 'Стены и резервуары', 'Подпорные сооружения', '🇰🇿 Сделано в Казахстане · Актобе'],
+  description: 'Сухая смесь на цементной основе для торкретирования машинным способом: обделка тоннелей и горных выработок, укрепление откосов, ремонт и усиление стен, резервуаров и подпорных сооружений. Специально разработана для улучшенных характеристик набрызга, с пониженным пылеобразованием.',
+  price: 'Цена по запросу',
+  priceSub: 'мешок 25 кг',
+  layer: 'Shotcrete CC1',
+  specTitle: 'ХАРАКТЕРИСТИКИ (по данным упаковки)',
+  calc: { kgPerMm: 2, def: 40, min: 10, max: 60, gravel: false, water: null,   // ⚠ расход — уточнить по техописанию CC1
+          note: 'Расчёт ориентировочный (≈ 20 кг/м² при слое 10 мм, без учёта отскока) — уточните расход по техописанию CC1.' },
+  specs: [
+    ['10–60 мм', 'толщина слоя'],
+    ['машинное', 'нанесение набрызгом'],
+    ['водостойкая', 'после твердения'],
+    ['NO DUST', 'пониженное пылеобразование'],
+    ['цемент', 'основа (cement base)'],
+    ['25 кг', 'мешок'],
+  ],
+  scenarios: [
+    { id: 'tunnel', tab: 'Тоннель / выработка', steps: [
+      { text: 'Очистка выработки: удаление непрочной породы, пыли и грязи сжатым воздухом и водой' },
+      { text: 'Монтаж арматурной сетки по своду и стенам тоннеля' },
+      { text: 'Увлажнение основания до матово-влажного состояния' },
+      { text: 'Торкретирование машинным способом: сопло перпендикулярно поверхности, слой 10–60 мм', badge: '10–60 мм за слой' },
+      { text: 'Набор прочности; при необходимости — следующий слой. Поверхность защищают от пересыхания' },
+    ]},
+    { id: 'slope', tab: 'Укрепление откоса', steps: [
+      { text: 'Планировка откоса: удаление рыхлого грунта и растительности' },
+      { text: 'Установка грунтовых анкеров и арматурной сетки' },
+      { text: 'Увлажнение основания' },
+      { text: 'Торкретирование снизу вверх слоем 10–60 мм', badge: '10–60 мм за слой' },
+      { text: 'Набор прочности — откос укреплён; уход за поверхностью от пересыхания' },
+    ]},
+    { id: 'tankwall', tab: 'Стена / резервуар', steps: [
+      { text: 'Очистка стены от непрочного бетона, пыли и загрязнений' },
+      { text: 'Монтаж арматурной сетки на анкерах' },
+      { text: 'Увлажнение основания до матово-влажного состояния' },
+      { text: 'Торкретирование стены снизу вверх слоем 10–60 мм — без пыли', badge: '10–60 мм за слой' },
+      { text: 'Выравнивание при необходимости и уход за поверхностью' },
+    ]},
+  ]
 }];
 </script>
 
@@ -477,6 +534,8 @@ const PI = Math.PI;
 
 /* ======================= static texts ======================= */
 const ICONS = {
+  spray: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10h8l2 2v2H3z"/><path d="M5 14v6M16 9l4-2M16 13h5M16 17l4 2"/></svg>',
+  wind: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/><path d="M4 4l16 16"/></svg>',
   drop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
   shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>',
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6M12 2v3"/></svg>',
@@ -507,7 +566,7 @@ function renderProduct() {
   P.title.forEach(([t, acc]) => h1.appendChild(el('span', acc ? 'y' : '', t)));
   h1.classList.toggle('long', P.title.some(([t]) => t.length > 8));
   $('sub').textContent = P.subtitle + (P.analog ? ' · ' + P.analog : '');
-  $('subKz').textContent = P.subtitleKz;
+  $('subKz').textContent = P.subtitleKz || ''; $('subKz').hidden = !P.subtitleKz;
   $('desc').textContent = P.description;
   $('price').textContent = P.price;
   $('priceSub').textContent = P.priceSub;
@@ -1757,6 +1816,206 @@ BUILDERS.post = () => {
     }
   };
 };
+
+
+/* ---------- Shotcrete Pro CC1: machine-sprayed concrete ---------- */
+// emitter of particles flying from `from` to `to` (instanced)
+function makeJet(n, mat, parent, life = 0.38) {
+  const inst = new THREE.InstancedMesh(new THREE.SphereGeometry(0.03, 6, 5), mat, n);
+  inst.frustumCulled = false; parent.add(inst);
+  const r = rand(55), D = []; for (let i = 0; i < n; i++) D.push({ o: r(), a: r() * PI * 2, d: Math.sqrt(r()) });
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3(), p = new THREE.Vector3(), side = new THREE.Vector3(), up2 = new THREE.Vector3();
+  return (on, from, to, t, spread = 0.25) => {
+    if (on) { side.subVectors(to, from).normalize(); up2.set(0, 1, 0); if (Math.abs(side.y) > 0.9) up2.set(1, 0, 0); up2.crossVectors(side, up2).normalize(); side.crossVectors(up2, side.clone().subVectors(to, from).normalize()); }
+    for (let i = 0; i < n; i++) {
+      const d = D[i];
+      if (!on) { sc.set(0, 0, 0); } else {
+        const ph = (t / life + d.o) % 1;
+        p.lerpVectors(from, to, ph);
+        const off = spread * d.d * ph;
+        p.addScaledVector(up2, Math.cos(d.a) * off).addScaledVector(side, Math.sin(d.a) * off);
+        sc.setScalar(0.7 + 0.6 * (1 - ph));
+      }
+      m4.compose(p, q, sc); inst.setMatrixAt(i, m4);
+    }
+    inst.instanceMatrix.needsUpdate = true;
+  };
+}
+function makeNozzle(parent) {
+  const g = new THREE.Group(); parent.add(g);
+  const mat = own(M.bucket); mat.color.set(P.accent); mat.side = THREE.FrontSide; mat.roughness = 0.5;
+  const body = new THREE.CylinderGeometry(0.07, 0.11, 0.6, 16); body.rotateX(PI / 2); mesh(body, mat, g).position.z = 0.3;
+  const tip = new THREE.CylinderGeometry(0.035, 0.06, 0.2, 12); tip.rotateX(PI / 2); mesh(tip, M.metal, g).position.z = -0.05;
+  const hose = new THREE.CylinderGeometry(0.06, 0.06, 1.4, 12); hose.rotateX(PI / 2); mesh(hose, M.slit, g).position.z = 1.3;
+  const handle = mesh(new THREE.BoxGeometry(0.05, 0.22, 0.06), M.metal, g); handle.position.set(0, -0.14, 0.35);
+  const Z = V(0, 0, -1);
+  return (vis, pos, n) => { g.visible = vis; if (!vis) return; g.position.copy(pos); g.quaternion.setFromUnitVectors(Z, n.clone().negate()); };
+}
+
+function shotcreteBuilder(o) {
+  const grp = new THREE.Group(); world.add(grp); if (o.place) o.place(grp);
+  grp.updateMatrixWorld(true);
+  const ctx = o.context(grp);
+  const wetBase = wetter(ctx.baseMat);
+  const gLocal = V(0, -1, 0).applyQuaternion(grp.quaternion.clone().invert());
+  const NU = o.nu, NV = o.nv, TH = o.th;
+  const P0 = V(), N0 = V(), P1 = V(), N1 = V(), P2 = V();
+  const at = (u, v, off = 0) => { o.surf(u, v, P0, N0); return P0.clone().addScaledVector(N0, off); };
+  const nrm = (u, v) => { o.surf(u, v, P0, N0); return N0.clone(); };
+  const r = rand(o.seed || 21);
+
+  // loose material (step 1)
+  const items = [];
+  for (let i = 0; i < 30; i++) {
+    const u = 0.05 + r() * 0.9, v = 0.05 + r() * 0.9, sz = 0.06 + r() * 0.08;
+    const m = mesh(new THREE.DodecahedronGeometry(sz, 0), own(M.old), grp); m.position.copy(at(u, v, sz * 0.5)); m.rotation.set(r() * 3, r() * 3, r() * 3);
+    items.push({ mesh: m, p0: m.position.clone(), r0: m.rotation.clone(), v: nrm(u, v).multiplyScalar(0.6 + r() * 0.6), start: 0.1 + r() * 0.6 });
+  }
+  const debris = sv => items.forEach(it => {
+    const dt = Math.max(0, (sv - it.start) * 2.2), m = it.mesh;
+    m.position.copy(it.p0).addScaledVector(it.v, dt).addScaledVector(gLocal, 4.9 * dt * dt);
+    m.rotation.set(it.r0.x + dt * 3, it.r0.y + dt * 2, it.r0.z + dt * 4);
+    const f = clamp01(1 - dt * 1.4); m.material.opacity = f; m.visible = f > 0.01;
+  });
+
+  // reinforcement mesh (+ optional anchors)
+  const meshMat = own(M.steel); meshMat.transparent = true;
+  const lines = [], ML = o.meshLines || [10, 8];
+  const tube = pts => mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 48, 0.014, 6), meshMat, grp, false);
+  for (let j = 0; j <= ML[1]; j++) { const v = 0.03 + 0.94 * j / ML[1], pts = []; for (let k = 0; k <= 24; k++) pts.push(at(k / 24, v, TH * 0.45)); lines.push(tube(pts)); }
+  for (let i = 0; i <= ML[0]; i++) { const u = 0.03 + 0.94 * i / ML[0], pts = []; for (let k = 0; k <= 24; k++) pts.push(at(u, k / 24, TH * 0.45 + 0.03)); lines.push(tube(pts)); }
+  const anchors = [];
+  (o.anchors || []).forEach(([u, v]) => {
+    const g = new THREE.Group(); grp.add(g); const n = nrm(u, v);
+    g.position.copy(at(u, v, TH * 0.3)); g.quaternion.setFromUnitVectors(V(0, 0, 1), n);
+    mesh(new THREE.BoxGeometry(0.24, 0.24, 0.025), M.steel, g);
+    const rod = new THREE.CylinderGeometry(0.025, 0.025, 1.6, 10); rod.rotateX(PI / 2); mesh(rod, M.steel, g).position.z = -0.7;
+    mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.05, 6).rotateX(PI / 2), M.metal, g).position.z = 0.03;
+    anchors.push(g);
+  });
+
+  // shotcrete layer cells, serpentine from the first row
+  const fillMat = own(M.fill), cells = [], order = [];
+  for (let j = 0; j < NV; j++) for (let ii = 0; ii < NU; ii++) order.push([j % 2 ? NU - 1 - ii : ii, j]);
+  const m4 = new THREE.Matrix4(), tu = V(), tv = V();
+  order.forEach(([i, j], idx) => {
+    const u = (i + 0.5) / NU, v = (j + 0.5) / NV;
+    o.surf(u, v, P0, N0); o.surf(Math.min(1, u + 0.5 / NU), v, P1, N1); o.surf(u, Math.min(1, v + 0.5 / NV), P2, N1);
+    const wu = P1.distanceTo(P0) * 2, wv = P2.distanceTo(P0) * 2;
+    tu.subVectors(P1, P0).normalize(); tv.crossVectors(N0, tu).normalize();
+    const thk = TH * (0.95 + r() * 0.1), g = new THREE.BoxGeometry(wu * 1.06, wv * 1.06, thk); g.translate(0, 0, thk / 2);
+    const m = mesh(g, fillMat, grp); m.position.copy(P0); m.quaternion.setFromRotationMatrix(m4.makeBasis(tu, tv, N0));
+    m.userData = { idx, u, v, n: N0.clone() }; cells.push(m);
+  });
+  const NC = cells.length;
+
+  const nozzle = makeNozzle(grp);
+  const mortarJet = makeJet(140, own(M.fill), grp);
+  const waterJet = makeJet(90, M.drop, grp, 0.45);
+  const target = V(), from = V();
+
+  const L = (u, v, off) => () => grp.localToWorld(at(u, v, off));
+  return {
+    camera: o.camera,
+    labels: [
+      { text: o.baseLabel, pos: () => grp.localToWorld(o.baseAt.clone()) },
+      { text: 'Арматурная сетка', pos: L(0.72, 0.62, TH * 0.45), show: (st, k) => st === 2 || (st === 1 && k > 0.6) },
+      ...(o.anchors ? [{ text: 'Грунтовые анкеры', pos: L(o.anchors[0][0], o.anchors[0][1], TH * 0.45 + 0.06), show: (st, k) => st === 1 && k > 0.4 }] : []),
+      { text: 'Сопло торкрет-машины', pos: () => grp.localToWorld(from.clone()), show: (st, k) => st === 3 && k > 0.1 && k < 0.9 },
+      { text: P.layer + ' · 10–60 мм', pos: L(0.3, 0.35, TH), show: (st, k) => st === 4 || (st === 3 && k > 0.7) },
+    ],
+    apply({ s, step, t }) {
+      // 1: cleaning with air / water
+      debris(s[0]);
+      const sweep = (sv, a, b) => { const u = seg(sv, a, b) * 3, row = Math.min(2, Math.floor(u)), f = u - row; return [row % 2 ? 1 - f : f, 0.2 + 0.3 * row]; };
+      let nozOn = false;
+      if (step === 0 && s[0] > 0.05 && s[0] < 0.92) {
+        const [u, v] = sweep(s[0], 0.05, 0.92); target.copy(at(u, v)); from.copy(at(u, v, 1.5)); nozOn = true;
+        waterJet(true, from, target, t, 0.35);
+      } else if (step === 2 && s[2] > 0.05 && s[2] < 0.92) {
+        const [u, v] = sweep(s[2], 0.05, 0.92); target.copy(at(u, v)); from.copy(at(u, v, 1.5)); nozOn = true;
+        waterJet(true, from, target, t, 0.3);
+      } else waterJet(false);
+      wetBase(ease(seg(s[2], 0.1, 0.85)));
+
+      // 2: mesh + anchors
+      const mp = step > 1 ? 1 : step === 1 ? seg(s[1], 0.05, 0.85) : 0;
+      lines.forEach((m, i) => { m.visible = mp > i / lines.length; });
+      meshMat.opacity = 1;
+      anchors.forEach((g, i) => { g.visible = mp > i / Math.max(1, anchors.length) * 0.8; });
+
+      // 4: shotcreting
+      const ap = step > 3 ? NC : step === 3 ? seg(s[3], 0.08, 0.92) * NC : 0;
+      cells.forEach(m => {
+        const a = clamp01((ap - m.userData.idx) * 0.7);
+        m.visible = a > 0; m.scale.set(1, 1, Math.max(0.02, easeOut(a)));
+      });
+      if (step === 3 && s[3] > 0.04 && s[3] < 0.95) {
+        const c = cells[Math.min(NC - 1, Math.floor(ap))];
+        target.copy(c.position).addScaledVector(c.userData.n, TH * 0.5);
+        from.copy(target).addScaledVector(c.userData.n, 1.35).add(V(Math.sin(t * 5) * 0.08, Math.cos(t * 4) * 0.08, 0));
+        nozOn = true; mortarJet(true, from, target, t, 0.22);
+      } else mortarJet(false);
+      nozzle(nozOn, from, target.clone().sub(from).normalize().negate());
+
+      fillMat.color.copy(FILL_WET).lerp(FILL_CURED, ease(seg(s[4], 0.05, 0.8)));
+      fillMat.roughness = 0.45 + 0.5 * seg(s[4], 0.05, 0.8);
+    }
+  };
+}
+
+BUILDERS.tunnel = () => {
+  const R = 3.2;
+  return shotcreteBuilder({
+    nu: 18, nv: 7, th: 0.14, meshLines: [14, 6],
+    surf: (u, v, p, n) => { const a = PI * (0.05 + 0.9 * u), z = -2.4 + 4.8 * v; p.set(R * Math.cos(a), R * Math.sin(a), z); n.set(-Math.cos(a), -Math.sin(a), 0); },
+    context: () => {
+      const rock = own(M.gravel); rock.color.set(0xb8aea0);
+      const sh = new THREE.Shape();
+      sh.moveTo(-5.5, 0); sh.lineTo(-R, 0); sh.absarc(0, 0, R, PI, 0, true); sh.lineTo(5.5, 0); sh.lineTo(5.5, 5.6); sh.lineTo(-5.5, 5.6); sh.closePath();
+      mesh(new THREE.ExtrudeGeometry(sh, { depth: 5.2, bevelEnabled: false, curveSegments: 64 }), rock).position.z = -2.6;
+      box(-5.5, 5.5, -0.4, 0, -2.6, 6, M.road);
+      for (const x of [-0.75, 0.75]) box(x - 0.05, x + 0.05, 0, 0.1, -2.6, 6, M.steel);
+      return { baseMat: rock };
+    },
+    baseLabel: 'Горная порода', baseAt: V(-4.0, 4.4, 2.6),
+    camera: { a: 0.22, r: 13, h: 3.0, ty: 2.1 },
+  });
+};
+BUILDERS.slope = () => {
+  const L = 5;
+  return shotcreteBuilder({
+    nu: 14, nv: 9, th: 0.13, meshLines: [12, 8], seed: 8,
+    place: g => { g.rotation.x = -0.62; },
+    surf: (u, v, p, n) => { p.set(-3.2 + 6.4 * u, 0.25 + (L - 0.5) * v, 0); n.set(0, 0, 1); },
+    anchors: [[0.15, 0.2], [0.5, 0.2], [0.85, 0.2], [0.15, 0.55], [0.5, 0.55], [0.85, 0.55], [0.15, 0.88], [0.5, 0.88], [0.85, 0.88]],
+    context: g => {
+      const soil = own(M.soil);
+      box(-3.5, 3.5, 0, L, -2.5, 0, soil, g);
+      box(-4.5, 4.5, -0.4, 0, -0.5, 4.5, M.road);
+      const top = L * Math.cos(0.62), back = -L * Math.sin(0.62);
+      box(-3.5, 3.5, top - 1.2, top, back - 3, back + 0.02, M.soil);
+      const grass = own(M.tile); grass.map = null; grass.color.set(0x6f9a4a);
+      box(-3.5, 3.5, top, top + 0.06, back - 3, back + 0.02, grass);
+      return { baseMat: soil };
+    },
+    baseLabel: 'Грунт откоса', baseAt: V(3.5, 1.2, -0.6),
+    camera: { a: 0.55, r: 12, h: 4.6, ty: 1.9, tz: -1 },
+  });
+};
+BUILDERS.tankwall = () => shotcreteBuilder({
+  nu: 14, nv: 8, th: 0.12, meshLines: [12, 7], seed: 4,
+  surf: (u, v, p, n) => { p.set(-3.2 + 6.4 * u, 0.2 + 3.6 * v, 0); n.set(0, 0, 1); },
+  context: g => {
+    const wall = own(M.base);
+    mesh(extrudeZ(rectXY(-3.5, 3.5, -0.3, 4.1), 0.8), wall, g).position.z = -0.8;
+    box(-4.3, -3.5, -0.3, 4.1, -0.8, 3.5, M.base, g);
+    box(-4.5, 4.5, -0.4, 0, 0, 4.5, M.road);
+    return { baseMat: wall };
+  },
+  baseLabel: 'Стена резервуара', baseAt: V(2.6, 3.9, 0),
+  camera: { a: 0.42, r: 10.5, h: 3.1, ty: 1.9 },
+});
 
 /* ======================= scenario engine ======================= */
 const STEP = 4.5;                 // seconds per step
