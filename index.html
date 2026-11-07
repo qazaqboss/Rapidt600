@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rapid T600 — 3D-анатомия</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#121a22; --panel:#16202a; --line:#2a3642; --text:#e9eef2; --muted:#a8b3bd;
+    --accent:#e8774a; --accent-dark:#7a3a20; --yellow:#f2c230; --red:#d33c3c;
+    --scene-bg:#efefea;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+  button{font:inherit;color:inherit;cursor:pointer}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 16px 40px}
+
+  /* ---------- header ---------- */
+  .head{display:grid;grid-template-columns:200px 1fr auto;gap:32px;align-items:start}
+  .bag{position:relative;width:170px;height:240px;margin:0 auto}
+  .bag .body{position:absolute;inset:0 0 22px 0;border-radius:10px 10px 6px 6px;
+    background:linear-gradient(180deg,#b08a55 0%,#9c7344 40%,#8d6538 100%);
+    clip-path:polygon(4% 0,96% 0,100% 100%,0 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
+  .bag .brand{position:absolute;top:30px;left:16px;background:var(--yellow);color:#111;font:800 11px Unbounded;padding:3px 6px}
+  .bag .band{position:absolute;top:78px;left:-2px;right:-2px;height:72px;background:var(--accent);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:4px}
+  .bag .band b{font:800 22px Unbounded;color:#fff}
+  .bag .band span{font:600 11px 'JetBrains Mono';color:#fff;opacity:.9;margin-top:4px}
+  .bag .kg{position:absolute;bottom:52px;width:100%;text-align:center;font:600 15px 'JetBrains Mono';color:#f6ead8}
+  .bag .shadow{position:absolute;bottom:0;left:10px;right:10px;height:18px;border-radius:50%;background:#2a3540}
+  .tag{display:inline-block;background:var(--accent-dark);color:#ffb08c;font:600 12px 'JetBrains Mono';letter-spacing:.12em;padding:5px 10px;border-radius:4px}
+  h1{font:800 clamp(32px,5.4vw,58px)/1.05 Unbounded;margin:12px 0 6px}
+  .was{font:400 14px 'JetBrains Mono';color:var(--muted)}
+  .desc{font-size:clamp(16px,1.8vw,20px);line-height:1.55;color:#c9d2da;max-width:760px;margin:16px 0}
+  .price{font:600 clamp(26px,3.4vw,38px) 'JetBrains Mono'}
+  .price-sub{font:400 13px 'JetBrains Mono';color:var(--muted);margin-top:6px}
+  .close{border:2px solid #fff;background:transparent;border-radius:999px;padding:10px 20px;font-weight:700;font-size:17px;outline:3px solid var(--yellow);outline-offset:3px}
+
+  /* ---------- viewer ---------- */
+  .sec-title{font:600 14px 'JetBrains Mono';letter-spacing:.2em;color:#c8d0d6;margin:34px 0 12px}
+  .viewer{position:relative;width:100%;aspect-ratio:16/9;min-height:320px;background:var(--scene-bg);overflow:hidden;border-radius:2px}
+  .viewer canvas{display:block;width:100%;height:100%}
+  .viewer.interactive canvas{cursor:grab}
+  .progress{position:absolute;top:0;left:0;height:4px;background:var(--red);width:0;z-index:3}
+  .labels{position:absolute;inset:0;pointer-events:none;z-index:2}
+  .lbl{position:absolute;left:0;top:0;transition:opacity .35s}
+  .lbl i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+  .lbl s{position:absolute;left:0;top:0;width:22px;height:1.5px;background:#555;transform-origin:0 0;transform:rotate(-40deg)}
+  .lbl span{position:absolute;left:16px;top:-46px;white-space:nowrap;background:#fbfbf8;color:#222;
+    border:1.5px solid #8a8a86;border-radius:3px;padding:5px 10px;font:600 clamp(11px,1.3vw,15px) Inter;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+  .caption{position:absolute;left:2%;right:2%;bottom:3%;z-index:3;display:flex;gap:12px;align-items:center;
+    background:rgba(250,250,247,.94);border:1px solid #cfcfca;border-radius:4px;padding:10px 14px;color:#222;font:600 clamp(12px,1.5vw,17px) Inter}
+  .caption b{background:#1d242b;color:#fff;font:600 12px 'JetBrains Mono';padding:4px 7px;border-radius:3px;flex:none}
+  .hint{position:absolute;top:14px;right:14px;z-index:3;background:rgba(29,36,43,.85);color:#fff;font:500 12px Inter;padding:6px 10px;border-radius:4px;opacity:0;transition:opacity .3s}
+  .viewer.interactive .hint{opacity:1}
+
+  .ctrls{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+  .btn{background:transparent;border:2px solid #e9eef2;border-radius:999px;padding:10px 22px;font-weight:700;font-size:16px}
+  .btn.on{background:#e9eef2;color:var(--bg)}
+  .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .step{text-align:left;background:transparent;border:1.5px solid var(--line);border-radius:22px;padding:12px 18px;color:#c9d2da;font-size:15px;line-height:1.4;display:flex;gap:10px;transition:border-color .2s,background .2s}
+  .step em{font-style:normal;font-family:'JetBrains Mono';color:var(--muted)}
+  .step.active{border-color:var(--accent);background:rgba(232,119,74,.08);color:#fff}
+
+  .reopen{display:none;margin:60px auto;max-width:420px;text-align:center}
+  .reopen .btn{margin-top:16px}
+  body.closed .wrap{display:none}
+  body.closed .reopen{display:block}
+
+  @media (max-width:760px){
+    .head{grid-template-columns:1fr;gap:12px}
+    .bag{transform:scale(.75);height:200px;margin:-20px auto -10px}
+    .close{position:absolute;top:16px;right:16px;padding:8px 14px;font-size:14px}
+    .steps{grid-template-columns:1fr}
+    .viewer{aspect-ratio:4/3}
+    .lbl span{top:-38px;padding:3px 7px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="bag" aria-hidden="true">
+      <div class="body"></div>
+      <div class="brand" id="bagBrand">RAPID</div>
+      <div class="band"><b id="bagName">T600</b><span id="bagCat">Ремонт бетона</span></div>
+      <div class="kg" id="bagKg">25 кг</div>
+      <div class="shadow"></div>
+    </div>
+    <div>
+      <span class="tag" id="tag">РЕМОНТ БЕТОНА</span>
+      <h1 id="title">Rapid T600</h1>
+      <div class="was" id="was"></div>
+      <p class="desc" id="desc"></p>
+      <div class="price" id="price"></div>
+      <div class="price-sub" id="priceSub"></div>
+    </div>
+    <button class="close" id="closeBtn">Закрыть ✕</button>
+  </div>
+
+  <div class="sec-title">3D-АНАТОМИЯ: КАК И КУДА НАНОСИТЬ</div>
+  <div class="viewer" id="viewer">
+    <div class="progress" id="progress"></div>
+    <div class="labels" id="labels"></div>
+    <div class="hint">Вращайте мышью / пальцем · колесо — масштаб</div>
+    <div class="caption"><b id="capNum">1/4</b><span id="capText"></span></div>
+  </div>
+  <div class="ctrls">
+    <button class="btn" id="btn3d">Интерактивный 3D</button>
+    <button class="btn" id="btnPlay">Пауза</button>
+  </div>
+  <div class="steps" id="steps"></div>
+</div>
+
+<div class="reopen">
+  <h2 style="font:800 28px Unbounded">Rapid T600</h2>
+  <button class="btn" id="openBtn">Открыть 3D-анатомию</button>
+</div>
+
+<script>
+/* ======================================================================
+   НАСТРОЙКИ ПРОДУКТА — правьте тексты здесь
+   ====================================================================== */
+window.PRODUCT = {
+  brand: 'RAPID',
+  name: 'Rapid T600',
+  bagName: 'T600',
+  category: 'РЕМОНТ БЕТОНА',
+  bagCategory: 'Ремонт бетона',
+  weight: '25 кг',
+  formerly: '',                         // напр. 'ранее: ...'
+  description: 'Наливной быстротвердеющий высокопрочный ремонтный состав: ремонт дорожного бетона, установка люков и бордюров, ремонт колодцев.',
+  price: 'Цена по запросу',             // напр. '7 500 ₸'
+  priceSub: 'розница KZ',               // напр. '≈ 300 ₸ за кг · розница KZ'
+  layerLabel: 'Rapid T600',             // подпись на слое; можно добавить толщину: 'Rapid T600 · 20–50 мм'
+  steps: [
+    'Вырубка разрушенного бетона и асфальта вокруг люка, очистка и увлажнение основания',
+    'Рама люка выставляется в проектное положение по уровню дороги',
+    'Наливной Rapid T600 заливается в зазор вокруг рамы до уровня покрытия',
+    'Состав быстро набирает прочность — движение открывается в кратчайшие сроки'
+  ]
+};
+</script>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const P = window.PRODUCT;
+const $ = id => document.getElementById(id);
+
+/* ---------- fill texts ---------- */
+$('bagBrand').textContent = P.brand;
+$('bagName').textContent = P.bagName;
+$('bagCat').textContent = P.bagCategory;
+$('bagKg').textContent = P.weight;
+$('tag').textContent = P.category;
+$('title').textContent = P.name;
+$('was').textContent = P.formerly;
+$('desc').textContent = P.description;
+$('price').textContent = P.price;
+$('priceSub').textContent = P.priceSub;
+document.title = P.name + ' — 3D-анатомия';
+
+const stepsEl = $('steps');
+P.steps.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'step';
+  b.innerHTML = `<em>${i + 1}.</em><span></span>`;
+  b.querySelector('span').textContent = s;
+  b.onclick = () => { time = i * STEP + 0.01; };
+  stepsEl.appendChild(b);
+});
+
+$('closeBtn').onclick = () => document.body.classList.add('closed');
+$('openBtn').onclick = () => { document.body.classList.remove('closed'); resize(); };
+
+/* ---------- timing ---------- */
+const STEP = 4.5;                 // seconds per step
+const N = P.steps.length;
+const TOTAL = STEP * N;
+let time = 0, playing = true, interactive = false;
+
+/* ---------- helpers ---------- */
+const clamp01 = x => Math.min(1, Math.max(0, x));
+const seg = (x, a, b) => clamp01((x - a) / (b - a));
+const ease = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+function rand(seed) { let s = seed; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+
+/* ---------- renderer ---------- */
+const viewer = $('viewer');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+viewer.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xefefea);
+const camera = new THREE.PerspectiveCamera(32, 16 / 9, 0.1, 200);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enabled = false;
+controls.enableDamping = true;
+controls.target.set(0, 0, 0);
+controls.minDistance = 5; controls.maxDistance = 30;
+controls.maxPolarAngle = Math.PI * 0.49;
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a80, 1.4));
+const sun = new THREE.DirectionalLight(0xffffff, 2.2);
+sun.position.set(-6, 12, 7);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 8, bottom: -8, near: 1, far: 40 });
+sun.shadow.bias = -0.0005;
+scene.add(sun);
+
+/* ---------- textures ---------- */
+function noiseTexture(base, spread, dots, size = 512, rep = 4) {
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const g = c.getContext('2d');
+  g.fillStyle = base; g.fillRect(0, 0, size, size);
+  const r = rand(7);
+  for (let i = 0; i < dots; i++) {
+    const v = Math.floor(r() * spread);
+    const light = r() > .5;
+    g.fillStyle = light ? `rgba(255,255,255,${0.05 + v / 900})` : `rgba(0,0,0,${0.08 + v / 700})`;
+    const s = 0.6 + r() * 2.2;
+    g.fillRect(r() * size, r() * size, s, s);
+  }
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(rep, rep);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+const asphaltTex = noiseTexture('#3b3d40', 120, 26000, 512, 0.35);
+const concreteTex = noiseTexture('#9a9a94', 80, 9000, 256, 0.6);
+
+const M = {
+  asphalt: new THREE.MeshStandardMaterial({ map: asphaltTex, roughness: .95 }),
+  base:    new THREE.MeshStandardMaterial({ map: concreteTex, roughness: .9, color: 0xcfcfc8 }),
+  metal:   new THREE.MeshStandardMaterial({ color: 0x55585c, roughness: .55, metalness: .6 }),
+  cover:   new THREE.MeshStandardMaterial({ color: 0x5f6266, roughness: .6, metalness: .5 }),
+  old:     new THREE.MeshStandardMaterial({ color: 0x8b8a84, roughness: 1, transparent: true }),
+  fill:    new THREE.MeshStandardMaterial({ color: 0xc9b9a0, roughness: .35, metalness: 0 }),
+  stream:  new THREE.MeshStandardMaterial({ color: 0xcdbb9e, roughness: .3 }),
+  bucket:  new THREE.MeshStandardMaterial({ color: 0xf4f4f2, roughness: .45, side: THREE.DoubleSide, transparent: true }),
+  shaft:   new THREE.MeshStandardMaterial({ color: 0x3a3a38, roughness: 1, side: THREE.BackSide }),
+  mark:    new THREE.MeshStandardMaterial({ color: 0xf4f4f0, roughness: .7 }),
+  car:     new THREE.MeshStandardMaterial({ color: 0xe8774a, roughness: .4, metalness: .2, transparent: true }),
+  glass:   new THREE.MeshStandardMaterial({ color: 0x2b3742, roughness: .2, metalness: .3, transparent: true }),
+  tire:    new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: .9, transparent: true }),
+};
+
+/* ---------- geometry helpers ---------- */
+function squareShape(s) {
+  const h = s / 2, sh = new THREE.Shape();
+  sh.moveTo(-h, -h); sh.lineTo(h, -h); sh.lineTo(h, h); sh.lineTo(-h, h); sh.closePath();
+  return sh;
+}
+function squarePath(s) {
+  const h = s / 2, p = new THREE.Path();
+  p.moveTo(-h, -h); p.lineTo(-h, h); p.lineTo(h, h); p.lineTo(h, -h); p.closePath();
+  return p;
+}
+function slab(outer, hole, depth, circle = false) {
+  const sh = squareShape(outer);
+  if (circle) { const p = new THREE.Path(); p.absarc(0, 0, hole, 0, Math.PI * 2, true); sh.holes.push(p); }
+  else sh.holes.push(squarePath(hole));
+  const g = new THREE.ExtrudeGeometry(sh, { depth, bevelEnabled: false, curveSegments: 48 });
+  g.rotateX(-Math.PI / 2);
+  return g;
+}
+const shadowy = m => { m.castShadow = m.receiveShadow = true; return m; };
+
+/* ---------- dimensions ---------- */
+const SLAB = 10, ASPH_H = 0.42, BASE_H = 1.3;
+const POCKET = 2.8;            // cut-out around the frame
+const FRAME_OUT = 2.0, FRAME_IN = 1.55, FRAME_H = ASPH_H;
+const SHAFT_R = 0.72;
+
+/* ---------- road ---------- */
+const base = shadowy(new THREE.Mesh(slab(SLAB, SHAFT_R, BASE_H, true), M.base));
+base.position.y = -BASE_H; scene.add(base);
+const asphalt = shadowy(new THREE.Mesh(slab(SLAB, POCKET, ASPH_H), M.asphalt));
+scene.add(asphalt);
+const shaft = new THREE.Mesh(new THREE.CylinderGeometry(SHAFT_R, SHAFT_R, BASE_H, 48, 1, true), M.shaft);
+shaft.position.y = -BASE_H / 2; scene.add(shaft);
+
+// lane markings
+for (let i = 0; i < 4; i++) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.01, 1.2), M.mark);
+  m.position.set(-3.6, ASPH_H + 0.005, -3.9 + i * 2.6);
+  m.receiveShadow = true; scene.add(m);
+}
+
+/* ---------- manhole frame + cover ---------- */
+const frame = new THREE.Group(); scene.add(frame);
+frame.add(shadowy(new THREE.Mesh(slab(FRAME_OUT, FRAME_IN, FRAME_H), M.metal)));
+const cover = new THREE.Group(); frame.add(cover);
+const disc = shadowy(new THREE.Mesh(new THREE.CylinderGeometry(0.72, 0.72, 0.08, 64), M.cover));
+disc.position.y = FRAME_H - 0.06; cover.add(disc);
+const ribs = new THREE.Group(); cover.add(ribs);
+for (let i = -4; i <= 4; i++) {
+  const len = 2 * Math.sqrt(Math.max(0, 0.62 * 0.62 - (i * 0.13) ** 2));
+  const r = shadowy(new THREE.Mesh(new THREE.BoxGeometry(len, 0.03, 0.05), M.metal));
+  r.position.set(0, FRAME_H - 0.005, i * 0.13);
+  ribs.add(r);
+}
+// inner ledge so the cover looks seated
+const ledge = new THREE.Mesh((() => {
+  const sh = squareShape(FRAME_IN), p = new THREE.Path(); p.absarc(0, 0, 0.68, 0, Math.PI * 2, true); sh.holes.push(p);
+  const g = new THREE.ExtrudeGeometry(sh, { depth: 0.06, bevelEnabled: false, curveSegments: 48 }); g.rotateX(-Math.PI / 2); return g;
+})(), M.metal);
+ledge.position.y = FRAME_H - 0.14; frame.add(ledge);
+
+/* ---------- old damaged concrete (step 1) ---------- */
+const debris = [];
+{
+  const r = rand(42);
+  const half = POCKET / 2, inner = FRAME_OUT / 2;
+  for (let i = 0; i < 70; i++) {
+    let x, z;
+    do { x = (r() * 2 - 1) * half * 0.94; z = (r() * 2 - 1) * half * 0.94; }
+    while (Math.max(Math.abs(x), Math.abs(z)) < inner + 0.05);
+    const s = 0.12 + r() * 0.2;
+    const g = new THREE.DodecahedronGeometry(s, 0);
+    g.scale(1, 0.7 + r() * 0.8, 1);
+    const m = shadowy(new THREE.Mesh(g, M.old.clone()));
+    const y = s * 0.5 + r() * (ASPH_H - s * 0.5);
+    m.userData = {
+      p0: new THREE.Vector3(x, y, z),
+      v: new THREE.Vector3(x * (1.2 + r()), 3 + r() * 2.5, z * (1.2 + r())),
+      rot: new THREE.Vector3(r() * 6, r() * 6, r() * 6),
+      start: 0.08 + r() * 0.5
+    };
+    m.rotation.set(r() * 3, r() * 3, r() * 3);
+    scene.add(m); debris.push(m);
+  }
+}
+
+/* ---------- repair mortar (fill) ---------- */
+const fill = shadowy(new THREE.Mesh(slab(POCKET - 0.005, FRAME_OUT + 0.005, ASPH_H - 0.005), M.fill));
+fill.position.y = 0.001; scene.add(fill);
+const wet = new THREE.Color(0xb9a585), cured = new THREE.Color(0xb4b4ae);
+
+/* ---------- bucket ---------- */
+const bucketPivot = new THREE.Group();            // pivot at lip edge
+bucketPivot.position.set(-1.25, 1.65, 1.25);
+scene.add(bucketPivot);
+const bucket = new THREE.Group(); bucketPivot.add(bucket);
+const BR = 0.42, BH = 0.85;
+const pail = shadowy(new THREE.Mesh(new THREE.CylinderGeometry(BR, BR * 0.8, BH, 40, 1, true), M.bucket));
+pail.position.set(-BR, -BH / 2, 0); bucket.add(pail);
+const bottom = shadowy(new THREE.Mesh(new THREE.CircleGeometry(BR * 0.8, 40), M.bucket));
+bottom.rotation.x = Math.PI / 2; bottom.position.set(-BR, -BH, 0); bucket.add(bottom);
+const handle = new THREE.Mesh(new THREE.TorusGeometry(BR, 0.015, 8, 40, Math.PI), M.metal);
+handle.position.set(-BR, 0, 0); handle.rotation.y = Math.PI / 2; bucket.add(handle);
+const mortarIn = new THREE.Mesh(new THREE.CircleGeometry(BR * 0.92, 40), M.stream);
+mortarIn.rotation.x = -Math.PI / 2; mortarIn.position.set(-BR, -0.1, 0); bucket.add(mortarIn);
+bucketPivot.rotation.y = -Math.PI / 4;           // face toward the pocket corner
+
+const stream = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.075, 1, 16), M.stream);
+stream.castShadow = true; scene.add(stream);
+const puddle = new THREE.Mesh(new THREE.CircleGeometry(0.18, 24), M.stream);
+puddle.rotation.x = -Math.PI / 2; scene.add(puddle);
+
+/* ---------- car (step 4) ---------- */
+const car = new THREE.Group(); scene.add(car);
+{
+  const body = shadowy(new THREE.Mesh(new THREE.BoxGeometry(2.1, 0.42, 1.0), M.car)); body.position.y = 0.38; car.add(body);
+  const cab = shadowy(new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.36, 0.9), M.glass)); cab.position.set(-0.1, 0.76, 0); car.add(cab);
+  for (const [x, z] of [[-0.68, .5], [0.68, .5], [-0.68, -.5], [0.68, -.5]]) {
+    const w = shadowy(new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.16, 20), M.tire));
+    w.rotation.x = Math.PI / 2; w.position.set(x, 0.2, z); car.add(w);
+  }
+}
+
+/* ---------- labels ---------- */
+const labelDefs = [
+  { text: 'Асфальт',        pos: new THREE.Vector3(-2.6, ASPH_H, -2.2), show: s => true },
+  { text: 'Основание',      pos: new THREE.Vector3(-SLAB/2, -BASE_H * 0.45, 0.8), show: s => s === 0 },
+  { text: 'Рама люка',      pos: new THREE.Vector3(FRAME_OUT/2, FRAME_H, -FRAME_OUT/2 + 0.2), show: s => s >= 1, follow: frame },
+  { text: P.layerLabel,     pos: new THREE.Vector3(POCKET/2 - 0.2, ASPH_H, POCKET/2 - 0.15), show: s => s >= 2 },
+];
+const labelsEl = $('labels');
+labelDefs.forEach(d => {
+  const el = document.createElement('div'); el.className = 'lbl';
+  el.innerHTML = '<s></s><i></i><span></span>';
+  el.querySelector('span').textContent = d.text;
+  labelsEl.appendChild(el); d.el = el;
+});
+const tmp = new THREE.Vector3();
+function updateLabels(step) {
+  const w = viewer.clientWidth, h = viewer.clientHeight;
+  labelDefs.forEach(d => {
+    tmp.copy(d.pos);
+    if (d.follow) tmp.y += d.follow.position.y;
+    tmp.project(camera);
+    const vis = d.show(step) && tmp.z < 1;
+    d.el.style.opacity = vis ? 1 : 0;
+    d.el.style.transform = `translate(${(tmp.x * .5 + .5) * w}px, ${(-tmp.y * .5 + .5) * h}px)`;
+  });
+}
+
+/* ---------- scene state as a pure function of time ---------- */
+const up = new THREE.Vector3(0, 1, 0), lip = new THREE.Vector3(), dir = new THREE.Vector3();
+function apply(t) {
+  const step = Math.min(N - 1, Math.floor(t / STEP));
+  const k = (t - step * STEP) / STEP;      // 0..1 within step
+  const s = i => (step > i ? 1 : step < i ? 0 : k);
+  const s1 = s(0), s2 = s(1), s3 = s(2), s4 = s(3);
+
+  // step 1: debris flies out, old frame (sunken & tilted) is lifted
+  debris.forEach(m => {
+    const u = m.userData, dt = Math.max(0, (s1 - u.start) * STEP * 0.55);
+    m.position.copy(u.p0).addScaledVector(u.v, dt); m.position.y -= 4.9 * dt * dt;
+    m.rotation.set(u.rot.x * dt, u.rot.y * dt, u.rot.z * dt);
+    const fade = clamp01(1 - dt * 1.6);
+    m.material.opacity = fade; m.visible = fade > 0.01;
+  });
+  const lift = ease(seg(s1, 0.65, 1));
+  const lower = ease(seg(s2, 0.1, 0.85));
+  frame.position.y = -0.09 + lift * 1.5 - lower * (1.5 - 0.09);
+  frame.rotation.z = 0.07 * (1 - lift) + 0.05 * lift * (1 - lower);
+  frame.rotation.x = -0.04 * (1 - lower);
+  frame.position.x = 0.04 * (1 - lower);
+
+  // step 3: bucket pours, mortar rises
+  const appear = seg(s3, 0, 0.12), vanish = seg(s3, 0.9, 1) + (step > 2 ? 1 : 0);
+  const bucketVis = step === 2 && appear > 0 && vanish < 1;
+  bucket.visible = bucketVis;
+  M.bucket.opacity = Math.min(appear, 1 - vanish);
+  const tilt = ease(seg(s3, 0.08, 0.28)) * (1 - ease(seg(s3, 0.8, 0.92)));
+  bucketPivot.rotation.z = -tilt * 1.95;
+  bucketPivot.position.y = 1.85 - (1 - appear) * 0.5;
+  mortarIn.visible = s3 < 0.82;
+
+  const rise = easeOut(seg(s3, 0.25, 0.85));
+  fill.visible = rise > 0.002 || step > 2;
+  fill.scale.y = Math.max(0.002, step > 2 ? 1 : rise);
+
+  const pouring = step === 2 && s3 > 0.25 && s3 < 0.84;
+  stream.visible = puddle.visible = pouring;
+  if (pouring) {
+    bucketPivot.updateMatrixWorld(true);
+    lip.set(0, 0, 0).applyMatrix4(bucketPivot.matrixWorld);
+    const target = new THREE.Vector3(-1.2, Math.max(0.02, ASPH_H * rise), 1.2);
+    dir.subVectors(target, lip); const L = dir.length();
+    stream.scale.set(1, L, 1);
+    stream.position.copy(lip).addScaledVector(dir, 0.5);
+    stream.quaternion.setFromUnitVectors(up, dir.normalize());
+    puddle.position.copy(target).y += 0.004;
+    puddle.scale.setScalar(1 + Math.sin(t * 14) * 0.08);
+  }
+
+  // step 4: cure + traffic
+  M.fill.color.copy(wet).lerp(cured, ease(seg(s4, 0, 0.45)));
+  M.fill.roughness = 0.35 + 0.55 * seg(s4, 0, 0.45);
+  const drive = seg(s4, 0.35, 1);
+  car.visible = step === 3 && drive > 0;
+  const carFade = Math.min(seg(drive, 0, 0.1), 1 - seg(drive, 0.9, 1));
+  [M.car, M.glass, M.tire].forEach(m => m.opacity = carFade);
+  car.position.set(-6 + drive * 12, ASPH_H, 0.6);
+
+  return { step, k };
+}
+
+/* ---------- camera ---------- */
+function autoCamera(t) {
+  const a = -0.55 + Math.sin(t * 0.12) * 0.28;
+  const r = 16, h = 9.6 + Math.sin(t * 0.09) * 0.5;
+  camera.position.set(Math.sin(a) * r, h, Math.cos(a) * r);
+  camera.lookAt(0, -0.3, 0);
+}
+
+/* ---------- UI ---------- */
+const btn3d = $('btn3d'), btnPlay = $('btnPlay');
+btn3d.onclick = () => {
+  interactive = !interactive;
+  controls.enabled = interactive;
+  viewer.classList.toggle('interactive', interactive);
+  btn3d.classList.toggle('on', interactive);
+  btn3d.textContent = interactive ? 'Авто-камера' : 'Интерактивный 3D';
+  if (interactive) { controls.target.set(0, -0.3, 0); controls.update(); }
+};
+btnPlay.onclick = () => { playing = !playing; btnPlay.textContent = playing ? 'Пауза' : 'Играть'; };
+
+let lastStep = -1;
+function updateUI(step, t) {
+  $('progress').style.width = (t / TOTAL * 100) + '%';
+  if (step !== lastStep) {
+    lastStep = step;
+    $('capNum').textContent = `${step + 1}/${N}`;
+    $('capText').textContent = P.steps[step];
+    [...stepsEl.children].forEach((c, i) => c.classList.toggle('active', i === step));
+  }
+}
+
+/* ---------- loop ---------- */
+function resize() {
+  const w = viewer.clientWidth, h = viewer.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.fov = w / h < 1.5 ? 40 : 32;
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(viewer);
+resize();
+
+const clock = new THREE.Clock();
+let camT = 0;
+function frameLoop() {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  if (playing) time = (time + dt) % TOTAL;
+  camT += dt;
+  const { step } = apply(time);
+  if (interactive) controls.update(); else autoCamera(camT);
+  renderer.render(scene, camera);
+  updateLabels(step);
+  updateUI(step, time);
+  requestAnimationFrame(frameLoop);
+}
+// expose for debugging / screenshots
+window.__seek = t => { time = t; };
+frameLoop();
+</script>
+</body>
+</html>
