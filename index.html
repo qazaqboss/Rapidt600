@@ -586,6 +586,19 @@ window.PRODUCTS = [{
       { text: 'Инъекция снизу вверх — суспензия заполняет пустоты и швы кладки', badge: '0,6–0,8 л/кг · снизу вверх' },
       { text: 'Кладка консолидирована без вскрытия конструкции' },
     ]},
+    { id: 'well', tab: 'Скважина: изоляция пласта', steps: [
+      { text: 'Обводнённый интервал: пластовая вода через перфорацию поступает в скважину вместе с нефтью' },
+      { text: 'В скважину спускают НКТ и устанавливают пакер над интервалом изоляции' },
+      { text: 'Суспензию NanoCem UT-9 закачивают насосным агрегатом через НКТ' },
+      { text: 'Продавка в пласт: ультратонкие частицы (D95 ≤ 9 мкм) проникают в поры и трещины обводнённого интервала', badge: 'D50 ≈ 3,5 мкм · D95 ≤ 9 мкм' },
+      { text: 'Выдержка под давлением — камень отключил обводнённый пласт, в скважину поступает нефть', badge: 'время загустевания — по программе под t° пласта' },
+    ]},
+    { id: 'dam', tab: 'Фундамент ГЭС', steps: [
+      { text: 'Фильтрация воды из водохранилища под плотиной через трещиноватую скалу основания' },
+      { text: 'Из цементационной галереи бурят веер скважин в скальное основание' },
+      { text: 'Нагнетание суспензии в скважины ступенями по глубине — трещины скалы заполняются', badge: '0,5–1,0 л/кг · ступенями по глубине' },
+      { text: 'Цементационная завеса сформирована — фильтрация под плотиной остановлена', badge: 'W14–W16 · стойкость к сульфатам' },
+    ]},
   ]
 }];
 </script>
@@ -2434,6 +2447,169 @@ BUILDERS.masonry = () => {
       rig(k, t, step === 2 ? k : step > 2 ? 99 : 0);
       const cure = step === 3 ? ease(seg(s[3], 0.1, 0.8)) : 0;
       voids.forEach(v => { const f = v.y < level; v.m.material.color.copy(f ? FC : DC); if (f) v.m.material.color.lerp(CC, cure); v.m.position.z = f ? -0.12 : -0.145; });
+    }
+  };
+};
+
+
+// particles flowing along polylines
+function makeFlow(paths, n, mat, speed = 0.35, size = 0.045) {
+  const curves = paths.map(p => new THREE.CatmullRomCurve3(p));
+  const inst = new THREE.InstancedMesh(new THREE.SphereGeometry(size, 8, 6), mat, n); inst.frustumCulled = false; world.add(inst);
+  const r = rand(91), D = []; for (let i = 0; i < n; i++) D.push({ c: i % curves.length, o: r(), w: r(), j: V((r() - .5) * 0.08, (r() - .5) * 0.08, 0) });
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = V(1, 1, 1), p = V(), zero = V(0, 0, 0);
+  return (intensity, t, alive) => {
+    for (let i = 0; i < n; i++) {
+      const d = D[i], ph = (t * speed + d.o) % 1;
+      let on = intensity > d.w;
+      if (on) { curves[d.c].getPointAt(ph, p); p.add(d.j); if (alive && !alive(p, d.c, ph)) on = false; }
+      m4.compose(p, q, on ? sc : zero); inst.setMatrixAt(i, m4);
+    }
+    inst.instanceMatrix.needsUpdate = true;
+  };
+}
+
+BUILDERS.well = () => {
+  const RW = 0.45, RC = 0.3, D = 3;
+  const notch = () => { const sh = new THREE.Shape(); sh.moveTo(-4.5, 0); sh.lineTo(-RW, 0); sh.absarc(0, 0, RW, PI, 0, true); sh.lineTo(4.5, 0); sh.lineTo(4.5, D); sh.lineTo(-4.5, D); sh.closePath(); return sh; };
+  const layer = (y0, y1, base, color) => { const m = own(base); if (color) m.color.set(color); return prism(notch(), y0, y1, m); };
+  const L = { oil: [-4.2, -3.0], water: [-6.2, -5.0] };
+  layer(-0.8, 0, M.soil); layer(-2.2, -0.8, M.gravel, 0xcdb68e); layer(-3.0, -2.2, M.base, 0x9c978e);
+  layer(L.oil[0], L.oil[1], M.gravel, 0x5b4633); layer(-5.0, -4.2, M.base, 0x9c978e);
+  layer(L.water[0], L.water[1], M.gravel, 0x7a98b0); layer(-7.2, -6.2, M.base, 0xa59a8a);
+  const casMat = own(M.steel); casMat.side = THREE.DoubleSide;
+  mesh(new THREE.CylinderGeometry(RC, RC, 7.8, 32, 1, true, PI / 2, PI), casMat).position.y = -3.3;
+  const cem = own(M.mortar); cem.side = THREE.DoubleSide;
+  mesh(new THREE.CylinderGeometry(RW - 0.01, RW - 0.01, 7.6, 32, 1, true, PI / 2, PI), cem).position.y = -3.4;
+  // perforation channels on the section plane
+  const perf = (y, side) => { const g = new THREE.CylinderGeometry(0.035, 0.02, 0.9, 8); g.rotateZ(-side * PI / 2); const m = mesh(g, M.slit, null, false); m.position.set(side * (RW + 0.45), y, 0.012); return [V(side * (RW + 0.9), y, 0.04), V(side * RC, y, 0.04)]; };
+  const wPerf = [-5.3, -5.6, -5.9].flatMap(y => [perf(y, -1), perf(y, 1)]);
+  const oPerf = [-3.35, -3.6, -3.85].flatMap(y => [perf(y, -1), perf(y, 1)]);
+  // wellhead + pump
+  box(-4.5, 4.5, -0.02, 0.02, -D, 0, M.soil).visible = false;
+  mesh(new THREE.CylinderGeometry(0.22, 0.26, 0.6, 16), M.metal).position.y = 0.3;
+  mesh(new THREE.BoxGeometry(0.8, 0.12, 0.12), M.metal).position.y = 0.45;
+  const valveMat = own(M.bucket); valveMat.color.set(0xd33c3c); valveMat.side = THREE.FrontSide;
+  for (const x of [-0.4, 0.4]) mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.05, 16).rotateZ(PI / 2), valveMat).position.set(x, 0.45, 0);
+  const pump = makePump(2.6, 1.0, -0.4);
+  const hose = mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([pump.outlet(), V(1.6, 0.3, 0.7), V(0.6, 0.45, 0.2), V(0.45, 0.45, 0)]), 40, 0.03, 8), M.slit, null, false);
+  // tubing (semi-transparent so the flow is visible) + packer
+  const tubMat = own(M.steel); tubMat.transparent = true; tubMat.opacity = 0.45; tubMat.depthWrite = false;
+  const TB = -4.75, tg = new THREE.CylinderGeometry(0.09, 0.09, 0.6 - TB, 16, 1, true); tg.translate(0, -(0.6 - TB) / 2, 0);
+  const tubing = mesh(tg, tubMat, null, false); tubing.position.y = 0.6;
+  const rub = own(M.slit); rub.color.set(0x222222);
+  const packer = mesh(new THREE.CylinderGeometry(1, 1, 0.35, 24), rub); packer.position.y = -4.55;
+  // treatment zone in the water layer (half rings on the section)
+  const fillMat = own(M.fill), rings = [];
+  for (let r0 = RW; r0 < 2.6; r0 += 0.2) {
+    const m = prism(sectorShape(r0, r0 + 0.2, 0, PI), L.water[0] + 0.02, L.water[1] - 0.02, fillMat); m.position.z = 0.005; m.userData.r = r0; rings.push(m);
+  }
+  const waterMat = own(WATER_MAT), oilMat = own(WATER_MAT); oilMat.color.set(0x3b2a14); oilMat.opacity = 0.95;
+  const up = y => V(0, y, 0.04);
+  const waterFlow = makeFlow(wPerf.map(([a, b]) => [a, b, up(b.y + 0.5), up(b.y + 1.4)]), 90, waterMat, 0.45);
+  const oilFlow = makeFlow(oPerf.map(([a, b]) => [a, b, up(b.y + 0.5), up(b.y + 1.4)]), 70, oilMat, 0.4);
+  const groutMat = own(M.fill);
+  const groutDown = makeFlow([[V(0, 0.5, 0.03), V(0, -2, 0.03), V(0, TB - 0.05, 0.03)]], 70, groutMat, 0.5, 0.04);
+  const groutOut = makeFlow(wPerf.map(([a, b]) => [V(0, TB - 0.1, 0.04), b, a]), 80, groutMat, 0.55, 0.04);
+  return {
+    camera: { a: 0.3, r: 18.5, h: 0.8, ty: -3.0, tx: 0.5 },
+    labels: [
+      { text: 'Обсадная колонна', pos: V(-RC, -1.0, 0) },
+      { text: 'Продуктивный нефтенасыщенный пласт', pos: V(-3.6, -3.6, 0) },
+      { text: 'Обводнённый пласт', pos: V(-3.6, -5.6, 0) },
+      { text: 'Перфорация', pos: V(RW + 0.5, -5.6, 0.02), show: st => st === 0 },
+      { text: 'НКТ', pos: V(0.09, -2.4, 0), show: st => st === 1 || st === 2 },
+      { text: 'Пакер', pos: V(0.28, -4.55, 0), show: st => st >= 1 && st <= 3 },
+      { text: 'Насосный агрегат', pos: () => pump.gauge(), show: st => st === 2 || st === 3 },
+      { text: 'Изоляционный экран ' + P.layer, pos: V(1.6, -5.6, 0.02), show: (st, k) => st === 4 || (st === 3 && k > 0.5) },
+    ],
+    apply({ s, step, t }) {
+      const tin = step > 1 ? 1 : step === 1 ? ease(seg(s[1], 0.05, 0.6)) : 0;
+      tubing.visible = tin > 0.01; tubing.scale.y = Math.max(0.01, tin);
+      const pe = step > 1 ? 1 : step === 1 ? ease(seg(s[1], 0.65, 0.95)) : 0;
+      packer.visible = tin > 0.99; const pr = 0.11 + (RC - 0.12) * pe; packer.scale.set(pr, 1, pr);
+      hose.visible = step >= 2 && step <= 3;
+      pump.set(step === 2 || step === 3 ? 0.5 + 0.15 * Math.sin(t * 3) : step === 4 ? 0.35 * (1 - seg(s[4], 0.5, 1)) : 0);
+      // inflows
+      const wInt = step === 0 ? 1 : step === 1 ? 1 - seg(s[1], 0.6, 1) * 0.6 : 0;
+      waterFlow(wInt, t);
+      oilFlow(step === 0 ? 0.5 : step === 4 ? seg(s[4], 0.4, 0.9) : 0, t);
+      groutDown(step === 2 ? seg(s[2], 0.05, 0.3) : step === 3 ? 1 - seg(s[3], 0.8, 1) : 0, t);
+      const R = step > 3 ? 2.5 : step === 3 ? RW + (2.5 - RW) * easeOut(seg(s[3], 0.05, 0.9)) : step === 2 ? RW + 0.3 * seg(s[2], 0.6, 1) : 0;
+      groutOut(step === 3 ? 1 : step === 2 ? seg(s[2], 0.55, 0.8) : 0, t, p => Math.abs(p.x) < R + 0.05);
+      rings.forEach(m => { m.visible = m.userData.r < R; });
+      cureFill(fillMat, step === 4 ? ease(seg(s[4], 0.05, 0.6)) : 0); cureFill(groutMat, 0);
+    }
+  };
+};
+
+BUILDERS.dam = () => {
+  const D = 3;
+  const rock = own(M.gravel); rock.color.set(0xa89c8a);
+  box(-7.5, 7.5, -5.2, 0, -D, 0, rock);
+  // fractures on the section
+  const frMat = own(M.slit), FILLED = new THREE.Color(0xb9bcbb), DARK = M.slit.color.clone();
+  const r = rand(33), fr = [];
+  for (let i = 0; i < 26; i++) {
+    const x = -6.5 + r() * 13, y = -0.4 - r() * 4.4, L = 0.6 + r() * 1.4, a = (r() - .5) * 1.6;
+    const g = new THREE.BoxGeometry(L, 0.035, 0.01); const m = mesh(g, frMat, null, false);
+    m.position.set(x, y, 0.006); m.rotation.z = a; fr.push(m);
+  }
+  const frFill = own(M.fill), frFilled = [];
+  fr.forEach(m => { if (Math.abs(m.position.x + 1.5) < 1.9) { const f = mesh(m.geometry, frFill, null, false); f.position.copy(m.position); f.position.z += 0.002; f.rotation.copy(m.rotation); f.visible = false; frFilled.push(f); } });
+  // dam profile with grouting gallery, extruded along z
+  const sh = new THREE.Shape(); sh.moveTo(-2.6, 0); sh.lineTo(3.8, 0); sh.lineTo(-1.4, 5.2); sh.lineTo(-2.6, 5.2); sh.closePath();
+  const gal = new THREE.Path(); gal.moveTo(-2.1, 0.35); gal.lineTo(-2.1, 1.25); gal.lineTo(-1.3, 1.25); gal.lineTo(-1.3, 0.35); gal.closePath(); sh.holes.push(gal);
+  mesh(new THREE.ExtrudeGeometry(sh, { depth: D, bevelEnabled: false }), M.base).position.z = -D;
+  const res = own(WATER_MAT); res.opacity = 0.45; res.depthWrite = false;
+  box(-7.5, -2.6, 0, 4.6, -D, 0, res);
+  const tail = own(WATER_MAT); tail.opacity = 0.4; tail.depthWrite = false;
+  box(3.9, 7.5, 0, 0.5, -D, 0, tail);
+  // seepage paths under the dam
+  const paths = [0.9, 1.9, 3.0].map(dp => [V(-6, 0.1, 0.03), V(-4, -dp * 0.7, 0.03), V(-1.5, -dp, 0.03), V(1.5, -dp, 0.03), V(4.5, -dp * 0.5, 0.03), V(5.8, 0.15, 0.03)]);
+  const seep = makeFlow(paths, 150, own(WATER_MAT), 0.12, 0.05);
+  // fan of grout holes from the gallery
+  const holes = [-0.32, -0.16, 0, 0.16, 0.32].map(a => {
+    const top = V(-1.7, 0.35, 0.012), dir = V(Math.sin(a), -Math.cos(a), 0), len = 4.4 / Math.cos(a);
+    const g = new THREE.CylinderGeometry(0.03, 0.03, len, 8); g.translate(0, -len / 2, 0);
+    const m = mesh(g, M.slit, null, false); m.position.copy(top); m.quaternion.setFromUnitVectors(V(0, -1, 0), dir);
+    return { m, top, dir, len };
+  });
+  const rig = new THREE.Group(); world.add(rig); rig.position.set(-1.7, 0.35, 0.05);
+  const rigMat = own(M.bucket); rigMat.color.set(P.accent); rigMat.side = THREE.FrontSide;
+  mesh(new THREE.BoxGeometry(0.34, 0.24, 0.3), rigMat, rig).position.y = 0.55;
+  mesh(new THREE.BoxGeometry(0.05, 0.75, 0.05), M.metal, rig).position.set(0.15, 0.4, 0);
+  // grout bulbs along holes, stage by stage in depth
+  const STAGES = 5, bulbMat = own(M.fill), bulbs = [];
+  holes.forEach(h => { for (let k = 0; k < STAGES; k++) { const b = mesh(new THREE.CircleGeometry(1, 20), bulbMat, null, false); b.position.copy(h.top).addScaledVector(h.dir, h.len * (k + 0.5) / STAGES); b.position.z = 0.02; b.userData.k = k; bulbs.push(b); } });
+  const curtMat = own(M.fill); curtMat.transparent = true;
+  const curtain = mesh(new THREE.PlaneGeometry(2.3, 4.6), curtMat, null, false); curtain.position.set(-1.7, -2.05, 0.022);
+  return {
+    camera: { a: 0.22, r: 18.5, h: 2.6, ty: 0.2 },
+    labels: [
+      { text: 'Водохранилище', pos: V(-5.2, 3.6, 0) },
+      { text: 'Плотина ГЭС', pos: V(0.6, 3.2, 0) },
+      { text: 'Цементационная галерея', pos: V(-1.3, 1.25, 0), show: st => st === 1 || st === 2 },
+      { text: 'Трещиноватая скала основания', pos: V(3.6, -3.8, 0) },
+      { text: 'Фильтрация под плотиной', pos: V(1.5, -1.9, 0.03), show: st => st === 0 },
+      { text: 'Скважины завесы', pos: () => holes[4].top.clone().addScaledVector(holes[4].dir, 2.5), show: st => st === 1 },
+      { text: 'Цементационная завеса ' + P.layer, pos: V(-1.0, -2.4, 0.03), show: (st, k) => st === 3 || (st === 2 && k > 0.6) },
+    ],
+    apply({ s, step, t }) {
+      const [hk, hf] = seq(seg(s[1], 0.04, 0.96), holes.length);
+      holes.forEach((h, i) => { const sc = step > 1 ? 1 : step === 1 ? (i < hk ? 1 : i === hk ? ease(hf) : 0) : 0; h.m.visible = sc > 0.01; h.m.scale.y = Math.max(0.01, sc); });
+      rig.visible = step === 1 || step === 2;
+      if (step === 1) rig.rotation.z = Math.asin(holes[hk].dir.x);
+      const g = step > 2 ? STAGES : step === 2 ? seg(s[2], 0.04, 0.96) * STAGES : 0;
+      bulbs.forEach(b => { const a = clamp01(g - b.userData.k); b.visible = a > 0.01; b.scale.set(0.45 * easeOut(a), 0.5 * easeOut(a), 1); });
+      const gp = g / STAGES;
+      frFilled.forEach(f => { f.visible = -f.position.y / 4.8 < gp; });
+      const c = step === 3 ? ease(seg(s[3], 0.05, 0.5)) : 0; curtain.visible = c > 0.01; curtMat.opacity = 0.75 * c;
+      // seepage stops where the curtain reaches
+      const cutDepth = step > 2 ? 9 : 4.8 * gp;
+      seep(1, t, p => !(p.x > -1.9 && -p.y < cutDepth + 0.2));
+      cureFill(bulbMat, step === 3 ? ease(seg(s[3], 0.1, 0.8)) : 0); cureFill(curtMat, step === 3 ? ease(seg(s[3], 0.1, 0.8)) : 0);
+      cureFill(frFill, step === 3 ? ease(seg(s[3], 0.1, 0.8)) : 0);
     }
   };
 };
