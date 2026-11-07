@@ -513,6 +513,80 @@ window.PRODUCTS = [{
       { text: 'Выравнивание при необходимости и уход за поверхностью' },
     ]},
   ]
+}, {
+  id: 'ut9',
+  brand: 'EASYMIX',
+  name: 'EasyMix NanoCem UT-9',
+  short: 'NanoCem UT-9',
+  kind: 'инъекционный микроцемент',
+  image: 'assets/nanocem-ut9-bag.webp', imageSize: [473, 900],
+  accent: '#c3ccd6', accentRgb: '195,204,214',
+  title: [['NANOCEM', false], ['UT-9', true]],
+  category: 'ИНЪЕКЦИОННАЯ СМЕСЬ · МИКРОЦЕМЕНТ',
+  subtitle: 'Ультрадисперсный цементный порошок',
+  subtitleKz: 'Ультрадисперсті цемент ұнтағы',
+  kpis: [
+    ['crack', '≥ 0,1 мм', 'ширина инъектируемой трещины'],
+    ['chart', '65–75 МПа', 'прочность через 28 суток'],
+    ['drop', 'W14–W16', 'водонепроницаемость'],
+    ['clock', '4–5 ч', 'жизнеспособность суспензии'],
+  ],
+  uses: ['Трещины в бетоне', 'Инъекционная гидроизоляция', 'Тоннели и шахты', 'Грунты и основания', 'Кладка', 'Скважины (РИР)', '🇰🇿 Сделано в Казахстане · Актобе'],
+  description: 'Ультратонкая сухая инъекционная смесь на цементной основе: D50 ≈ 3,5 мкм, D95 ≤ 9 мкм — в 5–10 раз мельче обычного цемента. Текучую суспензию закачивают под давлением в трещины, пустоты и поры, где она твердеет в плотный водонепроницаемый камень и восстанавливает монолитность конструкции. Минеральная, работает во влажных трещинах и не стареет, как смолы.',
+  price: 'Цена по запросу',
+  priceSub: 'мешок 25 кг · биг-бэг 1 000 кг · навалом',
+  layer: 'NanoCem UT-9',
+  specTitle: 'ТЕХНИЧЕСКИЕ ДАННЫЕ · +20…+25 °C',
+  calc: { mode: 'grout', dryDensity: 2.95, labelA: 'Объём заполнения (трещины, пустоты), л', labelB: 'Вода, л на 1 кг смеси', defA: 50, defB: 0.6, stepB: 0.05,
+          note: 'Ориентировочно: объём суспензии = объём сухой смеси (2,95 г/см³) + вода, без учёта потерь. Вода: трещины 0,5–0,8 л/кг, заобделочное 0,4–0,6, завеса 0,6–1,0, пески 0,8–1,5, анкеры 0,35–0,45.' },
+  specs: [
+    ['3,5 / 9 мкм', 'тонкость помола D50 / D95'],
+    ['≥ 0,1 мм', 'мин. ширина трещины'],
+    ['4–5 ч', 'жизнеспособность суспензии'],
+    ['~60 мин', 'начало твердения'],
+    ['≥ 12 МПа', 'прочность через 24 ч'],
+    ['65–75 МПа', 'прочность через 28 сут'],
+    ['≥ 2,5 МПа', 'адгезия к бетону'],
+    ['W14–W16', 'водонепроницаемость'],
+    ['1,85–1,95', 'плотность суспензии, г/см³'],
+    ['pH 11–13', 'суспензия'],
+    ['от +5 °C', 'температура применения'],
+    ['12 мес', 'срок хранения'],
+  ],
+  footer: 'Производитель: ТОО «ЭкоМикс» (бренд EasyMix), Казахстан, г. Актобе, Промзона 679/17 · Тел.: 8 747 111 19 64 · <a href="mailto:info@easymix.kz">info@easymix.kz</a> · <a href="https://nanocem.app" target="_blank" rel="noopener">nanocem.app</a> · СТ ТОО 171140033124-001-2025<br>Для подвижных трещин нужен эластичный состав. Сильную напорную течь сначала останавливают гидропломбой WaterBlock, затем инъектируют. Не добавляйте воду в загустевшую суспензию.',
+  scenarios: [
+    { id: 'crack', tab: 'Трещина в бетоне', steps: [
+      { text: 'Трещину и поверхность вдоль неё очищают от грязи, краски и рыхлого бетона' },
+      { text: 'Отверстия под пакеры сверлят под 45° поочерёдно с двух сторон — каждое пересекает трещину в толще', badge: '45° · шаг ≈ ½ толщины, 15–30 см' },
+      { text: 'Устанавливают и затягивают пакеры, трещину заделывают по поверхности гидропломбой WaterBlock' },
+      { text: 'Промывка трещины водой через пакеры; суспензия: 0,5–0,8 л воды на 1 кг, миксер ≥ 1 500 об/мин, 3–5 минут', badge: '0,5–0,8 л/кг · 3–5 мин' },
+      { text: 'Инъекция снизу вверх при 2–10 бар: суспензия вышла из соседнего пакера — текущий перекрывают и переходят дальше', badge: '2–10 бар' },
+      { text: 'Через 24 часа пакеры удаляют и заделывают отверстия; 3 суток поверхность держат влажной', badge: '⏱ 24 ч · 28 сут — 65–75 МПа' },
+    ]},
+    { id: 'curtain', tab: 'Завеса за стеной', steps: [
+      { text: 'Сквозные отверстия через стену подземного сооружения по сетке 30–50 см', badge: 'сетка 30–50 см' },
+      { text: 'Установка пакеров в отверстия' },
+      { text: 'Нагнетание суспензии в грунт за стеной, снизу вверх', badge: '0,6–1,0 л воды на 1 кг' },
+      { text: 'Сплошная инъекционная завеса за стеной остановила фильтрацию' },
+    ]},
+    { id: 'backfill', tab: 'Заобделочное пространство', steps: [
+      { text: 'Бурение отверстий в обделке тоннеля до заобделочного пространства' },
+      { text: 'Установка пакеров' },
+      { text: 'Нагнетание суспензии снизу вверх до отказа', badge: '0,4–0,6 л/кг · до отказа' },
+      { text: 'Пустоты за обделкой заполнены — обделка работает совместно с породой, водоприток снижен' },
+    ]},
+    { id: 'soil', tab: 'Пески под фундаментом', steps: [
+      { text: 'Погружение инъекторов-манжет в песчаное основание под фундаментом' },
+      { text: 'Нагнетание при низком давлении — суспензия пропитывает песок без разрушения грунта', badge: 'низкое давление · 0,8–1,5 л/кг' },
+      { text: 'Закреплённый массив под подошвой — основание фундамента усилено' },
+    ]},
+    { id: 'masonry', tab: 'Кирпичная кладка', steps: [
+      { text: 'Сверление отверстий под пакеры по сетке 30–50 см' },
+      { text: 'Установка пакеров' },
+      { text: 'Инъекция снизу вверх — суспензия заполняет пустоты и швы кладки', badge: '0,6–0,8 л/кг · снизу вверх' },
+      { text: 'Кладка консолидирована без вскрытия конструкции' },
+    ]},
+  ]
 }];
 </script>
 
@@ -534,6 +608,7 @@ const PI = Math.PI;
 
 /* ======================= static texts ======================= */
 const ICONS = {
+  crack: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 9 8l4 3-3 5 3 6"/><path d="M4 4h3M17 20h3"/></svg>',
   spray: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 10h8l2 2v2H3z"/><path d="M5 14v6M16 9l4-2M16 13h5M16 17l4 2"/></svg>',
   wind: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/><path d="M4 4l16 16"/></svg>',
   drop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/></svg>',
@@ -617,6 +692,15 @@ function calc() {
   const C = P.calc;
   const a = Math.max(0, parseFloat($('cArea').value) || 0);
   const h = Math.max(0, parseFloat($('cThick').value) || 0);
+  if (C.mode === 'grout') {
+    const kg = h > 0 ? a / (1 / C.dryDensity + h) : 0;     // л суспензии на 1 кг = 1/ρ + вода
+    $('oKg').textContent = fmt(kg, 1) + ' кг';
+    $('oBags').textContent = kg > 0 ? fmt(Math.ceil(kg / 25 - 1e-9)) : '—';
+    $('oWaterBox').hidden = false; $('oWater').textContent = fmt(kg * h, 1) + ' л';
+    $('oGravelBox').hidden = true;
+    $('cNote').textContent = h && (h < 0.35 || h > 1.5) ? 'Вода обычно от 0,35 до 1,5 л на 1 кг в зависимости от задачи. ' + C.note : C.note;
+    return;
+  }
   if (C.mode === 'groove') {
     const kg = a * 10 * (h / 100) ** 2 * C.kgPerDm3;        // объём, дм³ × 2,1 кг
     $('oKg').textContent = fmt(kg, 2) + ' кг';
@@ -2016,6 +2100,343 @@ BUILDERS.tankwall = () => shotcreteBuilder({
   baseLabel: 'Стена резервуара', baseAt: V(2.6, 3.9, 0),
   camera: { a: 0.42, r: 10.5, h: 3.1, ty: 1.9 },
 });
+
+
+/* ---------- NanoCem UT-9: injection with equipment ---------- */
+function xray(base, op = 0.3) { const m = own(base); m.transparent = true; m.opacity = op; m.depthWrite = false; return m; }
+function edges(obj, color = 0x6c737a) {
+  const mat = new THREE.LineBasicMaterial({ color }); mat.userData.own = true;
+  const l = new THREE.LineSegments(new THREE.EdgesGeometry(obj.geometry, 30), mat);
+  l.position.copy(obj.position); l.rotation.copy(obj.rotation); (obj.parent || world).add(l); return l;
+}
+function makeBore(mouth, dir, len, r = 0.028) {
+  const g = new THREE.CylinderGeometry(r, r, len, 12); g.translate(0, len / 2, 0);
+  const m = mesh(g, M.slit, null, false); m.position.copy(mouth); m.quaternion.setFromUnitVectors(UP, dir.clone().normalize());
+  m.userData.len = len; return m;
+}
+function makePacker(mouth, dir) {
+  const g = new THREE.Group(); world.add(g); g.position.copy(mouth); g.quaternion.setFromUnitVectors(V(0, 0, -1), dir.clone().normalize());
+  const body = new THREE.CylinderGeometry(0.03, 0.03, 0.3, 12); body.rotateX(PI / 2); mesh(body, M.steel, g).position.z = -0.12;
+  const nut = new THREE.CylinderGeometry(0.05, 0.05, 0.04, 6); nut.rotateX(PI / 2); mesh(nut, M.metal, g).position.z = 0.03;
+  const headMat = own(M.steel), hd = new THREE.CylinderGeometry(0.026, 0.026, 0.08, 10); hd.rotateX(PI / 2); mesh(hd, headMat, g).position.z = 0.09;
+  return { g, headMat, head: () => g.localToWorld(V(0, 0, 0.14)) };
+}
+function makeDrill() {
+  const g = new THREE.Group(); world.add(g);
+  const mat = own(M.bucket); mat.color.set(0x2f3a45); mat.side = THREE.FrontSide;
+  const acc = own(M.bucket); acc.color.set(P.accent); acc.side = THREE.FrontSide;
+  mesh(new THREE.BoxGeometry(0.14, 0.18, 0.42), mat, g).position.z = 0.42;
+  mesh(new THREE.BoxGeometry(0.1, 0.24, 0.1), acc, g).position.set(0, -0.16, 0.5);
+  const bit = new THREE.CylinderGeometry(0.018, 0.018, 0.4, 8); bit.rotateX(PI / 2); mesh(bit, M.steel, g).position.z = 0.0;
+  return (vis, tipPos, dir) => {
+    g.visible = vis; if (!vis) return;
+    const d = dir.clone().normalize();
+    g.quaternion.setFromUnitVectors(V(0, 0, -1), d); g.position.copy(tipPos).addScaledVector(d, -0.2);
+  };
+}
+function makePump(x, z, rotY = 0) {
+  const g = new THREE.Group(); world.add(g); g.position.set(x, 0, z); g.rotation.y = rotY;
+  const bodyMat = own(M.bucket); bodyMat.color.set(0x2f3a45); bodyMat.side = THREE.FrontSide;
+  const accMat = own(M.bucket); accMat.color.set(P.accent); accMat.side = THREE.FrontSide;
+  box(-0.45, 0.45, 0.14, 0.62, -0.25, 0.25, bodyMat, g);
+  const mot = new THREE.CylinderGeometry(0.14, 0.14, 0.55, 20); mot.rotateZ(PI / 2); mesh(mot, accMat, g).position.set(-0.05, 0.78, 0);
+  for (const [wx, wz] of [[-0.32, 0.27], [0.32, 0.27], [-0.32, -0.27], [0.32, -0.27]]) { const w = new THREE.CylinderGeometry(0.1, 0.1, 0.06, 16); w.rotateX(PI / 2); mesh(w, M.slit, g).position.set(wx, 0.1, wz); }
+  const gauge = new THREE.Group(); g.add(gauge); gauge.position.set(0.3, 0.8, 0.12);
+  const rim = new THREE.CylinderGeometry(0.12, 0.12, 0.04, 24); rim.rotateX(PI / 2); mesh(rim, M.metal, gauge);
+  mesh(new THREE.CircleGeometry(0.1, 24), own(M.mark), gauge, false).position.z = 0.022;
+  const needle = new THREE.Group(); gauge.add(needle); needle.position.z = 0.026;
+  mesh(new THREE.BoxGeometry(0.012, 0.085, 0.004), M.string, needle, false).position.y = 0.038;
+  mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.16, 10), M.metal, g).position.set(-0.32, 0.72, 0.18);
+  return { set(p) { needle.rotation.z = 1.25 - p * 2.5; }, outlet: () => g.localToWorld(V(-0.32, 0.8, 0.18)), gauge: () => g.localToWorld(V(0.3, 0.8, 0.16)) };
+}
+function makeMixer(x, z) {
+  const g = new THREE.Group(); world.add(g); g.position.set(x, 0, z);
+  const b = own(M.bucket); b.color.set(0xe9eef2);
+  mesh(new THREE.CylinderGeometry(0.3, 0.26, 0.6, 28, 1, true), b, g).position.y = 0.3;
+  const bb = mesh(new THREE.CircleGeometry(0.26, 28), b, g, false); bb.rotation.x = -PI / 2; bb.position.y = 0.01;
+  const sd = mesh(new THREE.CircleGeometry(0.28, 28), own(M.fill), g, false); sd.rotation.x = -PI / 2; sd.position.y = 0.46;
+  const drill = new THREE.Group(); g.add(drill); drill.position.y = 0.55;
+  const dm = own(M.bucket); dm.color.set(P.accent); dm.side = THREE.FrontSide;
+  mesh(new THREE.BoxGeometry(0.15, 0.32, 0.24), dm, drill).position.y = 0.55;
+  mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.6, 8), M.steel, drill).position.y = 0.12;
+  const pad = new THREE.Group(); drill.add(pad); pad.position.y = -0.16;
+  mesh(new THREE.BoxGeometry(0.2, 0.03, 0.04), M.steel, pad); mesh(new THREE.BoxGeometry(0.04, 0.03, 0.2), M.steel, pad);
+  return { spin(on, t) { pad.rotation.y = on ? t * 40 : 0; drill.position.y = 0.55 + (on ? Math.sin(t * 6) * 0.015 : 0); }, top: () => g.localToWorld(V(0, 1.1, 0)) };
+}
+function makeHose(from, to) {
+  const mid = from.clone().lerp(to, 0.5); mid.y = Math.max(0.05, Math.min(from.y, to.y) - 0.35);
+  const curve = new THREE.CatmullRomCurve3([from, from.clone().lerp(mid, 0.5).setY(Math.max(0.05, from.y - 0.25)), mid, to.clone().lerp(mid, 0.25), to]);
+  const m = mesh(new THREE.TubeGeometry(curve, 60, 0.025, 8), M.slit, null, false); m.visible = false; return m;
+}
+// pump + hose to each packer, one active at a time
+function injectionRig(packers, pump) {
+  const hoses = packers.map(pk => makeHose(pump.outlet(), pk.pk.head()));
+  const ACT = new THREE.Color(P.accent), CLOSED = new THREE.Color(0xd33c3c), IDLE = M.steel.color.clone();
+  return (active, t, closedBelow = active) => {
+    hoses.forEach((h, i) => { h.visible = i === active; });
+    packers.forEach((p, i) => p.pk.headMat.color.copy(i === active ? ACT : i < closedBelow ? CLOSED : IDLE));
+    pump.set(active >= 0 ? 0.45 + 0.12 * Math.sin(t * 3) : 0);
+  };
+}
+// helper: sequence of N items over progress u∈[0,1] → [index, fraction]
+const seq = (u, N) => { const x = clamp01(u) * N; const k = Math.min(N - 1, Math.floor(x)); return [k, Math.min(1, x - k)]; };
+function drillAndPack(packs, drill, s0, s1, step) {
+  const [k, f] = seq(seg(s0, 0.03, 0.97), packs.length);
+  packs.forEach((p, i) => {
+    const sc = step > 0 ? 1 : step === 0 ? (i < k ? 1 : i === k ? ease(f) : 0) : 0;
+    p.bore.visible = sc > 0.01; p.bore.scale.y = Math.max(0.01, sc);
+  });
+  if (step === 0) { const p = packs[k]; drill(true, p.mouth.clone().addScaledVector(p.dir.clone().normalize(), p.bore.userData.len * ease(f)), p.dir); }
+  else drill(false);
+  const pa = step > 1 ? packs.length : step === 1 ? seg(s1, 0.05, 0.9) * packs.length : 0;
+  packs.forEach((p, i) => { p.pk.g.visible = pa > i; });
+}
+const NC_LABELS = (packs, pump, mixer, stPack, stInj) => [
+  { text: 'Пакер', pos: () => packs[Math.min(2, packs.length - 1)].pk.head(), show: st => st === stPack },
+  { text: 'Насос с манометром', pos: () => pump.gauge(), show: st => st === stInj },
+  ...(mixer ? [{ text: 'Миксер-диспергатор', pos: () => mixer.top(), show: st => st === stInj - 1 }] : []),
+];
+
+BUILDERS.crack = () => {
+  const T = 0.8, Y0 = 0.25, Y1 = 3.35;
+  box(-4, 4, -0.3, 0, -1.2, 4, M.road);
+  const wall = box(-3, 3, 0, 3.6, -T, 0, xray(M.base, 0.3)); edges(wall);
+  const xc = y => 0.12 * Math.sin(y * 2.3) + 0.06 * Math.sin(y * 5.1 + 1);
+  const crackMat = own(M.slit), fillMat = own(M.fill), sealMat = own(M.fill); sealMat.color.set(0x8fa2b8); sealMat.roughness = 0.7;
+  const WATER = new THREE.Color(0x3f8fe0), DARK = M.slit.color.clone();
+  const NS = 34, segs = [];
+  for (let i = 0; i < NS; i++) {
+    const ya = Y0 + (Y1 - Y0) * i / NS, yb = Y0 + (Y1 - Y0) * (i + 1) / NS, h = yb - ya, ang = Math.atan2(xc(yb) - xc(ya), h);
+    const pos = V((xc(ya) + xc(yb)) / 2, (ya + yb) / 2, -T / 2);
+    const c = mesh(new THREE.BoxGeometry(0.022, h * 1.08, T * 0.98), crackMat, null, false); c.position.copy(pos); c.rotation.z = -ang;
+    const f = mesh(new THREE.BoxGeometry(0.03, h * 1.1, T * 0.96), fillMat, null, false); f.position.copy(pos); f.rotation.z = -ang;
+    const sl = mesh(new THREE.BoxGeometry(0.13, h * 1.1, 0.025), sealMat, null, false); sl.position.set(pos.x, pos.y, 0.012); sl.rotation.z = -ang;
+    segs.push({ c, f, sl, y: pos.y });
+  }
+  const packs = [];
+  for (let i = 0; i < 7; i++) {
+    const y = 0.45 + i * 0.45, side = i % 2 ? 1 : -1;
+    const mouth = V(xc(y) + side * T * 0.5, y, 0), dir = V(-side, 0, -1).normalize();
+    packs.push({ y, mouth, dir, bore: makeBore(mouth, dir, T * 0.75 * Math.SQRT2), pk: makePacker(mouth, dir) });
+  }
+  const patches = packs.map(p => { const m = mesh(new THREE.CircleGeometry(0.05, 16), fillMat, null, false); m.position.copy(p.mouth).add(V(0, 0, 0.004)); return m; });
+  const drill = makeDrill();
+  const brushMat = own(M.bucket); brushMat.color.set(P.accent); brushMat.side = THREE.FrontSide;
+  const brush = mesh(new THREE.BoxGeometry(0.22, 0.1, 0.08), brushMat); 
+  const pump = makePump(2.4, 1.1, -0.35), mixer = makeMixer(3.3, 0.5);
+  const rig = injectionRig(packs, pump);
+  const outflow = mesh(new THREE.SphereGeometry(0.05, 12, 8), fillMat);
+  return {
+    camera: { a: 0.42, r: 8.8, h: 2.9, ty: 1.6, tx: 0.9 },
+    labels: [
+      { text: 'Бетонная стена (в разрезе)', pos: V(-2.4, 3.3, 0) },
+      { text: 'Трещина ≥ 0,1 мм', pos: V(xc(2.75), 2.75, 0), show: st => st <= 1 },
+      { text: 'Шпур 45° пересекает трещину', pos: () => packs[3].mouth.clone().addScaledVector(packs[3].dir, 0.45), show: (st, k) => st === 1 && k > 0.5 },
+      { text: 'Гидропломба WaterBlock', pos: V(xc(1.6) + 0.05, 1.6, 0.02), show: (st, k) => (st === 2 && k > 0.7) || st === 3 },
+      ...NC_LABELS(packs, pump, mixer, 2, 4),
+      { text: P.layer, pos: V(xc(1.0), 1.0, -T / 2), show: (st, k) => st === 5 || (st === 4 && k > 0.3) },
+    ],
+    apply({ s, step, t }) {
+      brush.visible = step === 0 && s[0] > 0.04 && s[0] < 0.96;
+      { const y = Y0 + (Y1 - Y0) * seg(s[0], 0.05, 0.95); brush.position.set(xc(y) + Math.sin(t * 20) * 0.06, y, 0.06); }
+      drillAndPack(packs, drill, s[1], s[2], step - 1);
+      if (step < 1) packs.forEach(p => { p.bore.visible = false; p.pk.g.visible = false; });
+      const sealP = step > 2 ? 1 : step === 2 ? seg(s[2], 0.55, 0.95) : 0;
+      segs.forEach((sg, i) => { sg.sl.visible = sealP * NS > i; });
+      // flushing
+      crackMat.color.copy(DARK).lerp(WATER, step === 3 ? ease(seg(s[3], 0.05, 0.35)) : step === 4 ? 1 : 0);
+      mixer.spin((step === 3 && s[3] > 0.4) || step === 4, t);
+      // injection bottom-up
+      let fillTop = step > 4 ? 9 : Y0 - 1, active = -1, closed = step > 4 ? 99 : 0;
+      if (step === 4) {
+        const [k, f] = seq(seg(s[4], 0.04, 0.96), packs.length);
+        const lo = k === 0 ? Y0 : packs[k].y, hi = k + 1 < packs.length ? packs[k + 1].y : Y1 + 0.05;
+        fillTop = lo + f * (hi - lo); active = k; closed = k;
+        outflow.visible = f > 0.82 && k + 1 < packs.length; if (outflow.visible) outflow.position.copy(packs[k + 1].pk.head());
+      } else outflow.visible = false;
+      if (step === 3 && s[3] < 0.4) active = 0;
+      rig(active, t, closed);
+      segs.forEach(sg => { const fl = sg.y < fillTop; sg.f.visible = fl; sg.c.visible = !fl; });
+      packs.forEach((p, i) => { p.bore.material = step > 4 || (step === 4 && i < closed) ? fillMat : M.slit; });
+      // removal
+      const out = step === 5 ? ease(seg(s[5], 0.05, 0.4)) : 0;
+      packs.forEach((p, i) => { if (step === 5) { p.pk.g.visible = out < 0.95; p.pk.g.position.copy(p.mouth).addScaledVector(p.dir, -0.4 * out); } else p.pk.g.position.copy(p.mouth); });
+      patches.forEach(m => { m.visible = step === 5 && out >= 0.95; });
+      cureFill(fillMat, step === 5 ? ease(seg(s[5], 0.3, 0.9)) : 0);
+    }
+  };
+};
+
+BUILDERS.curtain = () => {
+  const T = 0.5;
+  box(-4, 4, -0.3, 0, 0, 4, M.road);
+  box(-3, 3, 0, 3.5, -T, 0, M.base);
+  const soilMat = xray(M.soil, 0.22); soilMat.color.set(0x8c7a68);
+  const soil = box(-3, 3, -0.3, 3.5, -3.2, -T, soilMat); edges(soil, 0x8a7a66);
+  const wetMat = own(M.slit); wetMat.color.set(0x3a4652); wetMat.transparent = true;
+  const wet = [[-1.6, 1.2, 0.5], [0.4, 0.7, 0.45], [1.5, 2.1, 0.4], [-0.5, 2.6, 0.35]].map(([x, y, r]) => { const m = mesh(new THREE.CircleGeometry(r, 24), wetMat, null, false); m.position.set(x, y, 0.004); m.scale.y = 1.4; return m; });
+  const packs = [], blobs = [];
+  const blobMat = own(M.fill); blobMat.transparent = true; blobMat.opacity = 0.9;
+  for (const y of [0.7, 1.6, 2.5]) for (const x of [-2, -1, 0, 1, 2]) {
+    const mouth = V(x, y, 0), dir = V(0, 0, -1);
+    packs.push({ mouth, dir, bore: makeBore(mouth, dir, T + 0.12), pk: makePacker(mouth, dir) });
+    const b = mesh(new THREE.SphereGeometry(1, 20, 14), blobMat); b.position.set(x, y, -T - 0.35); blobs.push(b);
+  }
+  const curtMat = own(M.fill); curtMat.transparent = true;
+  const curtain = box(-2.9, 2.9, 0.25, 3.0, -T - 0.6, -T - 0.08, curtMat);
+  const drill = makeDrill(), pump = makePump(1.9, 1.6, -0.6);
+  const rig = injectionRig(packs, pump);
+  return {
+    camera: { a: 1.3, r: 9.2, h: 4.4, ty: 1.3, tz: -1.0 },
+    labels: [
+      { text: 'Стена подземного сооружения', pos: V(-2.4, 3.3, 0) },
+      { text: 'Фильтрация воды', pos: V(-1.6, 1.2, 0), show: st => st < 2 },
+      { text: 'Водонасыщенный грунт', pos: V(2.2, 3.5, -2.4) },
+      ...NC_LABELS(packs, pump, null, 1, 2),
+      { text: 'Завеса ' + P.layer, pos: V(0.5, 2.0, -T - 0.6), show: (st, k) => st === 3 || (st === 2 && k > 0.6) },
+    ],
+    apply({ s, step, t }) {
+      drillAndPack(packs, drill, s[0], s[1], step);
+      const [k, f] = seq(seg(s[2], 0.04, 0.96), packs.length);
+      blobs.forEach((b, i) => {
+        const g = step > 2 ? 1 : step === 2 ? (i < k ? 1 : i === k ? ease(f) : 0) : 0;
+        b.visible = g > 0.01; b.scale.set(0.62 * g, 0.6 * g, 0.34 * g);
+      });
+      blobMat.opacity = 0.8 * (1 - (step === 3 ? ease(seg(s[3], 0.1, 0.7)) * 0.6 : 0));
+      rig(step === 2 ? k : -1, t, step === 2 ? k : step > 2 ? 99 : 0);
+      const prog = step > 2 ? 1 : step === 2 ? seg(s[2], 0.04, 0.96) : 0;
+      wetMat.opacity = 1 - prog; wet.forEach(m => { m.visible = prog < 0.99; });
+      const c = step === 3 ? ease(seg(s[3], 0, 0.6)) : 0; curtain.visible = c > 0.01; curtMat.opacity = 0.85 * c;
+      cureFill(blobMat, step === 3 ? ease(seg(s[3], 0.2, 0.9)) : 0); cureFill(curtMat, step === 3 ? ease(seg(s[3], 0.2, 0.9)) : 0);
+    }
+  };
+};
+
+BUILDERS.backfill = () => {
+  const RI = 2.6, RL = 2.9, RR = 3.25, Z0 = -2.5, LEN = 5;
+  const rock = own(M.gravel); rock.color.set(0xb8aea0);
+  const sh = new THREE.Shape();
+  sh.moveTo(-5.5, 0); sh.lineTo(-RR, 0); sh.absarc(0, 0, RR, PI, 0, true); sh.lineTo(5.5, 0); sh.lineTo(5.5, 5.6); sh.lineTo(-5.5, 5.6); sh.closePath();
+  mesh(new THREE.ExtrudeGeometry(sh, { depth: LEN, bevelEnabled: false, curveSegments: 64 }), rock).position.z = Z0;
+  mesh(new THREE.ExtrudeGeometry(sectorShape(RI, RL, 0, PI), { depth: LEN, bevelEnabled: false, curveSegments: 64 }), M.base).position.z = Z0;
+  box(-RI, RI, -0.4, 0, Z0, 4.6, M.road);
+  box(-5.5, -RR, -0.4, 0, Z0, 4.6, M.road); box(RR, 5.5, -0.4, 0, Z0, 4.6, M.road);
+  const fillMat = own(M.fill), NSg = 24, vsegs = [];
+  for (let i = 0; i < NSg; i++) {
+    const a0 = i / NSg * PI, a1 = (i + 1) / NSg * PI;
+    const m = mesh(new THREE.ExtrudeGeometry(sectorShape(RL + 0.004, RR - 0.004, a0, a1 + 0.004), { depth: LEN - 0.02, bevelEnabled: false, curveSegments: 6 }), fillMat);
+    m.position.z = Z0 + 0.01; m.userData.rank = Math.min((a0 + a1) / 2, PI - (a0 + a1) / 2) / (PI / 2); vsegs.push(m);
+  }
+  const packs = [0.32, 2.82, 0.86, 2.28, 1.57].map(a => {
+    const mouth = V(RI * Math.cos(a), RI * Math.sin(a), 1.3), dir = V(Math.cos(a), Math.sin(a), 0);
+    return { a, mouth, dir, bore: makeBore(mouth, dir, RL - RI + 0.06, 0.035), pk: makePacker(mouth, dir) };
+  });
+  const drill = makeDrill(), pump = makePump(0.9, 3.4, 0.2);
+  const rig = injectionRig(packs, pump);
+  return {
+    camera: { a: 0.2, r: 11.5, h: 2.6, ty: 2.1 },
+    labels: [
+      { text: 'Порода', pos: V(-4.3, 4.6, 2.5) },
+      { text: 'Обделка тоннеля', pos: V(-RL * Math.cos(0.5), RL * Math.sin(0.5) - 0.15, 2.5) },
+      { text: 'Заобделочная пустота', pos: V((RL + 0.17) * Math.cos(0.75), (RL + 0.17) * Math.sin(0.75), 2.5), show: st => st < 2 },
+      ...NC_LABELS(packs, pump, null, 1, 2),
+      { text: P.layer, pos: V((RL + 0.17) * Math.cos(0.75), (RL + 0.17) * Math.sin(0.75), 2.5), show: (st, k) => st === 3 || (st === 2 && k > 0.5) },
+    ],
+    apply({ s, step, t }) {
+      drillAndPack(packs, drill, s[0], s[1], step);
+      const u = step > 2 ? 1.01 : step === 2 ? seg(s[2], 0.04, 0.96) : 0;
+      vsegs.forEach(m => { m.visible = m.userData.rank < u; });
+      const k = step === 2 ? Math.min(packs.length - 1, Math.floor(u * packs.length)) : -1;
+      rig(k, t, step === 2 ? k : step > 2 ? 99 : 0);
+      cureFill(fillMat, step === 3 ? ease(seg(s[3], 0.1, 0.8)) : 0);
+    }
+  };
+};
+
+BUILDERS.soil = () => {
+  const sandMat = xray(M.gravel, 0.34); sandMat.color.set(0xe0c995);
+  const sand = box(-4, 4, -3.2, 0, -2, 2, sandMat); edges(sand, 0xa08a5a);
+  box(-1.5, 1.5, -0.9, 0.3, -1.2, 1.2, M.base);
+  box(-0.35, 0.35, 0.3, 2.6, -1.2, 1.2, M.mortar);
+  const pipes = [], bulbs = [], bulbMat = own(M.fill); bulbMat.transparent = true; bulbMat.opacity = 0.7;
+  for (const side of [-1, 1]) for (const z of [-0.75, 0, 0.75]) {
+    const start = V(side * 2.7, 0.25, z), end = V(side * 0.55, -2.3, z), dir = end.clone().sub(start), len = dir.length(); dir.normalize();
+    const g = new THREE.CylinderGeometry(0.035, 0.035, len, 10); g.translate(0, -len / 2, 0);
+    const m = mesh(g, M.steel); m.position.copy(start); m.quaternion.setFromUnitVectors(V(0, -1, 0), dir);
+    const head = start.clone();
+    const bs = [0.55, 0.75, 0.95].map(fr => { const b = mesh(new THREE.SphereGeometry(1, 18, 12), bulbMat); b.position.copy(start).addScaledVector(dir, len * fr); return b; });
+    pipes.push({ m, head, bs, pk: { head: () => head, headMat: own(M.steel), g: m } });
+    bulbs.push(...bs);
+  }
+  const zoneMat = own(M.fill); zoneMat.transparent = true;
+  const zone = mesh(new THREE.SphereGeometry(1, 32, 20), zoneMat); zone.position.set(0, -1.85, 0); zone.scale.set(2.5, 0.85, 1.55);
+  const pump = makePump(3.3, 1.6, -0.7);
+  const rig = injectionRig(pipes.map(p => ({ pk: p.pk })), pump);
+  return {
+    camera: { a: 0.5, r: 10.5, h: 1.5, ty: -0.9 },
+    labels: [
+      { text: 'Фундамент', pos: V(1.5, 0.1, 1.2) },
+      { text: 'Песчаное основание', pos: V(-3.6, -2.7, 2) },
+      { text: 'Инъектор-манжета', pos: () => pipes[3].head, show: st => st === 0 },
+      { text: 'Насос · низкое давление', pos: () => pump.gauge(), show: st => st === 1 },
+      { text: 'Закреплённый грунт ' + P.layer, pos: V(0.9, -2.3, 1.4), show: (st, k) => st === 2 && k > 0.3 },
+    ],
+    apply({ s, step, t }) {
+      const [k0, f0] = seq(seg(s[0], 0.03, 0.97), pipes.length);
+      pipes.forEach((p, i) => { const sc = step > 0 ? 1 : (i < k0 ? 1 : i === k0 ? ease(f0) : 0); p.m.visible = sc > 0.01; p.m.scale.y = Math.max(0.01, sc); });
+      const [k, f] = seq(seg(s[1], 0.04, 0.96), pipes.length);
+      pipes.forEach((p, i) => {
+        const g = step > 1 ? 1 : step === 1 ? (i < k ? 1 : i === k ? ease(f) : 0) : 0;
+        p.bs.forEach((b, j) => { const r = 0.42 * clamp01(g * 1.6 - j * 0.3); b.visible = r > 0.01; b.scale.setScalar(Math.max(0.01, r)); });
+      });
+      rig(step === 1 ? k : -1, t, -1);
+      pump.set(step === 1 ? 0.22 + 0.05 * Math.sin(t * 3) : 0);
+      const zf = step === 2 ? ease(seg(s[2], 0.05, 0.6)) : 0;
+      zone.visible = zf > 0.01; zoneMat.opacity = 0.6 * zf; bulbMat.opacity = 0.7 * (1 - zf * 0.8);
+      cureFill(zoneMat, zf); cureFill(bulbMat, zf);
+    }
+  };
+};
+
+BUILDERS.masonry = () => {
+  box(-4, 4, -0.3, 0, -1.5, 4, M.road);
+  box(-2.6, 2.6, 0, 3.0, -0.5, -0.245, M.mortar);
+  const r = rand(19), BH = 0.2, J = 0.016, BL = 0.5, voids = [];
+  for (let row = 0; row < 14; row++) {
+    const y = 0.01 + row * (BH + J) + BH / 2, off = row % 2 ? BL / 2 : 0;
+    for (let x0 = -2.6 - off; x0 < 2.6; x0 += BL + J) {
+      const a = Math.max(-2.6, x0), b = Math.min(2.6, x0 + BL); if (b - a < 0.08) continue;
+      const isVoid = r() < 0.12 && row > 0;
+      const mat = isVoid ? own(M.slit) : M.bricks[Math.floor(r() * 4)];
+      if (isVoid) mat.color.set(0x262626);
+      const m = mesh(new THREE.BoxGeometry(b - a, BH, isVoid ? 0.2 : 0.24), mat);
+      m.position.set((a + b) / 2, y, isVoid ? -0.145 : -0.12);
+      if (isVoid) voids.push({ m, y });
+    }
+  }
+  const packs = [];
+  for (const y of [0.55, 1.4, 2.3]) for (const x of [-1.8, -0.6, 0.6, 1.8]) { const mouth = V(x, y, 0), dir = V(0, 0, -1); packs.push({ mouth, dir, bore: makeBore(mouth, dir, 0.42), pk: makePacker(mouth, dir) }); }
+  const drill = makeDrill(), pump = makePump(1.6, 1.5, -0.5);
+  const rig = injectionRig(packs, pump);
+  const FC = new THREE.Color(0x8e9396), DC = new THREE.Color(0x262626), CC = FILL_CURED.clone();
+  return {
+    camera: { a: 0.42, r: 7.6, h: 2.2, ty: 1.5 },
+    labels: [
+      { text: 'Старая кирпичная кладка', pos: V(-2.2, 2.9, 0) },
+      { text: 'Пустоты в кладке', pos: () => voids[Math.floor(voids.length / 2)].m.position.clone().setZ(0), show: st => st < 2 },
+      ...NC_LABELS(packs, pump, null, 1, 2),
+      { text: P.layer + ' заполнил пустоты', pos: () => voids[Math.floor(voids.length / 2)].m.position.clone().setZ(0), show: st => st === 3 },
+    ],
+    apply({ s, step, t }) {
+      drillAndPack(packs, drill, s[0], s[1], step);
+      const u = step > 2 ? 1 : step === 2 ? seg(s[2], 0.04, 0.96) : 0, level = u * 3.1;
+      const k = step === 2 ? Math.min(packs.length - 1, Math.floor(u * packs.length)) : -1;
+      rig(k, t, step === 2 ? k : step > 2 ? 99 : 0);
+      const cure = step === 3 ? ease(seg(s[3], 0.1, 0.8)) : 0;
+      voids.forEach(v => { const f = v.y < level; v.m.material.color.copy(f ? FC : DC); if (f) v.m.material.color.lerp(CC, cure); v.m.position.z = f ? -0.12 : -0.145; });
+    }
+  };
+};
 
 /* ======================= scenario engine ======================= */
 const STEP = 4.5;                 // seconds per step
